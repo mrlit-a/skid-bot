@@ -9,7 +9,7 @@ global.ask = fs.readFileSync('./media/query.jpg')
 global.dumb = fs.readFileSync('./media/dumb.jpg')
 global.error = fs.readFileSync('./media/error.jpg')
 
-global.fdoc = { key : { participant : '0@s.whatsapp.net' }, message: { documentMessage: { title: `puto aiden marica`, jpegThumbnail: ask }}}
+global.floc = {key : {participant : '0@s.whatsapp.net', ...(from ? { remoteJid: `status@broadcast` } : {}) },message: {locationMessage: {name: 'msricon',jpegThumbnail: ask}}}
 
     
 
