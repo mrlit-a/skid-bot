@@ -1,15 +1,7 @@
 const fs = require("fs");
 const fetch = require("fetch")
 const { WAConnection } = require("@whiskeysockets/baileys");
-
-const imgerror = fs.readFileSync('./media/error.jpg');
-const imgdumb = fs.readFileSync('./media/dumb.jpg');
-const imgsuccess = fs.readFileSync('./media/success.jpg');
-const hentai = fs.readFileSync('./media/hentai.jpg');
-const lolquery = fs.readFileSync('./media/query.jpg');
-const url = `https://wa.me/+5284421114446`;
-const prefijos = ['!', '#', '?', '/', '.'];
-
+let url = `wa.me/+528442114446`
 let conn;
 let from;
 let mek;
@@ -50,7 +42,7 @@ function enviarerror(text) {
       sourceUrl: null,
       previewType: 'PHOTO',
       showAdAttribution: true,
-      thumbnail: imgerror,
+      thumbnail: error,
       sourceUrl: url
     }
   }}, {});
@@ -69,7 +61,7 @@ function query(text, sk) {
       sourceUrl: null,
       previewType: 'PHOTO',
       showAdAttribution: true,
-      thumbnail: lolquery,
+      thumbnail: query,
       sourceUrl: url
     }
   }}, {});
