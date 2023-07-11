@@ -61,7 +61,7 @@ function query(text, sk) {
       sourceUrl: null,
       previewType: 'PHOTO',
       showAdAttribution: true,
-      thumbnail: query,
+      thumbnail: ask,
       sourceUrl: url
     }
   }}, {});
