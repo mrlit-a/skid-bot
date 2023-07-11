@@ -1,13 +1,10 @@
 const chalk = require("chalk")
 const fs = require("fs")
 
-global.owner = [
-["5218442114446", "skid owner", true],
-]
+global.owner = [["5218442114446", "skid owner", true],
+['5218441029462', "subowner", true]]
 
 
-
-global.place = 'America/Bogota' // Aquí puede encontrar su ubicación https://momentjs.com/timezone/
 
 
 
