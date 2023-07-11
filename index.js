@@ -334,6 +334,16 @@ case 'neko':
   neko(conn, from, mek);
   break;
 
+    case 'update':
+if (!isOwner) return enviar(msg.owner);    
+try {    
+let stdout = execSync('git pull' + (mek.fromMe && q ? ' ' + q : ''))
+await conn.sendMessage(from, { text: stdout.toString() }, { quoted: mek });
+} catch { 
+let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot.git && git pull')
+await conn.sendMessage(from, { text: updatee.toString() }, { quoted: mek })}  
+break
+    
 case 'nsfw':
   if (!register) {
     enviar(msg.noreg);
