@@ -69,7 +69,7 @@ const type = Object.keys(mek.message)[0]
 
     
 
-    const from = mek.key.remoteJid;
+    global.from = mek.key.remoteJid;
     const isCmd = prefijos.some(p => body.startsWith(p));
     const isGroup = from.endsWith("@g.us") === true;
     const comando = body.slice(1).trim().split(/ +/).shift().toLowerCase();
