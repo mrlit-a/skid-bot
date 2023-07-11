@@ -1,3 +1,4 @@
+// base creada por skid :v
 const { videoyt, audioyt, handleYouTubeSearch } = require('./lib/download.js');
 const { generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys');
 const StartBlack = require('./lib/connection.js');
