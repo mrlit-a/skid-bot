@@ -93,7 +93,7 @@ const type = Object.keys(mek.message)[0]
 
     conn2(conn, from, mek);
 
-let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+
     if (!isCmd && !isGroup) {
       logs.logPrivateMessage(pushname, budy);
     } else if (!isCmd && isGroup) {
