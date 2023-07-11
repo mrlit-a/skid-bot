@@ -160,7 +160,7 @@ case 'descargar':
         await audioyt(url, mek, conn, from, user);
         break;
       case 'ytsearch':
-        await ytsearch(url, mek, conn, from, user);
+        await ytsearch(url, mek, conn, from, user, body);
         break
       default:
         conn.sendMessage(from, { text: 'Tipo de descarga no válido.' });
