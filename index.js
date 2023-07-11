@@ -1,5 +1,5 @@
 // base creada por skid :v
-const { videoyt, audioyt } = require('./lib/download.js');
+const { videoyt, audioyt, ytsearch } = require('./lib/download.js');
 const { generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys');
 const StartBlack = require('./lib/connection.js');
 const chalk = require('chalk');
@@ -159,6 +159,9 @@ case 'descargar':
       case 'ytaudio':
         await audioyt(url, mek, conn, from, user);
         break;
+      case 'ytsearch':
+        await ytsearch(url, mek, conn, from, user);
+        break
       default:
         conn.sendMessage(from, { text: 'Tipo de descarga no válido.' });
         break;
@@ -166,6 +169,10 @@ case 'descargar':
   }
   break;
 
+  case 'test':
+    enviar('online')
+    break
+    
 case 'registro':
   if (args.length !== 2) {
     conn.sendMessage(
@@ -355,15 +362,6 @@ case 'nsfw':
   break;
 
   default:
-             if (budy.startsWith('>')) {
-                if (!isOwner) return
-                try {
-                    return enviar(JSON.stringify(eval(budy.slice(2)), null, '\t'))
-                } catch (e) {
-                    e = String(e)
-                    enviar(e)
-                }
-            }
             if (budy.startsWith('=>')) {
                 if (!isOwner) return
                 try {
