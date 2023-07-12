@@ -61,10 +61,7 @@ const type = Object.keys(mek.message)[0]
     const budy =
       (type === 'conversation') ? mek.message.conversation :
       
-      var pes = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation :
-  (type === 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption :
-  (type === 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption :
-  (type === 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : '';
+      
   
 
     
