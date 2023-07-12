@@ -80,7 +80,7 @@ const type = Object.keys(mek.message)[0]
     const register = getUser(sender);
     const isBot = mek.key.fromMe ? true : false
     const isBotGroupAdmins = groupAdmins.includes(numeroBot) || false
-    
+    var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : ''
 
 
     const isOwner = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(sender)
@@ -163,7 +163,7 @@ case 'descargar':
   break;
     
     case 'ytsearch':
-        await ytsearch(url, mek, conn, from, user, body);
+        await ytsearch( mek, conn, from, user, body);
         break
   case 'test':
     enviar('online')
@@ -357,7 +357,7 @@ break
 } catch (error) {
       console.error(chalk.red(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ❌ Ocurrió un error al procesar el comando.`));
       console.error(chalk.red(`❗️ Error: ${error}`));
-      enviarerror(`ocurrio un error con el comando ${usedPrefix + comando} ${error}`)
+      enviarerror(`ocurrio un error con el comando ${prefix + comando} ${error}`)
     }
   })
 }
