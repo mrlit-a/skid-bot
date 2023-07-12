@@ -23,4 +23,16 @@ conn.sendMessage(from, { react: { text: emoji,  key: mek.key}})}
 function query(text, sk) {
 conn.sendMessage(from, {text: text, contextInfo: { externalAdReply: { title: sk, body: "©SKID BOT", mediaUrl: null, sourceUrl: null, previewType: 'PHOTO', showAdAttribution: true, thumbnail: ask, sourceUrl: url }}}, {})}
 
-module.exports = { enviar, enviarerror, query, conn2, skidenviar2, react }
+const msg = {
+noreg: `🗳️ ᴘᴀʀᴀ ᴜsᴀʀ ᴀ sᴋɪᴅ ʙᴏᴛ ɴᴇᴄᴇsɪᴛᴀs ʀᴇɢɪsᴛʀᴀʀᴛᴇ\n!ʀᴇɢɪsᴛʀᴏ ɴᴏᴍʙʀᴇ ᴇᴅᴀᴅ`,
+reg: `🎩 ɴᴏ ʜᴀᴄᴇ ғᴀʟᴛᴀ ǫᴜᴇ ᴛᴇ ᴠᴜᴇʟᴠᴀs ᴀ ʀᴇɢɪsᴛʀᴀʀ ʏᴀ ᴇsᴛᴀs ʀᴇɢɪsᴛʀᴀᴅᴏ!!`,
+owner: `🚫 sᴏʟᴏ ʟᴏs ᴏᴡɴᴇʀs ᴘᴜᴇᴅᴇɴ ᴜsᴀʀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ`,
+wait: `ᴇsᴘᴇʀᴀ ᴇsᴛᴀᴍᴏs ᴘʀᴏᴄᴇsᴀɴᴅᴏ ᴛᴜ ᴘᴇᴅɪᴅᴏ...`,
+admin: `❌ sᴏʟᴏ ᴀᴅᴍɪɴs ᴘᴜᴇᴅᴇɴ ᴜsᴀʀ ᴇsᴛᴏ`,
+botAdmin: `ɴᴇsᴇᴄɪᴛᴀs ǫᴜᴇ ᴇʟ ʙᴏᴛ sᴇᴀ ᴀᴅᴍɪɴ`,
+grupo: `ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ sᴏʟᴏ sᴇ ᴘᴜᴇᴅᴇ ᴜsᴀʀ ᴇɴ ɢʀᴜᴘᴏs`,
+priv: `ᴘᴀʀᴀ ᴜsᴀʀ ᴇsᴛᴇ ᴄᴏᴍᴀɴᴅᴏ ᴅᴇʙᴇ sᴇʀ ᴇɴ ᴇʟ ᴘʀɪᴠ`,
+error: `ʟᴏ sɪᴇɴᴛᴏ ʜᴜʙᴏ ᴜɴ ᴇʀʀᴏʀ ɪɴᴛᴇɴᴛᴀʟᴏ ᴅᴇ ɴᴜᴇᴠᴏ`
+}
+
+module.exports = { enviar, enviarerror, query, msg, conn2, skidenviar2, react }
