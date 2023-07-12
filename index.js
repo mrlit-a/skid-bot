@@ -357,7 +357,7 @@ break
 } catch (error) {
       console.error(chalk.red(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ❌ Ocurrió un error al procesar el comando.`));
       console.error(chalk.red(`❗️ Error: ${error}`));
-      enviarerror(`ocurrio un error con el comando ${comando}`)
+      enviarerror(`ocurrio un error con el comando ${usedPrefix + comando}` error)
     }
   })
 }
