@@ -25,7 +25,6 @@ const live = {key : { participant: '0@s.whatsapp.net', remoteJid: 'status@broadc
 const databaseFile = './lib/database/database.json';
 let database = [];
 
-const chalk = require('chalk');
 
 function logPrivateMessage(pushname, budy) {
   console.log(chalk.gray('┏━━━━━━━━━━━━━━━━━━━━━━━┓'));
