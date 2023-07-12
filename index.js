@@ -12,14 +12,12 @@ const path = require('path');
 const config = require("./config.js");
 const ffmpeg = require('fluent-ffmpeg');
 const { promisify } = require('util');
-
-const prefijos = ['!', '#', '?', '/', '.', '¿', '|', '_', '+'];
 const botNombre = "skid bot";
 const tempFolder = 'temp';
 const axios = require('axios');
-const { logPrivateMessage, logGroupMessage, logPrivateCommand, logGroupCommand, loadDatabase, registerUser, getUser, getUserData, saveDatabase, waifu, neko, megumin, nekonsfw,  simi, getBuffer } = require("./sk.js")
+const { logPrivateMessage, logGroupMessage, logPrivateCommand, logGroupCommand, loadDatabase, registerUser, getUser, getUserData, saveDatabase, getBuffer } = require("./sk.js")
 const speed = require("performance-now")
-const imagendumb = fs.readFileSync('./media/dumb.jpg')
+
 const { enviar, enviarerror, query, msg, conn2, react } = require('./messages.js')
 loadDatabase();
 
@@ -35,14 +33,11 @@ if(i.admin == "superadmin") admins.push(i.id)
 return admins
 }
 
-function usedPrefix(message) {
-  for (const prefix of prefijos) {
-    if (message.startsWith(prefix)) {
-      return true;
-    }
-  }
-  return false;
-}
+global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i');
+global.usedPrefix = function(message) {
+  return global.prefix.test(message);
+};
+
 
 async function skidbot() {
   let conn = await StartBlack();
@@ -65,7 +60,12 @@ const type = Object.keys(mek.message)[0]
 
     const budy =
       (type === 'conversation') ? mek.message.conversation :
-      (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : '';
+      
+      var pes = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation :
+  (type === 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption :
+  (type === 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption :
+  (type === 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : '';
+  
 
     
 
@@ -87,6 +87,9 @@ const type = Object.keys(mek.message)[0]
     const register = getUser(sender);
     const isBot = mek.key.fromMe ? true : false
     const isBotGroupAdmins = groupAdmins.includes(numeroBot) || false
+    
+
+
     const isOwner = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(sender)
     let girastamp = speed()
     let latensi = speed() - girastamp
@@ -159,16 +162,16 @@ case 'descargar':
       case 'ytaudio':
         await audioyt(url, mek, conn, from, user);
         break;
-      case 'ytsearch':
-        await ytsearch(url, mek, conn, from, user, body);
-        break
       default:
         conn.sendMessage(from, { text: 'Tipo de descarga no válido.' });
         break;
     }
   }
   break;
-
+    
+    case 'ytsearch':
+        await ytsearch(url, mek, conn, from, user, body);
+        break
   case 'test':
     enviar('online')
     break
@@ -327,22 +330,6 @@ case 'perfil':
   }
   break;
 
-case 'waifu':
-  if (!register) {
-   enviar(msg.noreg) 
-   return 
-   }
-  waifu(conn, from, mek);
-  break;
-
-case 'neko':
-  if (!register) {
-    enviar(msg.noreg);
-    return;
-  }
-  neko(conn, from, mek);
-  break;
-
     case 'update':
 if (!isOwner) return enviar(msg.owner);    
 try {    
@@ -353,14 +340,6 @@ let updatee = execSync('git remote set-url origin https://github.com/Skidy89/ski
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: mek })}  
 break
     
-case 'nsfw':
-  if (!register) {
-    enviar(msg.noreg);
-    return;
-  }
-  nekonsfw(conn, from, mek);
-  break;
-
   default:
             if (budy.startsWith('=>')) {
                 if (!isOwner) return

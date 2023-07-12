@@ -25,33 +25,60 @@ const live = {key : { participant: '0@s.whatsapp.net', remoteJid: 'status@broadc
 const databaseFile = './lib/database/database.json';
 let database = [];
 
+const chalk = require('chalk');
+
 function logPrivateMessage(pushname, budy) {
-  console.log(chalk.green(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] 📩 Mensaje en Mensaje Privado 📉`));
-  console.log(chalk.green(`🙋 Nombre: ${pushname}`));
-  console.log(chalk.green(`💬 Mensaje: ${budy}`));
+  console.log(chalk.gray('┏━━━━━━━━━━━━━━━━━━━━━━━┓'));
+  console.log(chalk.green('┃ ') + chalk.bold('📩 Mensaje en Mensaje Privado 📉'));
+  console.log(chalk.green('┃'));
+  console.log(chalk.green(`┃ ${chalk.bold('🙋 Nombre:')} ${pushname}`));
+  console.log(chalk.green('┃'));
+  console.log(chalk.green(`┃ ${chalk.bold('💬 Mensaje:')} ${budy}`));
+  console.log(chalk.green('┃'));
+  console.log(chalk.gray('┗━━━━━━━━━━━━━━━━━━━━━━━┛'));
 }
 
 function logGroupMessage(pushname, budy, groupName) {
-  console.log(chalk.green(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] 📩 Mensaje en Grupo 📉`));
-  console.log(chalk.green(`👥 Grupo: ${groupName}`));
-  console.log(chalk.green(`🙋 Nombre: ${pushname}`));
-  console.log(chalk.green(`💬 Mensaje: ${budy}`));
+  console.log(chalk.gray('┏━━━━━━━━━━━━━━━━━━━━━━━┓'));
+  console.log(chalk.green('┃ ') + chalk.bold('📩 Mensaje en Grupo 📉'));
+  console.log(chalk.green('┃'));
+  console.log(chalk.green(`┃ ${chalk.bold('👥 Grupo:')} ${groupName}`));
+  console.log(chalk.green('┃'));
+  console.log(chalk.green(`┃ ${chalk.bold('🙋 Nombre:')} ${pushname}`));
+  console.log(chalk.green('┃'));
+  console.log(chalk.green(`┃ ${chalk.bold('💬 Mensaje:')} ${budy}`));
+  console.log(chalk.green('┃'));
+  console.log(chalk.gray('┗━━━━━━━━━━━━━━━━━━━━━━━┛'));
 }
 
 function logPrivateCommand(pushname, budy, comando) {
-  console.log(chalk.blue(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ⚡️ Comando en Mensaje Privado 📈`));
-  console.log(chalk.blue(`➡️ Comando: ${comando}`));
-  console.log(chalk.blue(`🙋 Nombre: ${pushname}`));
-  console.log(chalk.blue(`💬 Mensaje: ${budy}`));
+  console.log(chalk.gray('┏━━━━━━━━━━━━━━━━━━━━━━━┓'));
+  console.log(chalk.blue('┃ ') + chalk.bold('⚡️ Comando en Mensaje Privado 📈'));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('➡️ Comando:')} ${comando}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('🙋 Nombre:')} ${pushname}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('💬 Mensaje:')} ${budy}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.gray('┗━━━━━━━━━━━━━━━━━━━━━━━┛'));
 }
 
 function logGroupCommand(pushname, budy, groupName, comando) {
-  console.log(chalk.blue(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ⚡️ Comando en Grupo 📈`));
-  console.log(chalk.blue(`👥 Grupo: ${groupName}`));
-  console.log(chalk.blue(`➡️ Comando: ${comando}`));
-  console.log(chalk.blue(`🙋 Nombre: ${pushname}`));
-  console.log(chalk.blue(`💬 Mensaje: ${budy}`));
+  console.log(chalk.gray('┏━━━━━━━━━━━━━━━━━━━━━━━┓'));
+  console.log(chalk.blue('┃ ') + chalk.bold('⚡️ Comando en Grupo 📈'));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('👥 Grupo:')} ${groupName}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('➡️ Comando:')} ${comando}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('🙋 Nombre:')} ${pushname}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.blue(`┃ ${chalk.bold('💬 Mensaje:')} ${budy}`));
+  console.log(chalk.blue('┃'));
+  console.log(chalk.gray('┗━━━━━━━━━━━━━━━━━━━━━━━┛'));
 }
+
 
 function loadDatabase() {
   try {
@@ -98,33 +125,6 @@ function getUserData(sender) {
   } : undefined;
 }
 
-async function neko(conn, from, mek) {
-  waifuu = await axios.get('https://waifu.pics/api/sfw/neko');
-  image = { url: waifuu.data.url };
-  text = `ɴᴇᴋᴏ!!`;
-  conn.sendMessage(from, { image: image, caption: text }, { quoted: live });
-}
-
-async function waifu(conn, from, mek) {
-  waifuu = await axios.get('https://waifu.pics/api/sfw/waifu');
-  image = { url: waifuu.data.url };
-  text = `ᴡᴀɪғᴜ!!`;
-  conn.sendMessage(from, { image: image, caption: text }, { quoted: live });
-}
-
-async function megumin(conn, from, mek) {
-  waifuu = await axios.get('https://waifu.pics/api/sfw/megumin');
-  image = { url: waifuu.data.url };
-  text = `ɴᴇɢᴜᴍɪɴ!!`;
-  conn.sendMessage(from, { image: image, caption: text }, { quoted: live });
-}
-
-async function nekonsfw(conn, from, mek) {
-  waifuu = await axios.get('https://waifu.pics/api/nsfw/neko');
-  image = { url: waifuu.data.url };
-  text = `ɴᴇᴋᴏ!?`;
-  conn.sendMessage(from, { image: image, caption: text }, { quoted: skid });
-}
 
 async function simi(conn, from, mek, q) {
   let res = await fetch(`https://api.simsimi.net/v2/?text=${q}&lc=es`);
@@ -162,10 +162,6 @@ module.exports = {
   getUser,
   getUserData,
   saveDatabase,
-  waifu,
-  neko,
-  megumin,
-  nekonsfw,
   simi,
   getBuffer
 };
