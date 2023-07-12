@@ -60,14 +60,10 @@ const type = Object.keys(mek.message)[0]
 
     const budy =
       (type === 'conversation') ? mek.message.conversation :
-      
-      
-  
-
-    
+      (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : '';
 
     const from = mek.key.remoteJid;
-    const isCmd = prefijos.some(p => body.startsWith(p));
+    const isCmd = body.startsWith(usedPrefix)
     const isGroup = from.endsWith("@g.us") === true;
     const comando = body.slice(1).trim().split(/ +/).shift().toLowerCase();
     const user = mek.sender && mek.sender.user ? mek.sender.user : botNombre;
