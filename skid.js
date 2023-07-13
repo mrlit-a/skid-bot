@@ -366,7 +366,7 @@ case 'sgif': {
   if (!quoted) return reply(`Reply Video/Image With Caption ${prefix + command}`)
   
   if (/image/.test(mime)) {
-    var stream = await downloadContentFromMessage(quoted)
+    var stream = await downloadContentFromMessage(m.message.imageMessage || m.message.extendedTextMessage?.contextInfoquotedMessage.imageMessage, 'image')
     var buffer = Buffer.from([])
     for await (const chunk of stream) {
       buffer = Buffer.concat([buffer, chunk])
@@ -399,7 +399,7 @@ case 'sgif': {
   } else if (/video/.test(mime)) {
     if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
     
-    var stream = await downloadContentFromMessage(quoted)
+    var stream = await downloadContentFromMessage(m.message.imageMessage || m.message.extendedTextMessage?.contextInfoquotedMessage.imageMessage, 'image')
     var buffer = Buffer.from([])
     for await (const chunk of stream) {
       buffer = Buffer.concat([buffer, chunk])
