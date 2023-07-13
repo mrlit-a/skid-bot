@@ -54,7 +54,7 @@ async function startBot() {
 const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
-    logger: pino({ level: 'warn' })
+    logger: pino({ level: 'silent' })
 })
 
 sock.ev.on('messages.upsert', async chatUpdate => {
@@ -73,7 +73,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     m = smsg(sock, mek)
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
-    require("./gataplus")(sock, m, chatUpdate, mek)
+    require("./skid")(sock, m, chatUpdate, mek)
     } catch (e) {
     console.log(e)
     }
