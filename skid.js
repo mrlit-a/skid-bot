@@ -362,11 +362,11 @@ break
             //reply(mess.wait)
                     if (/image/.test(mime)) {
                 let media = await quoted.download()
-                let encmedia = await conn.sendMessage(m.chat, { sticker: media }
+                let encmedia = await conn.sendMessage(m.chat, { sticker: media })
             } else if (/video/.test(mime)) {
                 if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
                 let media = await quoted.download()
-                let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+                let encmedia = await conn.sendMessage(m.chat, { sticker: media })
                 await fs.unlinkSync(encmedia)
             } else {
                 reply(`*Y LA IMAGEN?*`)
