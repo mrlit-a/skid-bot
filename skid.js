@@ -14,6 +14,8 @@ const fetch = require('node-fetch')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const gpt = require('api-dylux')
+const mimetype = require("mime-types")
+const ffmpeg = require("fluent-ffmpeg")
 
 const color = (text, color) => { // Función 'color' que toma un texto y un color como parámetros
 return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)
