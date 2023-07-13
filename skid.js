@@ -3,7 +3,7 @@
 // @Skidy89
 
 // Importaciones 
-const baileys = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
+const { downloadContentFromMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
 const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias
 const gradient = require('gradient-string') // Aplicar gradientes de color al texto
 const { execSync } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
@@ -361,13 +361,36 @@ break
             if (!quoted) return reply(`Reply Video/Image With Caption ${prefix + command}`)
             //reply(mess.wait)
                     if (/image/.test(mime)) {
-                let media = await quoted.download()
+               var stream = await downloadContentFromMessage(quoted)
                 let encmedia = await conn.sendMessage(m.chat, { sticker: media })
             } else if (/video/.test(mime)) {
                 if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
-                let media = await quoted.download()
-                let encmedia = await conn.sendMessage(m.chat, { sticker: media })
-                await fs.unlinkSync(encmedia)
+                 var stream = await downloadContentFromMessage(quoted)
+			    var buffer = Buffer.from([])
+for await(const chunk of stream) {
+ buffer = Buffer.concat([buffer, chunk])}
+let ran = `${Random}.webp`
+fs.writeFileSync(`./${ran}`, buffer)
+ffmpeg(`./${ran}`)
+.on("error", console.error)
+ .on("end", () => {
+exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
+  
+conn.sendMessage(from,{ 
+sticker: fs.readFileSync(`./${ran}`) 
+}, {quoted: fkontak })
+
+fs.unlinkSync(`./${ran}`)
+})
+})
+.addOutputOptions([
+"-vcodec", 
+"libwebp", 
+"-vf", 
+"scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+	  ])
+.toFormat('webp')
+.save(`${ran}`)
             } else {
                 reply(`*Y LA IMAGEN?*`)
                 }
