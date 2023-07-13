@@ -357,45 +357,82 @@ if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
   conn.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
 }
 break
-            case 'sticker': case 's': case 'stickergif': case 'sgif': {
-            if (!quoted) return reply(`Reply Video/Image With Caption ${prefix + command}`)
-            //reply(mess.wait)
-                    if (/image/.test(mime)) {
-               var stream = await downloadContentFromMessage(quoted)
-                let encmedia = await conn.sendMessage(m.chat, { sticker: media })
-            } else if (/video/.test(mime)) {
-                if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
-                 var stream = await downloadContentFromMessage(quoted)
-			    var buffer = Buffer.from([])
-for await(const chunk of stream) {
- buffer = Buffer.concat([buffer, chunk])}
-let ran = `${Random}.webp`
-fs.writeFileSync(`./${ran}`, buffer)
-ffmpeg(`./${ran}`)
-.on("error", console.error)
- .on("end", () => {
-exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
+case 'sticker':
+case 's':
+case 'stickergif':
+case 'sgif': {
+  if (!quoted) return reply(`Reply Video/Image With Caption ${prefix + command}`)
   
-conn.sendMessage(from,{ 
-sticker: fs.readFileSync(`./${ran}`) 
-}, {quoted: fkontak })
+  if (/image/.test(mime)) {
+    var stream = await downloadContentFromMessage(quoted)
+    var buffer = Buffer.from([])
+    for await (const chunk of stream) {
+      buffer = Buffer.concat([buffer, chunk])
+    }
+    
+    let ran = `${Random}.webp`
+    fs.writeFileSync(`./${ran}`, buffer)
+    
+    ffmpeg(`./${ran}`)
+      .on("error", console.error)
+      .on("end", () => {
+        exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
+          conn.sendMessage(from, { 
+            sticker: fs.readFileSync(`./${ran}`) 
+          }, { quoted: fkontak })
+          
+          fs.unlinkSync(`./${ran}`, (err) => {
+            if (err) console.error(err)
+          })
+        })
+      })
+      .addOutputOptions([
+        "-vcodec", 
+        "libwebp", 
+        "-vf", 
+        "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+      ])
+      .toFormat('webp')
+      .save(`${ran}`)
+  } else if (/video/.test(mime)) {
+    if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
+    
+    var stream = await downloadContentFromMessage(quoted)
+    var buffer = Buffer.from([])
+    for await (const chunk of stream) {
+      buffer = Buffer.concat([buffer, chunk])
+    }
+    
+    let ran = `${Random}.webp`
+    fs.writeFileSync(`./${ran}`, buffer)
+    
+    ffmpeg(`./${ran}`)
+      .on("error", console.error)
+      .on("end", () => {
+        exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
+          conn.sendMessage(from, { 
+            sticker: fs.readFileSync(`./${ran}`) 
+          }, { quoted: fkontak })
+          
+          fs.unlinkSync(`./${ran}`, (err) => {
+            if (err) console.error(err)
+          })
+        })
+      })
+      .addOutputOptions([
+        "-vcodec", 
+        "libwebp", 
+        "-vf", 
+        "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+      ])
+      .toFormat('webp')
+      .save(`${ran}`)
+  } else {
+    reply(`*Y LA IMAGEN?*`)
+  }
+}
+break;
 
-fs.unlinkSync(`./${ran}`)
-})
-})
-.addOutputOptions([
-"-vcodec", 
-"libwebp", 
-"-vf", 
-"scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
-	  ])
-.toFormat('webp')
-.save(`${ran}`)
-            } else {
-                reply(`*Y LA IMAGEN?*`)
-                }
-            }
-            break
 
 case 'estado':
   const totalMemory = Math.round(os.totalmem() / (1024 * 1024 * 1024)); 
