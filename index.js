@@ -4,8 +4,6 @@ const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, proto , 
 const { state, saveCreds } = await useMultiFileAuthState('./authFolder')
 const chalk = require('chalk')
 const moment = require('moment')
-const fs = require('fs')
-const yargs = require('yargs/yargs')
 const { smsg } = require('./libs/fuctions')
 
 const { execSync } = require('child_process')
@@ -14,47 +12,12 @@ const color = (text, color) => {
 return !color ? chalk.green(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)
 }
 
-//base de datos
-var low
-try {
-  low = require('lowdb')
-} catch (e) {
-  low = require('./database/lowdb')
-}
-
-const { Low, JSONFile } = low
-const mongoDB = require('./database/mongoDB')
-
-global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
-global.db = new Low(
-  /https?:\/\//.test(opts['db'] || '') ?
-    new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ?
-      new mongoDB(opts['db']) :
-      new JSONFile(`database.json`) //db
-)
-global.db.data = {
-    users: {},
-    chats: {},
-    database: {},
-    game: {},
-    settings: {},
-    others: {},
-    sticker: {},
-    ...(global.db.data || {})
-}
-
-if (global.db) setInterval(async () => {
-    if (global.db.data) await global.db.write()
-  }, 30 * 1000)
-
-//_________________
-
 async function startBot() {
 
 const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
-    logger: pino({ level: 'warn' })
+    logger: pino({ level: 'silent' })
 })
 
 sock.ev.on('messages.upsert', async chatUpdate => {
@@ -73,7 +36,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     m = smsg(sock, mek)
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
-    require("./gataplus")(sock, m, chatUpdate, mek)
+    require("./skid")(sock, m, chatUpdate, mek)
     } catch (e) {
     console.log(e)
     }
@@ -115,10 +78,11 @@ sock.ev.on('connection.update', async (update) => {
         console.log(
             color('[SYS]', '#009FFF'),
             color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'),
-            color(`╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊🧡 GataBotPlus-MD Se Conecto Correctamente a WhatsApp\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯` + receivedPendingNotifications, '#38ef7d')
+            color(`╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊🧡 SkidBot Se Conecto Correctamente a WhatsApp\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯`, '#38ef7d')
         );
     }
 });
+
 
 sock.ev.on('creds.update', saveCreds)
 
@@ -128,6 +92,10 @@ process.on('RefenceError', console.log)
 
 
 }
+
+startBot()
+
+})()
 
 startBot()
 
