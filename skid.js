@@ -441,7 +441,7 @@ try {
 let stdout = execSync('git pull' + (m.fromMe && q ? ' ' + q : ''))
 await conn.sendMessage(from, { text: stdout.toString() }, { quoted: msg });
 } catch { 
-let updatee = execSync('git remote set-url origin https://github.com/GataNina-Li/GataBotPlus-MD.git && git pull')
+let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: msg })}  
 break
         
