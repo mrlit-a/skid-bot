@@ -244,29 +244,7 @@ for (let i of search.all) {
   teks += `${themeemoji} No: ${no++}\n${themeemoji} Tipo: ${i.type}\n${themeemoji} ID del Video: ${i.videoId}\n${themeemoji} Título: ${i.title}\n${themeemoji} Vistas: ${i.views}\n${themeemoji} Duración: ${i.timestamp}\n${themeemoji} Subido: ${i.ago}\n${themeemoji} URL: ${i.url}\n\n━━━━━━━━━━━━\n\n`;
 }
 await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption: teks }, { quoted: fkontak });
-break
-case 'query': // envia un mensaje en forma de ad
-conn.sendMessage(from, {text: "puta gata", contextInfo: {
-externalAdReply: {
-title: "puta gata", // titulo
-body: "chingas a tu madre aiden", // cuerpo del mensaje (subtitulo)
-mediaUrl: null, // tampoco se :v
-sourceUrl: null, // nose :v
-previewType: 'PHOTO', // puedes cambiarlo segun lo que quieras gata
-showAdAttribution: true, //puedes cambiarlo a false si gustas
-thumbnail: null, // imagen puedes hacer a traves de fs o dejarlo null
-sourceUrl: 'github.com/skidy89' //link
-    }
-  }}, {});
-break
 
-case 'text': // envia un puto mensaje como persona normal
-conn.sendMessage(from, { text: "puto aiden" }, { quoted: fkontak })
-break
-
-//case "react": // reacion para tu puto spam
-//conn.sendMessage(from, { react: { text: emoji,  key: m.key}})
-//break
 
 case 'antilink': {
 if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
@@ -359,81 +337,6 @@ if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
   conn.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
 }
 break
-case 'sticker':
-case 's':
-case 'stickergif':
-case 'sgif': {
-  if (!quoted) return reply(`Reply Video/Image With Caption ${prefix + command}`)
-  
-  if (/image/.test(mime)) {
-    var stream = await downloadContentFromMessage(m.message.imageMessage || m.message.extendedTextMessage?.contextInfoquotedMessage.imageMessage, 'image')
-    var buffer = Buffer.from([])
-    for await (const chunk of stream) {
-      buffer = Buffer.concat([buffer, chunk])
-    }
-    
-    let ran = `${Random}.webp`
-    fs.writeFileSync(`./${ran}`, buffer)
-    
-    ffmpeg(`./${ran}`)
-      .on("error", console.error)
-      .on("end", () => {
-        exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
-          conn.sendMessage(from, { 
-            sticker: fs.readFileSync(`./${ran}`) 
-          }, { quoted: fkontak })
-          
-          fs.unlinkSync(`./${ran}`, (err) => {
-            if (err) console.error(err)
-          })
-        })
-      })
-      .addOutputOptions([
-        "-vcodec", 
-        "libwebp", 
-        "-vf", 
-        "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
-      ])
-      .toFormat('webp')
-      .save(`${ran}`)
-  } else if (/video/.test(mime)) {
-    if ((quoted.msg || quoted).seconds > 11) return reply('Maximum 10 Seconds!')
-    
-    var stream = await downloadContentFromMessage(m.message.imageMessage || m.message.extendedTextMessage?.contextInfoquotedMessage.imageMessage, 'image')
-    var buffer = Buffer.from([])
-    for await (const chunk of stream) {
-      buffer = Buffer.concat([buffer, chunk])
-    }
-    
-    let ran = `${Random}.webp`
-    fs.writeFileSync(`./${ran}`, buffer)
-    
-    ffmpeg(`./${ran}`)
-      .on("error", console.error)
-      .on("end", () => {
-        exec(`webpmux -set exif ./temp/${ran} -o ./${ran}`, async (error) => {
-          conn.sendMessage(from, { 
-            sticker: fs.readFileSync(`./${ran}`) 
-          }, { quoted: fkontak })
-          
-          fs.unlinkSync(`./${ran}`, (err) => {
-            if (err) console.error(err)
-          })
-        })
-      })
-      .addOutputOptions([
-        "-vcodec", 
-        "libwebp", 
-        "-vf", 
-        "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
-      ])
-      .toFormat('webp')
-      .save(`${ran}`)
-  } else {
-    reply(`*Y LA IMAGEN?*`)
-  }
-}
-break;
 
 
 case 'estado':
