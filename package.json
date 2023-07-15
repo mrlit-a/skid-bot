@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@whiskeysockets/baileys": "^6.3.1",
-    "api-dylux": "^1.2.2",
+    "api-dylux": "^1.5.5",
     "axios": "^0.24.0",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.10",
@@ -20,6 +20,7 @@
     "human-readable": "^0.2.1",
     "jimp": "^0.16.13",
     "lowdb": "^2.1.0",
+    "mime-types": "^2.1.35",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.43",
     "mongoose": "^6.2.1",

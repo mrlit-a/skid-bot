@@ -4,14 +4,23 @@
       "afkTime": -1,
       "afkReason": "",
       "limit": 20
+    },
+    "573043603261@s.whatsapp.net": {
+      "afkTime": -1,
+      "afkReason": "",
+      "limit": 20
     }
   },
   "chats": {
+    "120363162823804672@g.us": {
+      "antilink": false,
+      "ban": false
+    },
     "5218442114446@s.whatsapp.net": {
       "antilink": false,
       "ban": false
     },
-    "120363162823804672@g.us": {
+    "120363142801587275@g.us": {
       "antilink": false,
       "ban": false
     }
@@ -20,7 +29,7 @@
   "game": {},
   "settings": {
     "5218441029462@s.whatsapp.net": {
-      "status": 1689231033024,
+      "status": 1689442643833,
       "autobio": true
     }
   },
