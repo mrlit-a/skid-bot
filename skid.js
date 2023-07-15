@@ -152,7 +152,16 @@ if (db.data.settings[numBot].autobio) {
 let setting = global.db.data.settings[numBot]
 if (new Date() * 1 - setting.status > 1000) {
 //let uptime = await runtime(process.uptime())
-const bio = `Bot el Desarrollo 🐈\n${runtime(process.uptime())}`
+const sk = [
+  "skid bot < gata spam",
+  "puto el que lo lea",
+  "developer skid a tus órdenes",
+  "puto gay"
+];
+
+const XD = sk[Math.floor(Math.random() * sk.length)];
+
+const bio = `${runtime(process.uptime())} | `
 await conn.updateProfileStatus(bio)
 setting.status = new Date() * 1
 }} 
