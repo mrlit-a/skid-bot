@@ -161,7 +161,7 @@ const sk = [
 
 const XD = sk[Math.floor(Math.random() * sk.length)];
 
-const bio = `${runtime(process.uptime())} | `
+const bio = `${runtime(process.uptime())} | ${XD}`
 await conn.updateProfileStatus(bio)
 setting.status = new Date() * 1
 }} 
