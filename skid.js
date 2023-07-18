@@ -259,7 +259,7 @@ if (db.data.chats[m.chat].welcome) {
 conn.ev.on('group-participants.update', async (num) => {
 if (num.action === 'add') {
 try {
-ppimg = await client.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
+ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 } catch(e) {
 ppimg = noperfil
 }
@@ -267,7 +267,7 @@ perfil = await getBuffer(ppimg)
 conn.sendMessage(num.id, {image: perfil, caption: `╭══════════════⪩\n┃│ _bienvenido(a)_ @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
 } else if (num.action === 'remove') {
 try {
-ppimg = await client.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
+ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 } catch(e) {
 ppimg = noperfil
 }
