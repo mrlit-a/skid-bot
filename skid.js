@@ -258,7 +258,7 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 if (db.data.chats[m.chat].welcome) {
 conn.ev.on('group-participants.update', async (num) => {
 if (num.action === 'add') {
-conn.sendMessage(num.id, {text: `╭══════════════⪩\n┃│ _bienvenido(a) @${num.participants[0].split("@")[0]} a ${groupname}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
+conn.sendMessage(num.id, {text: `╭══════════════⪩\n┃│ _bienvenido(a) @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
 } else if (num.action === 'remove') {
 conm.sendMessage(num.id, {text: `╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
 }})}
