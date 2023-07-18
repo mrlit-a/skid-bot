@@ -245,7 +245,7 @@ if (m.message) {
     chalk.bold.cyanBright(botname),
     chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
     chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
-    chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', chalk.magenta(userSender), // Cambia el color del nombre de usuario a magenta
+    chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', chalk.magenta(userSender), 
     m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + chalk.magenta(from) : chalk.bold.greenBright('CHAT PRIVADO'),
     //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
     chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
