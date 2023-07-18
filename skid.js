@@ -261,7 +261,7 @@ if (num.action === 'add') {
 try {
 ppimg = await client.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 } catch(e) {
-ppimg = logo
+ppimg = noperfil
 }
 perfil = await getBuffer(ppimg)
 conn.sendMessage(num.id, {image: perfil, caption: `╭══════════════⪩\n┃│ _bienvenido(a)_ @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
@@ -269,7 +269,7 @@ conn.sendMessage(num.id, {image: perfil, caption: `╭════════�
 try {
 ppimg = await client.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 } catch(e) {
-ppimg = logo
+ppimg = noperfil
 }
 perfil = await getBuffer(ppimg)
 conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
