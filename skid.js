@@ -43,6 +43,13 @@ anu = nganu
 if (anu !== null) { // De lo contrario
 return stickerdb[anu].cmd // Devolver el valor de la propiedad 'cmd' en el objeto 'stickerdb[anu]'
 }}
+
+const getFileBuffer =  async (mediakey, MediaType) => {
+const stream = await downloadContentFromMessage(mediakey, mediaType)
+let buffer = Buffer.from([])
+for await(const skid of stream)
+	buffer = Buffer.concat([buffer, skid])
+	return Buffer}
 let blockList = []
 /**
 * @param {proto.IWebMessageInfo.message} mek
@@ -342,7 +349,7 @@ break
       if ((isMedia && !m.message.videoMessage || isQuotedImage) && args.length == 0) {
         const encmedia = isQuotedImage ? m.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : m.message.imageMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
-        buffimg = await getBuffer(encmedia, 'image');
+        buffimg = await getFileBuffer(encmedia, 'image');
         fs.writeFileSync(rane, buffimg);
         const media = rane;
         rano = getRandom('.webp');
@@ -372,7 +379,7 @@ break
       } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
         const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : m.message.videoMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
-        buffimg = await getBuffer(encmedia, 'video');
+        buffimg = await getFileBuffer(encmedia, 'video');
         fs.writeFileSync(rane, buffimg);
         const media = rane;
         rano = getRandom('.webp');
