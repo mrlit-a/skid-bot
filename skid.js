@@ -110,6 +110,19 @@ const isPremium = m.isGroup ? premium.includes(userSender) : false
 // ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
 const reply = (text) => {
 m.reply(text)} // Enviar una respuesta
+const ad = (text, title, body, image, url) => {
+conn.sendMessage(from, {text: text, contextInfo: {
+externalAdReply: {
+title: title, 
+body: body,
+mediaUrl: null, 
+sourceUrl: null, 
+previewType: 'PHOTO',
+showAdAttribution: true,
+thumbnail: image, 
+sourceUrl: url
+    }
+  }}, {})}
 
 const isAudio = type == 'audioMessage' // Mensaje de Audio
 const isSticker = type == 'stickerMessage' // Mensaje de Sticker
