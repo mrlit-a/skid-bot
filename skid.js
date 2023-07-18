@@ -45,7 +45,7 @@ return stickerdb[anu].cmd // Devolver el valor de la propiedad 'cmd' en el objet
 }}
 
 const getFileBuffer =  async (mediakey, MediaType) => {
-const stream = await downloadContentFromMessage(mediakey, mediaType)
+const stream = await downloadContentFromMessage(mediakey, MediaType)
 let buffer = Buffer.from([])
 for await(const skid of stream)
 	buffer = Buffer.concat([buffer, skid])
