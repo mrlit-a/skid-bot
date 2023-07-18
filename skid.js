@@ -115,7 +115,7 @@ conn.sendMessage(from, {text: text, contextInfo: {
 externalAdReply: {
 title: title, 
 body: body,
-mediaUrl: null, 
+mediaUrl: url, 
 sourceUrl: url, 
 previewType: 'PHOTO',
 showAdAttribution: true,
