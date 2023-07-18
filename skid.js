@@ -398,25 +398,25 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
         {
           if (!quoted)
             return responder(`Marque Vídeo/Image usando ${prefix + command}`);
-          responder(mess.wait);
+          reply("espera");
           if (/image/.test(mime)) {
             let media = await quoted.download();
-            let encmedia = await satoru.sendImageAsSticker(m.chat, media, m, {
+            let encmedia = await conn.sendImageAsSticker(m.chat, media, m, {
               packname: global.packname,
               author: global.author,
             });
             await fs.unlinkSync(encmedia);
           } else if (/video/.test(mime)) {
             if ((quoted.msg || quoted).seconds > 11)
-              return responder("Maximo 10 segundos!");
+              return reply("Maximo 10 segundos!");
             let media = await quoted.download();
-            let encmedia = await satoru.sendVideoAsSticker(m.chat, media, m, {
+            let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, {
               packname: global.packname,
               author: global.author,
             });
             await fs.unlinkSync(encmedia);
           } else {
-            responder(
+            reply(
               `Marque vídeo/imagen com ${
                 prefix + command
               }\nDuração do Video 1-9 Segundos`
