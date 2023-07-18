@@ -335,7 +335,7 @@ break
   case 'f':
   case 'fig':
   case 'figurinhas':
-    conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: info.key } });
+    conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: m.key } });
     try {
       if ((isMedia && !info.message.videoMessage || isQuotedImage) && args.length == 0) {
         const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : info.message.imageMessage;
@@ -344,7 +344,7 @@ break
         fs.writeFileSync(rane, buffimg);
         const media = rane;
         rano = getRandom('.webp');
-        enviar('*Creando tu sticker, espera un momento...*');
+        reply('*Creando tu sticker, espera un momento...*');
         await ffmpeg(`./${media}`)
           .input(media)
           .on('start', function (cmd) {
@@ -354,13 +354,13 @@ break
             console.log(`Error : ${err}`);
             exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
               fs.unlinkSync(media);
-              enviar('*Ocurrió un error al crear el sticker*');
+              reply('*Ocurrió un error al crear el sticker*');
             });
           })
           .on('end', function () {
             exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
               fs.unlinkSync(media);
-              enviar('*Sticker creado exitosamente*');
+              reply('*Sticker creado exitosamente*');
               buffer = fs.readFileSync(rano);
               conn.sendMessage(from, { sticker: buffer }, { quoted: info });
               fs.unlinkSync(rano);
@@ -374,7 +374,7 @@ break
         fs.writeFileSync(rane, buffimg);
         const media = rane;
         rano = getRandom('.webp');
-        enviar('*Creando tu sticker, espera un momento...*');
+        reply('*Creando tu sticker, espera un momento...*');
         await ffmpeg(`./${media}`)
           .inputFormat(media.split('.')[1])
           .on('start', function (cmd) {
@@ -385,7 +385,7 @@ break
             exec(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`, async (error) => {
               fs.unlinkSync(media);
               tipe = media.endsWith('.mp4') ? 'video' : 'gif';
-              enviar(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
+              reply(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
             });
           })
           .on('end', function () {
@@ -398,7 +398,7 @@ break
           })
           .run();
       } else {
-        enviar('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
+        reply('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
       }
     } catch (e) {
       enviar('Ocurrió un error');
