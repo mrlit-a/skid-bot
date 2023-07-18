@@ -9,6 +9,8 @@ global.owner = [
 ["5492266613038"]
 ]
 
+global.noperfil = fs.readFileSync('./media/sinfoto.jpg')
+
 global.mess = {
 admin: "𝚗𝚘 𝚎𝚛𝚎𝚜 𝚊𝚍𝚖𝚒𝚗",
 owner: "𝚎𝚜𝚝𝚎 𝚌𝚘𝚖𝚊𝚗𝚍𝚘 𝚎𝚜 𝚙𝚊𝚛𝚊 𝚘𝚠𝚗𝚎𝚛𝚜",
