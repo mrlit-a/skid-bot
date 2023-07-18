@@ -471,7 +471,7 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
 
     case 'ia':
      case 'chatgpt':
-     if (!text) return conn.sendMessage(from, { text: `*INGRESE EL TEXTO DE LOS QUE QUIERE BUSCAR?*` }, { quoted: msg })
+     if (!text) return conn.sendMessage(from, { text: `*INGRESE EL TEXTO DE LO QUE QUIERE BUSCAR?*` }, { quoted: msg })
      await conn.sendPresenceUpdate('composing', m.chat)
 let jailbreak = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
 await conn.sendPresenceUpdate('composing', m.chat)
