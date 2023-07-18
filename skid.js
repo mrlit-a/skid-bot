@@ -381,7 +381,26 @@ db.data.chats[m.chat].ban = false
 reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚍𝚎𝚜𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`)}}
 break
 
-
+        case 'hidetag': {
+          if (!m.isGroup) return responder(mess.group);
+          if (isAdmins) {
+            conn.sendMessage(
+              m.chat,
+              { text: q ? q : "", mentions: participants.map((a) => a.id) },
+              { quoted: null }
+            );
+          } else {
+            if (isCreator) {
+              conn.sendMessage(
+                m.chat,
+                { text: q ? q : "", mentions: participants.map((a) => a.id) },
+                { quoted: m }
+              );
+            }
+          }
+        }
+        break;
+	
 
 
 
