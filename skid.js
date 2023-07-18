@@ -284,6 +284,12 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 
 switch (command) {
 
+case 'attp':
+if (!text) return reply('ingresa algo para convertirlo a sticker :v')
+link = `https://api.lolhuman.xyz/api/attp?apikey=${lolkeysapi}&text=${text}`
+conn.sendMessage(m.chat, { sticker: { url: link } }, { quoted: fkontak})
+break
+
 case 'yts':
   if (!text) throw `Ejemplo: ${prefix + comand} historia wa anime`;
 const yts = require("youtube-yts");
