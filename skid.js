@@ -3,7 +3,7 @@
 // @Skidy89
 
 // Importaciones 
-const { downloadContentFromMessage, BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, areJidsSameUser, getContentType } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
+const { downloadContentFromMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
 const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias
 const gradient = require('gradient-string') // Aplicar gradientes de color al texto
 const { execSync } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
@@ -140,9 +140,13 @@ if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
 if (chats) {
 if (!('antilink' in chats)) chats.antilink = false
 if (!('ban' in chats)) chats.ban = false
+if (!('onlyadmin' in chats)) chats.onlyadmin = false
+if (!('welcome' in chats)) chats.welcome = true
 } else global.db.data.chats[m.chat] = {
 antilink: false,
 ban: false, 
+onlyadmin: false,
+welcome: true,
 }
 let setting = global.db.data.settings[numBot]
 if (typeof setting !== 'object') global.db.data.settings[numBot] = {}
@@ -184,18 +188,19 @@ if (db.data.chats[m.chat].antilink) {
 if (budy.match(`chat.whatsapp.com`)) {
 let delet = m.key.participant
 let bang = m.key.id
-reply(`*「 ANTI LINK 」*\n\n*Detectado sera expulsado del grupo sucia rata 🙄*`)
-if (!isBotAdmins) return reply(`El bot necesita admin para eliminar al incluso 🙄`)
+reply(`*「 ANTI LINK 」*\n\n*𝚕𝚒𝚗𝚔 𝚍𝚎𝚝𝚎𝚌𝚝𝚊𝚍𝚘*\n*𝚕𝚘 𝚜𝚒𝚎𝚗𝚝𝚘 𝚙𝚎𝚛𝚘 𝚗𝚘 𝚜𝚎 𝚙𝚎𝚛𝚖𝚒𝚝𝚎𝚗 𝚕𝚒𝚗𝚔𝚜 𝚜𝚎𝚛𝚊𝚜 𝚎𝚕𝚒𝚖𝚒𝚗𝚊𝚍𝚘*`)
+if (!isBotAdmins) return reply(`𝚎𝚕 𝚋𝚘𝚝 𝚗𝚎𝚌𝚎𝚜𝚒𝚝𝚊 𝚜𝚎𝚛 𝚊𝚍𝚖𝚒𝚗`)
 let gclink = (`https://chat.whatsapp.com/`+await conn.groupInviteCode(m.chat))
 let isLinkThisGc = new RegExp(gclink, 'i')
 let isgclink = isLinkThisGc.test(m.text)
-//if (isgclink) return reply(`Te salvarte el link enviado es de este grupo`)
-// if (isAdmins) return reply(`Te salvarte perra eres admin jjj`)
 conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')}}
         
 //Banea chat
 if (db.data.chats[m.chat].ban && !isCreator) {
+return
+}
+if (db.data.chats[m.chat].onlyadmins && !isGroupAdmins) {
 return
 }
       
@@ -227,7 +232,7 @@ idle: 0,
 irq: 0
 }})
 
-// ya lo pobre puta gata
+// fake
 const thumb = fs.readFileSync("./media/test.jpg")
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${userSender.split('@')[0]}:${userSender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
 const ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "status@broadcast"}, "message": {orderMessage: {itemCount: 2022,status: 200, thumbnail: thumb, surface: 200, message: "puta gata", orderTitle: "puto aiden me lo folle", sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
@@ -239,19 +244,24 @@ conn.groupParticipantsUpdate(from, [i], "remove");
 const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a')
 
 // ‿︵‿︵ʚɞ『 INFO CONSOLE 』ʚɞ‿︵‿︵	
-
 if (m.message) {
-  console.log(
-    chalk.bold.cyanBright(botname),
-    chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
-    chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
-    chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', chalk.magenta(userSender), 
-    m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + chalk.magenta(from) : chalk.bold.greenBright('CHAT PRIVADO'),
-    //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-    chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
-  );
-}
+console.log(chalk.bold.cyanBright(botname), 
+chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'),
+chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`), 
+chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(userSender), 
+m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(from) : chalk.bold.greenBright('CHAT PRIVADO'), 
+//chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
+chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
+)}
 
+// bienvenidas y despedidas
+if (db.data.chats[m.chat].welcome) {
+conn.ev.on('group-participants.update', async (num) => {
+if (num.action === 'add') {
+conn.sendMessage(num.id, {text: `╭══════════════⪩\n┃│ _bienvenido(a) @${num.participants[0].split("@")[0]} a ${groupname}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
+} else if (num.action === 'remove') {
+conm.sendMessage(num.id, {text: `╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
+}})}
 
 switch (command) {
 case 'imagen': //envia una imagen
@@ -270,11 +280,12 @@ for (let i of search.all) {
   teks += `${themeemoji} No: ${no++}\n${themeemoji} Tipo: ${i.type}\n${themeemoji} ID del Video: ${i.videoId}\n${themeemoji} Título: ${i.title}\n${themeemoji} Vistas: ${i.views}\n${themeemoji} Duración: ${i.timestamp}\n${themeemoji} Subido: ${i.ago}\n${themeemoji} URL: ${i.url}\n\n━━━━━━━━━━━━\n\n`;
 }
 await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption: teks }, { quoted: fkontak });
-
+break
 
 case 'antilink': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
+if (!m.isGroup) return reply()
+if (!isBotAdmins) return reply(mess.botAdmin)
+if (!isGroupAdmins) return reply(mess.admin)
 if (args[0] === "on") {
 if (db.data.chats[m.chat].antilink) return reply(`Activo`)
 db.data.chats[m.chat].antilink = true
@@ -288,79 +299,66 @@ break
 
 case 'leave': {
 if (!isCreator) return reply(`*este comando solo es para mi jefe*`)
-reply(m.chat, `*Adios fue un gusto esta aqui hasta pronto*`)
+reply(m.chat, `*Adios fue un gusto estar aqui hasta pronto*`)
 await conn.groupLeave(m.chat)}
 break
             
 case 'kick': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
+if (!m.isGroup) return reply(mess.group)
+if (!isBotAdmins) return reply(mess.botAdmin)
   //reply(`[ ⚠️ ] etiqueta al algun usuario`)
 let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 conn.groupParticipantsUpdate(m.chat, [users], 'remove')}
 break
 	
 case 'promote': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
-// if (!isAdmins) return replay(`${mess.admin}`)
+if (!m.isGroup) return reply(mess.group)
+if (!isBotAdmins) return reply(mess.botAdmin)
+if (!isGroupAdmins) return reply(mess.admin)
 let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 await conn.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
 }
 break
 	
 case 'demote': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
-  // if (!isAdmins) return replay(`${mess.admin}`)
+if (!m.isGroup) return reply(mess.group)
+if (!isBotAdmins) return reply(mess.botAdmin)
+  if (!isGroupAdmins) return reply(mess.admin)
 let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 await conn.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
 }
 break
-	
-case 'block': {
-if (!isCreator) return reply(`*Este comando es para mo jefe*`)
-reply(`*el usuario fue bloqueado del bot*`)
-let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-await conn.updateBlockStatus(users, 'block').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
-}
-break
-	
-case 'unblock': {
-if (!isCreator) return reply(`*Este comando es para mo jefe*`)
-reply(`*el usuario fue desbloqueado*`)
-let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-await conn.updateBlockStatus(users, 'unblock').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
-}
-break
+
 	
 case 'banchat': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
- // if (!isAdmins) return replay(`${mess.admin}`)
+if (!m.isGroup) return reply(mess.group)
+if (!isBotAdmins) return reply(mess.botAdmin)
+ if (!isGroupAdmins) return reply(mess.admin)
   if (args[0] === "on") {
   if (db.data.chats[m.chat].ban) return reply(`*Chat baneado*`)
  db.data.chats[m.chat].ban = true
- reply(`*Chat baneado con exito el bot no respodera a ningun  comando*`)
+ reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`)
  } else if (args[0] === "off") {
 if (!db.data.chats[m.chat].ban) return reply(`*Chat desbaneado*`)
 db.data.chats[m.chat].ban = false
-reply(`*Chat desbaneado hora estoy disponible*`)}}
+reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚍𝚎𝚜𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`)}}
 break
 
 
+
+
 case 'tagall': {
-if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
-if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
+if (!m.isGroup) return reply(mess.group)
+if (!isBotAdmins) return reply(mess.botAdmin)
 //if (!isAdmins) return reply(`[ ⚠️ ] No eres admin`)
   let teks = `✿ ━〔 *🍬 𝐈𝐍𝐕𝐎𝐂𝐀𝐂𝐈𝐎́𝐍 𝐌𝐀𝐒𝐈𝐕𝐀  🍬* 〕━ ✿\n\n`
   teks += `✿ 𝐒𝐔 𝐀𝐃𝐌𝐈𝐍 𝐋𝐎𝐒 𝐈𝐍𝐕𝐎𝐂𝐀, 𝐑𝐄𝐕𝐈𝐕𝐀𝐍\n\n`
-  teks += `✿ 𝐌𝐄𝐍𝐒𝐀𝐉𝐄:  ${q ? q : 'no message'}\n\n`
+  teks += `✿ 𝐌𝐄𝐍𝐒𝐀𝐉𝐄:  ${q ? q : 'no hay mensaje :v'}\n\n`
   for (let mem of participants) {
     teks += `┃@${mem.id.split('@')[0]}\n⁩`
-    teks += `┃𝐊𝐢𝐦𝐝𝐚𝐧𝐁𝐨𝐭-𝙈𝘿 : 𝐊𝐢𝐦 𝐃𝐚𝐧\n`
   }
-  teks += `╰━━━━━[ *✰ 𝐔𝐰𝐔 ✰* ]━━━━━⬣`
+  teks += `┃\n`
+  teks += `╰━━━━━[ *${botname}* ]━━━━━⬣`
   conn.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
 }
 break
@@ -373,7 +371,8 @@ case 'estado':
   const cpuUsage = os.loadavg()[0];
 
   conn.sendMessage(from, {
-    text: `*╭𝄗𝄗✦ --${botname}-- ✦𝄗𝄗⬣*
+    text: `
+*╭𝄗𝄗✦ --${botname}-- ✦𝄗𝄗⬣*
 ⎸ *⍟ Versión*
 ⎸ ❉ ➺ ${vs}
 ⎸ ┈┈┈┈┈┈┈┈┈┈┈
@@ -394,41 +393,6 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
         
         
 
-      case "sticker":
-      case "figurinha":
-      case "fig":
-      case "stickergif":
-      case "figu":
-        {
-          if (!quoted)
-            return responder(`Marque Vídeo/Image usando ${prefix + command}`);
-          reply("espera");
-          if (/image/.test(mime)) {
-            let media = await quoted.download();
-            let encmedia = await conn.sendMessage(m.chat, media, m, {
-              packname: global.packname,
-              author: global.author,
-            });
-            await fs.unlinkSync(encmedia);
-          } else if (/video/.test(mime)) {
-            if ((quoted.msg || quoted).seconds > 11)
-              return reply("Maximo 10 segundos!");
-            let media = await quoted.download();
-            let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, {
-              packname: global.packname,
-              author: global.author,
-            });
-            await fs.unlinkSync(encmedia);
-          } else {
-            reply(
-              `Marque vídeo/imagen com ${
-                prefix + command
-              }\nDuração do Video 1-9 Segundos`
-            );
-          }
-        }
-        break;
-
     case 'ia':
      case 'chatgpt':
      if (!text) return conn.sendMessage(from, { text: `*INGRESE EL TEXTO DE LO QUE QUIERE BUSCAR?*` }, { quoted: msg })
@@ -439,8 +403,6 @@ var syms = `${jailbreak}`
  
     var res = await gpt.ChatGpt(text, syms);
     await m.reply(res.text);
-
-
   break;
 
 
@@ -485,7 +447,7 @@ break
             if (budy.startsWith('=>')) {
                 if (!isCreator) return
                 try {
-                    return  reply(JSON.stringify(eval(`(async () => { ${budy.slice(3)} })()`), null, '\t'))  //gata.sendMessage(from, JSON.stringify(eval(`(async () => { ${budy.slice(3)} })()`), null, '\t'), text, { quoted: msg })
+                    return  reply(JSON.stringify(eval(`(async () => { ${budy.slice(3)} })()`), null, '\t')) 
                 } catch (e) {
                     e = String(e)
                     reply(e)
