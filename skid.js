@@ -350,7 +350,8 @@ break
         const encmedia = isQuotedImage ? m.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : m.message.imageMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
         buffimg = await getFileBuffer(encmedia, 'image');
-        fs.writeFileSync(rane, buffimg);
+        const bufferData = buffimg();
+        fs.writeFileSync(rane, bufferData);
         const media = rane;
         rano = getRandom('.webp');
         reply('*Creando tu sticker, espera un momento...*');
@@ -379,8 +380,9 @@ break
       } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
         const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : m.message.videoMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
-        buffimg = await getFileBuffer(encmedia, 'video');
-        fs.writeFileSync(rane, buffimg);
+        buffimg = await getFileBuffer(encmedia, 'image');
+        const bufferData = buffimg();
+        fs.writeFileSync(rane, bufferData);
         const media = rane;
         rano = getRandom('.webp');
         reply('*Creando tu sticker, espera un momento...*');
