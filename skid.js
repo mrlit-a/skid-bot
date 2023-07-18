@@ -337,7 +337,7 @@ break
   case 'figurinhas':
     conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: m.key } });
     try {
-      if ((isMedia && !info.message.videoMessage || isQuotedImage) && args.length == 0) {
+      if ((isMedia && !m.message.videoMessage || isQuotedImage) && args.length == 0) {
         const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : info.message.imageMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
         buffimg = await getFileBuffer(encmedia, 'image');
