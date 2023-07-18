@@ -363,12 +363,12 @@ case 'figurinhas':
         })
         .on('error', function (err) {
           console.log(`Error : ${err}`);
-          execSync(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`);
+          execSync(`webpmux -set exif ${rano} -o ${rano}`);
           fs.unlinkSync(media);
           reply('*Ocurrió un error al crear el sticker*');
         })
         .on('end', function () {
-          execSync(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`);
+          execSync(`webpmux -set exif ${rano} -o ${rano}`);
           fs.unlinkSync(media);
           reply('*Sticker creado exitosamente*');
           buffer = fs.readFileSync(rano);
@@ -392,13 +392,13 @@ case 'figurinhas':
         })
         .on('error', function (err) {
           console.log(`Error : ${err}`);
-          execSync(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`);
+          execSync(`webpmux -set exif  ${rano} -o ${rano}`);
           fs.unlinkSync(media);
           tipe = media.endsWith('.mp4') ? 'video' : 'gif';
           reply(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
         })
         .on('end', function () {
-          execSync(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`);
+          execSync(`webpmux -set exif ${rano} -o ${rano}`);
           fs.unlinkSync(media);
           buffer = fs.readFileSync(rano);
           conn.sendMessage(from, { sticker: buffer }, { quoted: info });
