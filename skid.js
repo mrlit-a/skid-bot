@@ -239,15 +239,19 @@ conn.groupParticipantsUpdate(from, [i], "remove");
 const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a')
 
 // ‿︵‿︵ʚɞ『 INFO CONSOLE 』ʚɞ‿︵‿︵	
+
 if (m.message) {
-console.log(chalk.bold.cyanBright(botname), 
-chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'),
-chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`), 
-chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(userSender), 
-m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(from) : chalk.bold.greenBright('CHAT PRIVADO'), 
-//chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
-)}
+  console.log(
+    chalk.bold.cyanBright(botname),
+    chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
+    chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
+    chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', chalk.magenta(userSender), // Cambia el color del nombre de usuario a magenta
+    m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + chalk.magenta(from) : chalk.bold.greenBright('CHAT PRIVADO'),
+    //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
+    chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
+  );
+}
+
 
 switch (command) {
 case 'imagen': //envia una imagen
