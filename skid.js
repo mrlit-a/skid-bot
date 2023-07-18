@@ -336,6 +336,8 @@ break
   case 'fig':
   case 'figurinhas':
     conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: m.key } });
+    const getExtension = async (type) => {
+	    return await mimetype.extension(type)}
     try {
       if ((isMedia && !m.message.videoMessage || isQuotedImage) && args.length == 0) {
         const encmedia = isQuotedImage ? m.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : m.message.imageMessage;
