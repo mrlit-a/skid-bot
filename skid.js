@@ -310,7 +310,7 @@ reply(`✅El ${command} se activo con exito!`)
 } else if (args[0] === "off") {
 if (!db.data.chats[m.chat].antilink) return reply(`off`)
 db.data.chats[m.chat].antilink = false
-reply(`AntiLink desactivado !`)
+reply(`${command} desactivado !`)
 }}
 break
 
