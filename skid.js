@@ -433,7 +433,7 @@ break
 
 case 'play2':    
 if (!text) return conn.sendMessage(from, { text: `*ingrese nombre de alguna cancion*` }, { quoted: msg })
-conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fdoc });    
+conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fkontak });    
 let mediaa = await ytplayvid(textoo)
 await conn.sendMessage(from, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });
 break               
@@ -448,24 +448,7 @@ let updatee = execSync('git remote set-url origin https://github.com/Skidy89/ski
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: msg })}  
 break
 
-case 'grupo':
-lol =  `
-┏━━━━━━━━━━━━━━━━━━━━┓
-┃➢ 𝚊𝚚𝚞𝚒 𝚝𝚒𝚎𝚗𝚎𝚜 𝚕𝚊 𝚒𝚗𝚏𝚘 𝚍𝚎 𝚝𝚞 𝚐𝚛𝚞𝚙𝚘
-┗━━━━━━━━━━━━━━━━━━━━┛
 
-┏━━━━━━━━━━━━━━━━━━━━┓
-┃➢ 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎𝚕 𝚐𝚛𝚞𝚙𝚘: ${groupName}
-┃➢ 𝚒𝚍 𝚍𝚎𝚕 𝚐𝚛𝚞𝚙𝚘: ${from}
-┗━━━━━━━━━━━━━━━━━━━━┛
-┏━━━━━━━━━━━━━━━━━━━━┓
-┃➢ 𝚖𝚘𝚍𝚘𝚊𝚍𝚖𝚒𝚗: ${modeadmin ? '✅' : '❌'}
-┃➢ 𝚊𝚗𝚝𝚒𝚕𝚒𝚗𝚔 ${antilink ? '✅' : '❌'}
-┃➢ 𝚋𝚊𝚗𝚌𝚑𝚊𝚝: ${banchat ? '✅' : '❌'}
-┃➢ 𝚠𝚎𝚕𝚌𝚘𝚖𝚎: ${welcome ? '✅' : '❌'}
-┗━━━━━━━━━━━━━━━━━━━━┛`
-conn.sendMessage(from, { text: lol }, {quoted: fkontak})
-break
 
         
         default:
