@@ -401,7 +401,7 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
           reply("espera");
           if (/image/.test(mime)) {
             let media = await quoted.download();
-            let encmedia = await conn.sendImageAsSticker(m.chat, media, m, {
+            let encmedia = await conn.sendMessage(m.chat, media, m, {
               packname: global.packname,
               author: global.author,
             });
