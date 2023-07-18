@@ -363,20 +363,19 @@ case 'figurinhas':
         })
         .on('error', function (err) {
           console.log(`Error : ${err}`);
-          exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
-            fs.unlinkSync(media);
-            reply('*Ocurrió un error al crear el sticker*');
-          });
+          execSync(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`);
+          fs.unlinkSync(media);
+          reply('*Ocurrió un error al crear el sticker*');
         })
         .on('end', function () {
-          exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
-            fs.unlinkSync(media);
-            reply('*Sticker creado exitosamente*');
-            buffer = fs.readFileSync(rano);
-            conn.sendMessage(from, { sticker: buffer }, { quoted: info });
-            fs.unlinkSync(rano);
-          });
+          execSync(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`);
+          fs.unlinkSync(media);
+          reply('*Sticker creado exitosamente*');
+          buffer = fs.readFileSync(rano);
+          conn.sendMessage(from, { sticker: buffer }, { quoted: info });
+          fs.unlinkSync(rano);
         })
+        .save(rano)
         .run();
     } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
       const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : m.message.videoMessage;
@@ -393,20 +392,19 @@ case 'figurinhas':
         })
         .on('error', function (err) {
           console.log(`Error : ${err}`);
-          exec(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`, async (error) => {
-            fs.unlinkSync(media);
-            tipe = media.endsWith('.mp4') ? 'video' : 'gif';
-            reply(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
-          });
+          execSync(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`);
+          fs.unlinkSync(media);
+          tipe = media.endsWith('.mp4') ? 'video' : 'gif';
+          reply(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
         })
         .on('end', function () {
-          exec(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`, async (error) => {
-            fs.unlinkSync(media);
-            buffer = fs.readFileSync(rano);
-            conn.sendMessage(from, { sticker: buffer }, { quoted: info });
-            fs.unlinkSync(rano);
-          });
+          execSync(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`);
+          fs.unlinkSync(media);
+          buffer = fs.readFileSync(rano);
+          conn.sendMessage(from, { sticker: buffer }, { quoted: info });
+          fs.unlinkSync(rano);
         })
+        .save(rano)
         .run();
     } else {
       reply('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
