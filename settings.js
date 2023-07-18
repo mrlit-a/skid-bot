@@ -10,7 +10,9 @@ global.owner = [
 ]
 
 
-global.botname = "𝑮𝒂𝒕𝒂𝑩𝒐𝒕𝑷𝒍𝒖𝒔-𝑴𝑫 💝🐈"
+global.botname = "sᴋɪᴅ ʙᴏᴛ ᴍᴅ"
+global.packname = "sᴋɪᴅ ʙᴏᴛ =>"
+global.author = "gata mierda"
 global.vs = '1.0.0'
 global.place = 'America/Bogota' // Aquí puede encontrar su ubicación https://momentjs.com/timezone/
 global.language = 'es' // Aquí puede encontrar su idioma https://cloud.google.com/translate/docs/languages?hl=es-419
