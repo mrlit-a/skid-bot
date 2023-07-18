@@ -331,6 +331,81 @@ db.data.chats[m.chat].ban = false
 reply(`*Chat desbaneado hora estoy disponible*`)}}
 break
 
+ case 's':
+  case 'f':
+  case 'fig':
+  case 'figurinhas':
+    conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: info.key } });
+    try {
+      if ((isMedia && !info.message.videoMessage || isQuotedImage) && args.length == 0) {
+        const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : info.message.imageMessage;
+        rane = getRandom('.' + await getExtension(encmedia.mimetype));
+        buffimg = await getFileBuffer(encmedia, 'image');
+        fs.writeFileSync(rane, buffimg);
+        const media = rane;
+        rano = getRandom('.webp');
+        enviar('*Creando tu sticker, espera un momento...*');
+        await ffmpeg(`./${media}`)
+          .input(media)
+          .on('start', function (cmd) {
+            console.log(`Started : ${cmd}`);
+          })
+          .on('error', function (err) {
+            console.log(`Error : ${err}`);
+            exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
+              fs.unlinkSync(media);
+              enviar('*Ocurrió un error al crear el sticker*');
+            });
+          })
+          .on('end', function () {
+            exec(`webpmux -set exif ${addMetadata('skid-bot', 'skidy89')} ${rano} -o ${rano}`, async (error) => {
+              fs.unlinkSync(media);
+              enviar('*Sticker creado exitosamente*');
+              buffer = fs.readFileSync(rano);
+              conn.sendMessage(from, { sticker: buffer }, { quoted: info });
+              fs.unlinkSync(rano);
+            });
+          })
+          .run();
+      } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
+        const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : m.message.videoMessage;
+        rane = getRandom('.' + await getExtension(encmedia.mimetype));
+        buffimg = await getFileBuffer(encmedia, 'video');
+        fs.writeFileSync(rane, buffimg);
+        const media = rane;
+        rano = getRandom('.webp');
+        enviar('*Creando tu sticker, espera un momento...*');
+        await ffmpeg(`./${media}`)
+          .inputFormat(media.split('.')[1])
+          .on('start', function (cmd) {
+            console.log(`Started : ${cmd}`);
+          })
+          .on('error', function (err) {
+            console.log(`Error : ${err}`);
+            exec(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`, async (error) => {
+              fs.unlinkSync(media);
+              tipe = media.endsWith('.mp4') ? 'video' : 'gif';
+              enviar(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
+            });
+          })
+          .on('end', function () {
+            exec(`webpmux -set exif ${addMetadata('Karen-Bot', 'Sr.LC')} ${rano} -o ${rano}`, async (error) => {
+              fs.unlinkSync(media);
+              buffer = fs.readFileSync(rano);
+              conn.sendMessage(from, { sticker: buffer }, { quoted: info });
+              fs.unlinkSync(rano);
+            });
+          })
+          .run();
+      } else {
+        enviar('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
+      }
+    } catch (e) {
+      enviar('Ocurrió un error');
+      console.log(e);
+    }
+    break;
+
 case 'tagall': {
 if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
 if (!isBotAdmins) return reply(`[ ⚠️ ] Necesito ser admin`)
