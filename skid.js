@@ -43,13 +43,14 @@ anu = nganu
 if (anu !== null) { // De lo contrario
 return stickerdb[anu].cmd // Devolver el valor de la propiedad 'cmd' en el objeto 'stickerdb[anu]'
 }}
-
-const getFileBuffer =  async (mediakey, MediaType) => {
+const getFileBuffer = async (mediakey, MediaType) => {
 const stream = await downloadContentFromMessage(mediakey, MediaType)
 let buffer = Buffer.from([])
-for await(const skid of stream)
-	buffer = Buffer.concat([buffer, skid])
-	return Buffer}
+for await(const chunk of stream) {
+buffer = Buffer.concat([buffer, chunk]) }
+return buffer}
+
+
 let blockList = []
 /**
 * @param {proto.IWebMessageInfo.message} mek
