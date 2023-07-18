@@ -344,85 +344,6 @@ db.data.chats[m.chat].ban = false
 reply(`*Chat desbaneado hora estoy disponible*`)}}
 break
 
-  case 's':
-  case 'f':
-  case 'fig':
-  case 'figurinhas':
-    conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: m.key } });
-
-    // Función para obtener la extensión
-    const getExtension = async (type) => {
-      return await mimetype.extension(type);
-    };
-
-    try {
-      if ((isMedia && !m.message.videoMessage || isQuotedImage) && args.length == 0) {
-        const encmedia = isQuotedImage ? m.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : m.message.imageMessage;
-        rane = getRandom('.' + await getExtension(encmedia.mimetype));
-        buffimg = await getFileBuffer(encmedia, 'image');
-        fs.writeFileSync(rane, buffimg);
-        const media = rane;
-        rano = getRandom('.webp');
-        reply('*Creando tu sticker, espera un momento...*');
-        await ffmpeg(`./${media}`)
-          .input(media)
-          .on('start', function (cmd) {
-            console.log(`Started : ${cmd}`);
-          })
-          .on('error', function (err) {
-            console.log(`Error : ${err}`);
-            execSync(`webpmux -set exif ${rano} -o ${rano}`);
-            fs.unlinkSync(media);
-            reply('*Ocurrió un error al crear el sticker*');
-          })
-          .on('end', function () {
-            execSync(`webpmux -set exif ${rano} -o ${rano}`);
-            fs.unlinkSync(media);
-            reply('*Sticker creado exitosamente*');
-            buffer = fs.readFileSync(rano);
-            conn.sendMessage(from, { sticker: buffer }, { quoted: fkontak });
-            fs.unlinkSync(rano);
-          })
-          .save(rano)
-          .run();
-      } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
-        const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : m.message.videoMessage;
-        rane = getRandom('.' + await getExtension(encmedia.mimetype));
-        buffimg = await getFileBuffer(encmedia, 'image');
-        fs.writeFileSync(rane, buffimg);
-        const media = rane;
-        rano = getRandom('.webp');
-        reply('*Creando tu sticker, espera un momento...*');
-        await ffmpeg(`./${media}`)
-          .inputFormat(media.split('.')[1])
-          .on('start', function (cmd) {
-            console.log(`Started : ${cmd}`);
-          })
-          .on('error', function (err) {
-            console.log(`Error : ${err}`);
-            execSync(`webpmux -set exif ${rano} -o ${rano}`);
-            fs.unlinkSync(media);
-            tipe = media.endsWith('.mp4') ? 'video' : 'gif';
-            reply(`Marca la conversación con el ${tipe} para convertirlo en sticker`);
-          })
-          .on('end', function () {
-            execSync(`webpmux -set exif ${rano} -o ${rano}`);
-            fs.unlinkSync(media);
-            buffer = fs.readFileSync(rano);
-            conn.sendMessage(from, { sticker: buffer }, { quoted: fkontak });
-            fs.unlinkSync(rano);
-          })
-          .save(rano)
-          .run();
-      } else {
-        reply('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
-      }
-    } catch (e) {
-      console.error(e);
-      reply('Ocurrió un error');
-    }
-    break;
-
 
 case 'tagall': {
 if (!m.isGroup) return reply(`[ ⚠️ ] solo el grupo`)
@@ -468,6 +389,41 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
      break
         
         
+
+      case "sticker":
+      case "figurinha":
+      case "fig":
+      case "stickergif":
+      case "figu":
+        {
+          if (!quoted)
+            return responder(`Marque Vídeo/Image usando ${prefix + command}`);
+          responder(mess.wait);
+          if (/image/.test(mime)) {
+            let media = await quoted.download();
+            let encmedia = await satoru.sendImageAsSticker(m.chat, media, m, {
+              packname: global.packname,
+              author: global.author,
+            });
+            await fs.unlinkSync(encmedia);
+          } else if (/video/.test(mime)) {
+            if ((quoted.msg || quoted).seconds > 11)
+              return responder("Maximo 10 segundos!");
+            let media = await quoted.download();
+            let encmedia = await satoru.sendVideoAsSticker(m.chat, media, m, {
+              packname: global.packname,
+              author: global.author,
+            });
+            await fs.unlinkSync(encmedia);
+          } else {
+            responder(
+              `Marque vídeo/imagen com ${
+                prefix + command
+              }\nDuração do Video 1-9 Segundos`
+            );
+          }
+        }
+        break;
 
     case 'ia':
      case 'chatgpt':
