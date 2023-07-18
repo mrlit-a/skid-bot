@@ -338,7 +338,7 @@ break
     conn.sendMsg = await conn.sendMessage(from, { react: { text: `📸`, key: m.key } });
     try {
       if ((isMedia && !m.message.videoMessage || isQuotedImage) && args.length == 0) {
-        const encmedia = isQuotedImage ? info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : info.message.imageMessage;
+        const encmedia = isQuotedImage ? m.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage : m.message.imageMessage;
         rane = getRandom('.' + await getExtension(encmedia.mimetype));
         buffimg = await getFileBuffer(encmedia, 'image');
         fs.writeFileSync(rane, buffimg);
