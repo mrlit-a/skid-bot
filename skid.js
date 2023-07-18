@@ -401,7 +401,7 @@ break
         reply('Debes cargar o etiquetar una imagen o video con una duración máxima de 10 segundos');
       }
     } catch (e) {
-      enviar('Ocurrió un error');
+      reply('Ocurrió un error');
       console.log(e);
     }
     break;
