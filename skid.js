@@ -129,10 +129,16 @@ if (user) {
 if (!isNumber(user.afkTime)) user.afkTime = -1
 if (!('afkReason' in user)) user.afkReason = ''
 if (!isNumber(user.limit)) user.limit = 20
+if(!isNumber(user.money)) user.money = 100
+if(!isNumber(user.health)) user.health = 100
+if(!isNumber(user.premium)) user.premium = false
  } else global.db.data.users[m.sender] = {
 afkTime: -1,
 afkReason: '',
 limit: 20,
+money: 100,
+health: 100,
+premium: false
 }
     
 let chats = global.db.data.chats[m.chat]
@@ -140,12 +146,12 @@ if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
 if (chats) {
 if (!('antilink' in chats)) chats.antilink = false
 if (!('ban' in chats)) chats.ban = false
-if (!('onlyadmin' in chats)) chats.onlyadmin = false
+if (!('modeadmin' in chats)) chats.modeadmin = false
 if (!('welcome' in chats)) chats.welcome = true
 } else global.db.data.chats[m.chat] = {
 antilink: false,
 ban: false, 
-onlyadmin: false,
+modeadmin: false,
 welcome: true,
 }
 let setting = global.db.data.settings[numBot]
@@ -264,7 +270,7 @@ ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 ppimg = noperfil
 }
 perfil = await getBuffer(ppimg)
-conn.sendMessage(num.id, {image: perfil, caption: `╭══════════════⪩\n┃│ _bienvenido(a)_ @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
+await conn.sendMessage(num.id, {image: perfil, caption: `╭══════════════⪩\n┃│ _bienvenido(a)_ @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
 } else if (num.action === 'remove') {
 try {
 ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
@@ -272,14 +278,10 @@ ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
 ppimg = noperfil
 }
 perfil = await getBuffer(ppimg)
-conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
+await conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
 }})}
 
 switch (command) {
-case 'imagen': //envia una imagen
-imagen = fs.readFileSync('./media/img_rectangular.jpg') // puede ser cualquier imagen como en plugins
-conn.sendMessage(m.chat, {image: imagen, caption: '*YAOI*' }, { quoted: m }) 
-break
 
 case 'yts':
   if (!text) throw `Ejemplo: ${prefix + comand} historia wa anime`;
@@ -445,6 +447,26 @@ await conn.sendMessage(from, { text: stdout.toString() }, { quoted: msg });
 let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: msg })}  
 break
+
+case 'grupo':
+lol =  `
+┏━━━━━━━━━━━━━━━━━━━━┓
+┃➢ 𝚊𝚚𝚞𝚒 𝚝𝚒𝚎𝚗𝚎𝚜 𝚕𝚊 𝚒𝚗𝚏𝚘 𝚍𝚎 𝚝𝚞 𝚐𝚛𝚞𝚙𝚘
+┗━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━┓
+┃➢ 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎𝚕 𝚐𝚛𝚞𝚙𝚘: ${groupName}
+┃➢ 𝚒𝚍 𝚍𝚎𝚕 𝚐𝚛𝚞𝚙𝚘: ${from}
+┗━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━┓
+┃➢ 𝚖𝚘𝚍𝚘𝚊𝚍𝚖𝚒𝚗: ${modeadmin ? '✅' : '❌'}
+┃➢ 𝚊𝚗𝚝𝚒𝚕𝚒𝚗𝚔 ${antilink ? '✅' : '❌'}
+┃➢ 𝚋𝚊𝚗𝚌𝚑𝚊𝚝: ${banchat ? '✅' : '❌'}
+┃➢ 𝚠𝚎𝚕𝚌𝚘𝚖𝚎: ${welcome ? '✅' : '❌'}
+┗━━━━━━━━━━━━━━━━━━━━┛`
+conn.sendMessage(from, { text: lol }, {quoted: fkontak})
+break
+
         
         default:
             if (budy.startsWith('>')) {
