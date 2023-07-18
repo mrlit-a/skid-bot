@@ -80,7 +80,7 @@ let t = m.messageTimestamp // Marca de tiempo de mensaje
 const pushname = m.pushName || "Sin nombre" // Obtiene el nombre de visualización del usuario de lo contrario será "Sin nombre"
 const botnm = conn.user.id.split(":")[0] + "@s.whatsapp.net"
 const userSender = m.key.fromMe ? botnm : m.isGroup && m.key.participant.includes(":") ? m.key.participant.split(":")[0] + "@s.whatsapp.net" : m.key.remoteJid.includes(":") ? m.key.remoteJid.split(":")[0] + "@s.whatsapp.net" : m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid
-const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) // Eliminar todo a excepción de números 
+const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) // Eliminar todo a excepción de números
 const itsMe = m.sender == conn.user.id ? true : false // Verifica si el remitente del mensaje es el propio bot
 const text = args.join(" ") // Unir rgumentos en una sola cadena separada por espacios
 const quoted = m.quoted ? m.quoted : m // Obtiene el mensaje citado si existe, de lo contrario, se establece como el propio mensaje
@@ -383,7 +383,7 @@ break
 
         case 'hidetag': {
           if (!m.isGroup) return responder(mess.group);
-          if (isAdmins) {
+          if (isGroupAdmins) {
             conn.sendMessage(
               m.chat,
               { text: q ? q : "", mentions: participants.map((a) => a.id) },
