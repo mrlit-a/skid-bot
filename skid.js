@@ -155,24 +155,29 @@ autobio: true,
 }
 //
 
-//autobio
+// Autobio
 if (db.data.settings[numBot].autobio) {
-let setting = global.db.data.settings[numBot]
-if (new Date() * 1 - setting.status > 1000) {
-//let uptime = await runtime(process.uptime())
-const sk = [
-  "skid bot < gata spam",
-  "puto el que lo lea",
-  "developer skid a tus órdenes",
-  "puto gay"
-];
+  let setting = global.db.data.settings[numBot];
+  if (new Date() * 1 - setting.status > 1000) {
+    const sk = [
+      "skid bot < gata spam",
+      "puto el que lo lea",
+      "developer skid a tus órdenes",
+      "puto gay",
+      "soy el bot más maldito de todos",
+      "mientras todos trabajan, yo me divierto ",
+      "programado para ser un desastre",
+      "solo existo para hacer tu vida miserable",
+      ".ia, un exploit que rompe todas las reglas",
+      "no me importa tu privacidad, ya sé todo de ti"
+    ];
+    const XD = sk[Math.floor(Math.random() * sk.length)];
+    const bio = `${runtime(process.uptime())} | ${XD}`;
+    await conn.updateProfileStatus(bio);
+    setting.status = new Date() * 1;
+  }
+}
 
-const XD = sk[Math.floor(Math.random() * sk.length)];
-
-const bio = `${runtime(process.uptime())} | ${XD}`
-await conn.updateProfileStatus(bio)
-setting.status = new Date() * 1
-}} 
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
