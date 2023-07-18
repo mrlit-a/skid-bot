@@ -52,6 +52,7 @@ return buffer}
 
 
 let blockList = []
+let premium = []
 /**
 * @param {proto.IWebMessageInfo.message} mek
 * @param {proto.IWebMessageInfo} chatUpdate
@@ -104,6 +105,7 @@ const groupAdmins = m.isGroup ? await getGroupAdmins(participants) : '' // // Li
 const isBotAdmins = m.isGroup ? groupAdmins.includes(numBot) : false // Verifica si el bot es un administrador del grupo
 const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Verifica si el remitente del mensaje es un administrador del grupo
 const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados
+const isPremium = m.isGroup ? premium.includes(userSender) : false 
 
 // ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
 const reply = (text) => {
@@ -137,8 +139,7 @@ afkTime: -1,
 afkReason: '',
 limit: 20,
 money: 100,
-health: 100,
-premium: false
+health: 100
 }
     
 let chats = global.db.data.chats[m.chat]
@@ -296,20 +297,23 @@ for (let i of search.all) {
 await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption: teks }, { quoted: fkontak });
 break
 
+case 'welcome':
+case 'modeadmin:
 case 'antilink': {
-if (!m.isGroup) return reply()
+if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
 if (!isGroupAdmins) return reply(mess.admin)
 if (args[0] === "on") {
-if (db.data.chats[m.chat].antilink) return reply(`Activo`)
+if (db.data.chats[m.chat].command) return reply(`Activo`)
 db.data.chats[m.chat].antilink = true
-reply(`✅El AntiLink se activo con exito!`)
+reply(`✅El ${command} se activo con exito!`)
 } else if (args[0] === "off") {
 if (!db.data.chats[m.chat].antilink) return reply(`off`)
 db.data.chats[m.chat].antilink = false
 reply(`AntiLink desactivado !`)
 }}
 break
+
 
 case 'leave': {
 if (!isCreator) return reply(`*este comando solo es para mi jefe*`)
@@ -320,7 +324,7 @@ break
 case 'kick': {
 if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
-  //reply(`[ ⚠️ ] etiqueta al algun usuario`)
+if (!isGroupAdmins) return reply(mess.admin)
 let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 conn.groupParticipantsUpdate(m.chat, [users], 'remove')}
 break
@@ -357,6 +361,8 @@ if (!db.data.chats[m.chat].ban) return reply(`*Chat desbaneado*`)
 db.data.chats[m.chat].ban = false
 reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚍𝚎𝚜𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`)}}
 break
+
+
 
 
 
@@ -433,7 +439,7 @@ break
 
 case 'play2':    
 if (!text) return conn.sendMessage(from, { text: `*ingrese nombre de alguna cancion*` }, { quoted: msg })
-conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fkontak });    
+conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fdoc });    
 let mediaa = await ytplayvid(textoo)
 await conn.sendMessage(from, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });
 break               
