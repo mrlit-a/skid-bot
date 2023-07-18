@@ -116,7 +116,7 @@ externalAdReply: {
 title: title, 
 body: body,
 mediaUrl: null, 
-sourceUrl: null, 
+sourceUrl: url, 
 previewType: 'PHOTO',
 showAdAttribution: true,
 thumbnail: image, 
