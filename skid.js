@@ -378,7 +378,10 @@ case 'bloodfrosted':
 case 'blackpink':
 case 'pornhub':
 if (!text) { m.reply('test')}
+try {
 lol = `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}`
+} catch {
+lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`
 sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
 break
         case 'hidetag': {
