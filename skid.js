@@ -428,20 +428,20 @@ case 'estado':
   const usedMemory = totalMemory - freeMemory;
   const cpuUsage = os.loadavg()[0];
 
-  conn.sendMessage(from, {
-    text: `
-*╭𝄗𝄗✦ --${botname}-- ✦𝄗𝄗⬣*
-⎸ *⍟ Versión*
+conn.sendMessage(m.chat, {image: imagen1, caption: `*╭𝄗𝄗✦ --ESTADO-- ✦𝄗𝄗⬣*
+⎸ *⍟ Versión de ${botname}*
 ⎸ ❉ ➺ ${vs}
 ⎸ ┈┈┈┈┈┈┈┈┈┈┈
-⎸ ❉ *Actividad ➺ ${runtime(process.uptime())}*
+⎸ ❉ *Hots : ${os.hostname()}*
+⎸ ❉ *Platform : ${os.platform()}*
 ⎸ ❉ *RAM usada ➺ ${usedMemory} GB / ${totalMemory} GB*
 ⎸ ❉ *CPU usada ➺ ${cpuUsage.toFixed(2)}%*
 ⎸ ❉ *Memoria total ➺ ${totalMemory} GB*
-*╰𝄗𝄗𝄗𝄗𝄗⬣*`
-  }, { quoted: fkontak });
+⎸ ┈┈┈┈┈┈┈┈┈┈┈
+⎸ ❉ *Usuarios : ${Object.keys(global.db.data.users).length}*
+⎸ ❉ *Actividad ➺ ${runtime(process.uptime())}*
+*╰𝄗𝄗𝄗𝄗𝄗⬣*` }, { quoted: fkontak })
   break;
-
 		
  case 'ping':
 var timestamp = speed();
