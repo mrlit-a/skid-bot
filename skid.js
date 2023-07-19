@@ -457,7 +457,7 @@ await conn.sendPresenceUpdate('composing', m.chat)
 var syms = `${jailbreak}`
  
     var res = await gpt.ChatGpt(text, syms);
-    await m.reply(res.text);
+    await sendAdMessage(res.text, 'chat gpt', 'exploit mode', chatgpt, 'https://wa.me/+5218442114446') 
   break;
 
 
