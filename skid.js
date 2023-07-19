@@ -392,29 +392,17 @@ if (!text) { m.reply('test')}
 lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`
 sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
 break
-        case 'hidetag': {
-          if (!m.isGroup) return responder(mess.group);
-          if (isGroupAdmins) {
-            conn.sendMessage(
-              m.chat,
-              { text: q ? q : "", mentions: participants.map((a) => a.id) },
-              { quoted: null }
-            );
-          } else {
-            if (isCreator) {
-              conn.sendMessage(
-                m.chat,
-                { text: q ? q : "", mentions: participants.map((a) => a.id) },
-                { quoted: m }
-              );
-            }
-          }
-        }
-        break;
-	
 
-
-
+case 'hidetag':
+  if (!m.isGroup) return responder(mess.group);
+  if (isGroupAdmins || isCreator) {
+    conn.sendMessage(
+      m.chat,
+      { text: q ? q : "", mentions: participants.map((a) => a.id) },
+      { quoted: isGroupAdmins ? null : m }
+    );
+  }
+  break;
 
 case 'tagall': {
 if (!m.isGroup) return reply(mess.group)
