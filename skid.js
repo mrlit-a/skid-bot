@@ -170,9 +170,7 @@ autobio: true,
 }
 //
 
-const updateBio = async () => {
-  if (db.data.settings[numBot].autobio) {
-    let setting = global.db.data.settings[numBot];
+
     const sk = [
       "skid bot < gata spam",
       "puto el que lo lea",
@@ -186,13 +184,13 @@ const updateBio = async () => {
       "no me importa tu privacidad, ya sé todo de ti"
     ];
     const XD = sk[Math.floor(Math.random() * sk.length)];
+
+  if (db.data.settings[numBot].autobio) {
+    let setting = global.db.data.settings[numBot];
     const bio = `${runtime(process.uptime())} | ${XD}`;
     await conn.updateProfileStatus(bio);
     setting.status = new Date() * 1;
   }
-};
-setInterval(updateBio, 60000);
-
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
@@ -407,7 +405,7 @@ case 'hidetag':
 case 'tagall': {
 if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
-//if (!isAdmins) return reply(`[ ⚠️ ] No eres admin`)
+if (!isGroupAdmins) return reply(mess.admin)
   let teks = `✿ ━〔 *🍬 𝐈𝐍𝐕𝐎𝐂𝐀𝐂𝐈𝐎́𝐍 𝐌𝐀𝐒𝐈𝐕𝐀  🍬* 〕━ ✿\n\n`
   teks += `✿ 𝐒𝐔 𝐀𝐃𝐌𝐈𝐍 𝐋𝐎𝐒 𝐈𝐍𝐕𝐎𝐂𝐀, 𝐑𝐄𝐕𝐈𝐕𝐀𝐍\n\n`
   teks += `✿ 𝐌𝐄𝐍𝐒𝐀𝐉𝐄:  ${q ? q : 'no hay mensaje :v'}\n\n`
