@@ -107,11 +107,14 @@ const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Ve
 const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados
 const isPremium = m.isGroup ? premium.includes(userSender) : false 
 
-// ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
+// mensajes :v
 const reply = (text) => {
 m.reply(text)} // Enviar una respuesta
 const sendAdMessage = (text, title, body, image, url) => { conn.sendMessage(from, {text: text, contextInfo: { externalAdReply: { title: title, body: body, mediaUrl: url, sourceUrl: url, previewType: 'PHOTO', showAdAttribution: true, thumbnail: image, sourceUrl: url }}}, {})}
+const sendImage = ( image, caption ) => { conn.sendMessage(from, { image: image, caption: caption }, { quoted: m })}
+const sendImageAsUrl = ( url, caption ) => { conn.sendMessage(from, { image:  {url: url }, caption: caption }, { quoted: m })}
 
+// ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
 const isAudio = type == 'audioMessage' // Mensaje de Audio
 const isSticker = type == 'stickerMessage' // Mensaje de Sticker
 const isContact = type == 'contactMessage' // Mensaje de Contacto
