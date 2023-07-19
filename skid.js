@@ -378,15 +378,20 @@ case 'bloodfrosted':
 case 'neon':
 case 'minion':
 case 'toxic':
+case 'cloud':
+case 'hallowen':
 if (!text) { m.reply('test')}
-try {
 lol = `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}`
-} catch {
-lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`
-}
 sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
 break
 
+case 'avenger':
+case 'space':
+case 'avenger':
+if (!text) { m.reply('test')}
+lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`
+sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
+break
         case 'hidetag': {
           if (!m.isGroup) return responder(mess.group);
           if (isGroupAdmins) {
