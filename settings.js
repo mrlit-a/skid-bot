@@ -10,6 +10,7 @@ global.owner = [
 ]
 
 global.noperfil = fs.readFileSync('./media/sinfoto.jpg')
+global.chatgpt = fs.readFileSync('./media/chatgpt.jpg')
 global.query = fs.readFileSync('./media/query.jpg')
 global.menu = fs.readFileSync('./media/menu.jpg')
 global.hentai = fs.readFileSync('./media/hentai.jpg')
