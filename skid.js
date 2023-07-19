@@ -428,7 +428,7 @@ case 'estado':
   const usedMemory = totalMemory - freeMemory;
   const cpuUsage = os.loadavg()[0];
 
-conn.sendMessage(m.chat, {image: imagen1, caption: `*╭𝄗𝄗✦ --ESTADO-- ✦𝄗𝄗⬣*
+conn.sendMessage(m.chat, {image: menu, caption: `*╭𝄗𝄗✦ --ESTADO-- ✦𝄗𝄗⬣*
 ⎸ *⍟ Versión de ${botname}*
 ⎸ ❉ ➺ ${vs}
 ⎸ ┈┈┈┈┈┈┈┈┈┈┈
