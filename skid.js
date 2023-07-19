@@ -170,10 +170,9 @@ autobio: true,
 }
 //
 
-// Autobio
-if (db.data.settings[numBot].autobio) {
-  let setting = global.db.data.settings[numBot];
-  if (new Date() * 1 - setting.status > 1000) {
+const updateBio = async () => {
+  if (db.data.settings[numBot].autobio) {
+    let setting = global.db.data.settings[numBot];
     const sk = [
       "skid bot < gata spam",
       "puto el que lo lea",
@@ -191,7 +190,8 @@ if (db.data.settings[numBot].autobio) {
     await conn.updateProfileStatus(bio);
     setting.status = new Date() * 1;
   }
-}
+};
+setInterval(updateBio, 60000);
 
 	
 //antilink
