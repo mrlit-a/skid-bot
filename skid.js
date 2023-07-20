@@ -415,7 +415,7 @@ await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption:
 break
 
 case 'welcome':
-case 'modeadmin:
+case 'modeadmin':
 case 'antilink': {
 if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
