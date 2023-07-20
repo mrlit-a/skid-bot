@@ -185,12 +185,14 @@ autobio: true,
     ];
     const XD = sk[Math.floor(Math.random() * sk.length)];
 
-  if (db.data.settings[numBot].autobio) {
-    let setting = global.db.data.settings[numBot];
-    const bio = `${runtime(process.uptime())} | ${XD}`;
-    await conn.updateProfileStatus(bio);
-    setting.status = new Date() * 1;
-  }
+if (db.data.settings[numBot].autobio) { 
+ let setting = global.db.data.settings[numBot] 
+ if (new Date() * 1 - setting.status > 1000) { 
+ //let uptime = await runtime(process.uptime()) 
+ const bio = `${XD}\n${runtime(process.uptime())}` 
+ await conn.updateProfileStatus(bio) 
+ setting.status = new Date() * 1 
+ }}
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
