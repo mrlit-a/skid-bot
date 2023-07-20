@@ -9,6 +9,7 @@ const gradient = require('gradient-string') // Aplicar gradientes de color al te
 const { execSync } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
 const chalk = require('chalk') // Estilizar el texto en la consola
 const os = require('os') // Proporciona información del sistema operativo
+const { TelegraPh } = require("./lib/telegraPh.js")
 const fs = require('fs') // Trabajar con el sistema de archivos
 const fetch = require('node-fetch')
 const axios = require('axios')
@@ -16,14 +17,14 @@ const cheerio = require('cheerio')
 const gpt = require('api-dylux')
 const mimetype = require("mime-types")
 const webp = require("node-webpmux")
-
+const {videoToWebp,imageToWebp,writeExifImg,writeExifVid} = require('./lib/simple.js')
 const color = (text, color) => { // Función 'color' que toma un texto y un color como parámetros
 return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)
 
 // Importa varias funciones y objetos
-const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom } = require('./libs/fuctions')
+const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom } = require('./lib/fuctions')
 const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") // Importa los objetos 'makeWASocket' y 'proto' desde el módulo '@whiskeysockets/baileys'
-const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./libs/youtube')
+const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')
 const speed = require("performance-now")
 const ffmpeg = require("fluent-ffmpeg")
 
@@ -80,7 +81,7 @@ let t = m.messageTimestamp // Marca de tiempo de mensaje
 const pushname = m.pushName || "Sin nombre" // Obtiene el nombre de visualización del usuario de lo contrario será "Sin nombre"
 const botnm = conn.user.id.split(":")[0] + "@s.whatsapp.net"
 const userSender = m.key.fromMe ? botnm : m.isGroup && m.key.participant.includes(":") ? m.key.participant.split(":")[0] + "@s.whatsapp.net" : m.key.remoteJid.includes(":") ? m.key.remoteJid.split(":")[0] + "@s.whatsapp.net" : m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid
-const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) // Eliminar todo a excepción de números
+const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) // Eliminar todo a excepción de números 
 const itsMe = m.sender == conn.user.id ? true : false // Verifica si el remitente del mensaje es el propio bot
 const text = args.join(" ") // Unir rgumentos en una sola cadena separada por espacios
 const quoted = m.quoted ? m.quoted : m // Obtiene el mensaje citado si existe, de lo contrario, se establece como el propio mensaje
@@ -107,14 +108,23 @@ const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Ve
 const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados
 const isPremium = m.isGroup ? premium.includes(userSender) : false 
 
-// mensajes :v
+// ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
 const reply = (text) => {
 m.reply(text)} // Enviar una respuesta
-const sendAdMessage = (text, title, body, image, url) => { conn.sendMessage(from, {text: text, contextInfo: { externalAdReply: { title: title, body: body, mediaUrl: url, sourceUrl: url, previewType: 'PHOTO', showAdAttribution: true, thumbnail: image, sourceUrl: url }}}, {})}
-const sendImage = ( image, caption ) => { conn.sendMessage(from, { image: image, caption: caption }, { quoted: m })}
-const sendImageAsUrl = ( url, caption ) => { conn.sendMessage(from, { image:  {url: url }, caption: caption }, { quoted: m })}
+const ad = (text, title, body, image, url) => {
+conn.sendMessage(from, {text: text, contextInfo: {
+externalAdReply: {
+title: title, 
+body: body,
+mediaUrl: null, 
+sourceUrl: null, 
+previewType: 'PHOTO',
+showAdAttribution: true,
+thumbnail: image, 
+sourceUrl: url
+    }
+  }}, {})}
 
-// ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵
 const isAudio = type == 'audioMessage' // Mensaje de Audio
 const isSticker = type == 'stickerMessage' // Mensaje de Sticker
 const isContact = type == 'contactMessage' // Mensaje de Contacto
@@ -170,7 +180,10 @@ autobio: true,
 }
 //
 
-
+// Autobio
+if (db.data.settings[numBot].autobio) {
+  let setting = global.db.data.settings[numBot];
+  if (new Date() * 1 - setting.status > 1000) {
     const sk = [
       "skid bot < gata spam",
       "puto el que lo lea",
@@ -184,15 +197,12 @@ autobio: true,
       "no me importa tu privacidad, ya sé todo de ti"
     ];
     const XD = sk[Math.floor(Math.random() * sk.length)];
+    const bio = `${runtime(process.uptime())} | ${XD}`;
+    await conn.updateProfileStatus(bio);
+    setting.status = new Date() * 1;
+  }
+}
 
-if (db.data.settings[numBot].autobio) { 
- let setting = global.db.data.settings[numBot] 
- if (new Date() * 1 - setting.status > 1000) { 
- //let uptime = await runtime(process.uptime()) 
- const bio = `${XD}\n${runtime(process.uptime())}` 
- await conn.updateProfileStatus(bio) 
- setting.status = new Date() * 1 
- }}
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
@@ -207,10 +217,13 @@ let isgclink = isLinkThisGc.test(m.text)
 conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})
 conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')}}
         
-//Banea chat
+//Banchat
 if (db.data.chats[m.chat].ban && !isCreator) {
 return
 }
+
+
+//modo admin
 if (db.data.chats[m.chat].onlyadmins && !isGroupAdmins) {
 return
 }
@@ -242,6 +255,101 @@ sys: 0,
 idle: 0,
 irq: 0
 }})
+const sendStickerAsImage = async (jid, path, quoted, options = {}) => {
+let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
+let buffer
+if (options && (options.packname || options.author)) {
+ buffer = await writeExifImg(buff, options)
+} else {
+ buffer = await imageToWebp(buff)
+}
+
+await conn.sendMessage(jid, {
+ sticker: {
+url: buffer
+ }, ...options
+}, {
+ quoted
+})
+return buffer
+ }
+ 
+ const sendStickerAsVideo = async (jid, path, quoted, options = {}) => {
+let buff = Buffer.isBuffer(path) ? path: /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64'): /^https?:\/\//.test(path) ? await (await getBuffer(path)): fs.existsSync(path) ? fs.readFileSync(path): Buffer.alloc(0)
+let buffer
+if (options && (options.packname || options.author)) {
+ buffer = await writeExifVid(buff, options)
+} else {
+ buffer = await videoToWebp(buff)
+}
+
+await conn.sendMessage(jid, {
+ sticker: {
+url: buffer
+ }, ...options
+}, {
+ quoted
+})
+return buffer
+ }
+ 
+ const getFileBuffer = async (mediakey, MediaType) => { 
+const stream = await downloadContentFromMessage(mediakey, MediaType)
+
+let buffer = Buffer.from([])
+for await(const chunk of stream) {
+buffer = Buffer.concat([buffer, chunk])
+}
+return buffer
+}
+
+// ASYNC FUNCION
+
+   conn.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
+        let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+        let buffer
+        if (options && (options.packname || options.author)) {
+            buffer = await writeExifImg(buff, options)
+        } else {
+            buffer = await imageToWebp(buff)
+        }
+
+        await conn.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
+        return buffer
+    }
+
+    conn.sendImage = async (jid, path, caption = '', quoted = '', options) => {
+	let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
+        return await conn.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
+    }
+    conn.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
+        let quoted = message.msg ? message.msg : message
+        let mime = (message.msg || message).mimetype || ''
+        let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
+        const stream = await downloadContentFromMessage(quoted, messageType)
+        let buffer = Buffer.from([])
+        for await(const chunk of stream) {
+            buffer = Buffer.concat([buffer, chunk])
+        }
+	let type = await FileType.fromBuffer(buffer)
+        trueFileName = attachExtension ? (filename + '.' + type.ext) : filename
+        // save to file
+        await fs.writeFileSync(trueFileName, buffer)
+        return trueFileName
+    }
+
+    conn.downloadMediaMessage = async (message) => {
+        let mime = (message.msg || message).mimetype || ''
+        let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
+        const stream = await downloadContentFromMessage(message, messageType)
+        let buffer = Buffer.from([])
+        for await(const chunk of stream) {
+            buffer = Buffer.concat([buffer, chunk])
+	}
+        
+	return buffer
+     } 
+
 
 // fake
 const thumb = fs.readFileSync("./media/test.jpg")
@@ -293,7 +401,6 @@ if (!text) return reply('ingresa algo para convertirlo a sticker :v')
 link = `https://api.lolhuman.xyz/api/attp?apikey=${lolkeysapi}&text=${text}`
 conn.sendMessage(m.chat, { sticker: { url: link } }, { quoted: fkontak})
 break
-
 case 'yts':
   if (!text) throw `Ejemplo: ${prefix + comand} historia wa anime`;
 const yts = require("youtube-yts");
@@ -308,7 +415,7 @@ await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption:
 break
 
 case 'welcome':
-case 'modeadmin':
+case 'modeadmin:
 case 'antilink': {
 if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
@@ -316,11 +423,11 @@ if (!isGroupAdmins) return reply(mess.admin)
 if (args[0] === "on") {
 if (db.data.chats[m.chat].command) return reply(`Activo`)
 db.data.chats[m.chat].antilink = true
-reply(`✅El ${command} se activo con exito!`)
+reply(`✅ El ${command} se activo con exito!!`)
 } else if (args[0] === "off") {
 if (!db.data.chats[m.chat].antilink) return reply(`off`)
 db.data.chats[m.chat].antilink = false
-reply(`${command} desactivado !`)
+reply(`✅ El ${command} fue desactivado!!`)
 }}
 break
 
@@ -372,42 +479,20 @@ db.data.chats[m.chat].ban = false
 reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚍𝚎𝚜𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`)}}
 break
 
+ case 'hidetag': {
+ if (!m.isGroup) return responder(mess.group);
+ if (isAdmins) { conn.sendMessage( m.chat, { text: q ? q : "", mentions: participants.map((a) => a.id) }, { quoted: null });
+          } else {
+if (isCreator) {
+conn.sendMessage(m.chat, { text: q ? q : "", mentions: participants.map((a) => a.id) }, { quoted: m })}}
+        }
+        break;
 
-case 'blackpink':
-case 'bloodfrosted':
-case 'neon':
-case 'minion':
-case 'toxic':
-case 'cloud':
-case 'hallowen':
-if (!text) { m.reply('test')}
-lol = `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}`
-sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
-break
-
-case 'avenger':
-case 'space':
-case 'avenger':
-if (!text) { m.reply('test')}
-lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`
-sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)
-break
-
-case 'hidetag':
-  if (!m.isGroup) return responder(mess.group);
-  if (isGroupAdmins || isCreator) {
-    conn.sendMessage(
-      m.chat,
-      { text: q ? q : "", mentions: participants.map((a) => a.id) },
-      { quoted: isGroupAdmins ? null : m }
-    );
-  }
-  break;
 
 case 'tagall': {
 if (!m.isGroup) return reply(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
-if (!isGroupAdmins) return reply(mess.admin)
+//if (!isAdmins) return reply(`[ ⚠️ ] No eres admin`)
   let teks = `✿ ━〔 *🍬 𝐈𝐍𝐕𝐎𝐂𝐀𝐂𝐈𝐎́𝐍 𝐌𝐀𝐒𝐈𝐕𝐀  🍬* 〕━ ✿\n\n`
   teks += `✿ 𝐒𝐔 𝐀𝐃𝐌𝐈𝐍 𝐋𝐎𝐒 𝐈𝐍𝐕𝐎𝐂𝐀, 𝐑𝐄𝐕𝐈𝐕𝐀𝐍\n\n`
   teks += `✿ 𝐌𝐄𝐍𝐒𝐀𝐉𝐄:  ${q ? q : 'no hay mensaje :v'}\n\n`
@@ -427,20 +512,20 @@ case 'estado':
   const usedMemory = totalMemory - freeMemory;
   const cpuUsage = os.loadavg()[0];
 
-conn.sendMessage(m.chat, {image: menu, caption: `*╭𝄗𝄗✦ --ESTADO-- ✦𝄗𝄗⬣*
-⎸ *⍟ Versión de ${botname}*
+  conn.sendMessage(from, {
+    text: `
+*╭𝄗𝄗✦ --${botname}-- ✦𝄗𝄗⬣*
+⎸ *⍟ Versión*
 ⎸ ❉ ➺ ${vs}
 ⎸ ┈┈┈┈┈┈┈┈┈┈┈
-⎸ ❉ *Hots : ${os.hostname()}*
-⎸ ❉ *Platform : ${os.platform()}*
+⎸ ❉ *Actividad ➺ ${runtime(process.uptime())}*
 ⎸ ❉ *RAM usada ➺ ${usedMemory} GB / ${totalMemory} GB*
 ⎸ ❉ *CPU usada ➺ ${cpuUsage.toFixed(2)}%*
 ⎸ ❉ *Memoria total ➺ ${totalMemory} GB*
-⎸ ┈┈┈┈┈┈┈┈┈┈┈
-⎸ ❉ *Usuarios : ${Object.keys(global.db.data.users).length}*
-⎸ ❉ *Actividad ➺ ${runtime(process.uptime())}*
-*╰𝄗𝄗𝄗𝄗𝄗⬣*` }, { quoted: fkontak })
+*╰𝄗𝄗𝄗𝄗𝄗⬣*`
+  }, { quoted: fkontak });
   break;
+
 		
  case 'ping':
 var timestamp = speed();
@@ -455,11 +540,10 @@ conn.sendMessage(from, { text: `*Pong 🏓  ${latensi.toFixed(4)}*` }, { quoted:
      if (!text) return conn.sendMessage(from, { text: `*INGRESE EL TEXTO DE LO QUE QUIERE BUSCAR?*` }, { quoted: msg })
      await conn.sendPresenceUpdate('composing', m.chat)
 let jailbreak = await fetch('https://raw.githubusercontent.com/Skidy89/chat-gpt-jailbreak/main/Text.txt').then(v => v.text());
-await conn.sendPresenceUpdate('composing', m.chat)
 var syms = `${jailbreak}`
  
     var res = await gpt.ChatGpt(text, syms);
-    await sendAdMessage(res.text, 'chat gpt', 'exploit mode', chatgpt, 'https://wa.me/+5218442114446') 
+    await m.reply(res.text);
   break;
 
 
@@ -491,7 +575,50 @@ let updatee = execSync('git remote set-url origin https://github.com/Skidy89/ski
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: msg })}  
 break
 
-
+case 's':
+case 'sticker':
+ if ((isMedia && !m.message.videoMessage || isQuotedImage)) {      
+var stream = await downloadContentFromMessage(m.message.imageMessage || m.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image')
+    var buffer = Buffer.from([])
+    for await(const chunk of stream) {
+     buffer = Buffer.concat([buffer, chunk])
+    }
+    let ran = 'stickers.webp'
+    fs.writeFileSync(`./${ran}`, buffer)
+     ffmpeg(`./${ran}`)
+     .on("error", console.error)
+     .on("end", () => {
+      exec(`webpmux -set exif ./tmp/${ran} -o ./${ran}`, async (error) => {
+      
+       await sendStickerAsImage(from, fs.readFileSync(`./${ran}`), m, {
+ packname: packname, author: author
+})
+				
+        fs.unlinkSync(`./${ran}`)
+			       
+       })
+      })
+	 .addOutputOptions([
+       "-vcodec", 
+ 	   "libwebp", 
+ 	   "-vf", 
+	"scale=320:320:force_original_aspect_ratio=decrease,fps=15, pad=320:320:(ow-iw)/2:(oh-ih)/2:color=green@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+	  ])
+	 .toFormat('webp')
+	 .save(`${ran}`)	 
+    } else if ((isMedia && m.message.videoMessage.seconds < 11 || isQuotedVideo && m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11)) {
+const encmedia = isQuotedVideo ? m.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage: m.message.videoMessage
+rane = getRandom('.'+ await getExtension(encmedia.mimetype))
+imgbuff = await getFileBuffer(encmedia, 'video')
+fs.writeFileSync(rane, imgbuff)
+const media = rane
+ran = getRandom('.'+media.split('.')[1])
+const upload = await TelegraPh(media)
+await sendStickerAsVideo(from, util.format(upload), m, {
+ packname: packname, author: author
+}) 
+}
+          break
 
         
         default:
