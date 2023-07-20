@@ -15,6 +15,9 @@ global.query = fs.readFileSync('./media/query.jpg')
 global.menu = fs.readFileSync('./media/menu.jpg')
 global.hentai = fs.readFileSync('./media/hentai.jpg')
 
+global.packname = 'skid bot'
+global.author = 'anti gata spam'
+
 global.mess = {
 admin: "𝚗𝚘 𝚎𝚛𝚎𝚜 𝚊𝚍𝚖𝚒𝚗",
 owner: "𝚎𝚜𝚝𝚎 𝚌𝚘𝚖𝚊𝚗𝚍𝚘 𝚎𝚜 𝚙𝚊𝚛𝚊 𝚘𝚠𝚗𝚎𝚛𝚜",
