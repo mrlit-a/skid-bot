@@ -505,6 +505,42 @@ case 'simi': {
 break
 
 
+case 's':
+case 'sticker':
+{
+  conn.sendMessage(from, { react: { text: `❤`, key: msg.key }});               
+  if (!isQuotedImage) return enviar(`por favor, etiqueta una foto/imagen y usa ${prefix}s`);
+  var stream = await downloadContentFromMessage(msg.message.imageMessage || msg.message.extendedTextMessage?.contextInfo.quotedMessage.imageMessage, 'image');
+  var buffer = Buffer.from([]);
+  for await (const chunk of stream) {
+    buffer = Buffer.concat([buffer, chunk]);
+  }
+  let ran = 'sticker.webp'; 
+  fs.writeFileSync(`./temp/${ran}`, buffer); // Guardar el archivo
+  ffmpeg(`./temp/${ran}`)
+    .on("error", console.error)
+    .on("end", () => {
+      exec(`webpmux -set exif ./temp/${ran} -o ./temp/${ran}`, async (error) => {
+        conn.sendMessage(
+          from, 
+          { 
+            sticker: fs.readFileSync(`./temp/${ran}`) 
+          }, 
+          { quoted: msg }
+        );
+        fs.unlinkSync(`./temp/${ran}`);
+      });
+    })
+    .addOutputOptions([
+      "-vcodec", 
+      "libwebp", 
+      "-vf", 
+      "scale='min(320,iw)':min(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse"
+    ])
+    .toFormat('webp')
+    .save(`./temp/${ran}`); 
+}
+break
 
         
         default:
