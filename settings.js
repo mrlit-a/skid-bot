@@ -14,7 +14,7 @@ global.chatgpt = fs.readFileSync('./media/chatgpt.jpg')
 global.query = fs.readFileSync('./media/query.jpg')
 global.menu = fs.readFileSync('./media/menu.jpg')
 global.hentai = fs.readFileSync('./media/hentai.jpg')
-global.simi = fs.readFileSync('./media/simi.jpg')
+global.simi = fs.readFileSync('./media/simi.jpeg')
 
 global.packname = 'skid bot'
 global.author = 'anti gata spam'
