@@ -496,9 +496,11 @@ case 'simi':{
  await conn.sendPresenceUpdate('composing', m.chat) 
  let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`) 
  let res = anu.success; 
- sendAdMessage(res, 'sim simi', 'te gusta hablar con sim simi?' simi, 'https://github.com/Skidy89') 
+ sendAdMessage(res, 'sim simi', 'te gusta hablar con sim simi?' simi, 'https://github.com/Skidy89')
+d = Math.floor(Math.random() * 6) + 5;
+global.db.data.users[m.sender].money -= 
  } 
- break  
+ break 
 
 
         
