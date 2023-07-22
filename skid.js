@@ -491,6 +491,14 @@ let updatee = execSync('git remote set-url origin https://github.com/Skidy89/ski
 await conn.sendMessage(from, { text: updatee.toString() }, { quoted: msg })}  
 break
 
+case 'simi':{ 
+ if (!text) return conn.sendMessage(from, { text: `*INGRESE UN TEXTO PARA HABLAR CONMIGO*` }, { quoted: msg }) 
+ await conn.sendPresenceUpdate('composing', m.chat) 
+ let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`) 
+ let res = anu.success; 
+ sendAdMessage(res, 'sim simi', 'te gusta hablar con sim simi?' simi, 'https://github.com/Skidy89') 
+ } 
+ break  
 
 
         
