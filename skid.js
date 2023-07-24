@@ -525,6 +525,14 @@ case 'simi': {
 }
 break
 
+case 'pinterest':
+if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')
+m.reply(mess.wait)
+lol = await pinterest(text);
+result = lol[Math.floor(Math.random() * lol.length)];
+sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)
+break
+
         
         default:
             if (budy.startsWith('>')) {
