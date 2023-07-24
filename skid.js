@@ -293,7 +293,7 @@ case 'sticker': {
     if (/image/.test(mime)) {
         reply(`Espera, estamos creando tu sticker...`)
         media = await quoted.download()
-        let encmedia = await conn.sendImageAsSticker(from, media, m, { packname: global.author, author: global.packname })
+        let encmedia = await conn.sendImageAsSticker(from, media, m, { packname: global.packname, author: global.author })
         await fs.unlinkSync(encmedia)
     } else if (/video/.test(mime)) {
         if ((quoted.msg || quoted).seconds > 40) return reply('¡Máximo 40 segundos!')
