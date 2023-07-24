@@ -266,7 +266,7 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 )}
 
 // bienvenidas y despedidas
-if (db.data.chats[m.chat].welcome) {
+/*if (global.db.data.chats[m.chat].welcome) {
 conn.ev.on('group-participants.update', async (num) => {
 if (num.action === 'add') {
 try {
@@ -284,7 +284,7 @@ ppimg = noperfil
 }
 perfil = await getBuffer(ppimg)
 await conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
-}})}
+}})}*/
 
 switch (command) {
 
