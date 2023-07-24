@@ -288,24 +288,25 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 
 switch (command) {
 
-
 case 's':
- case 'sticker': {
-if (/image/.test(mime)) {
-reply(`espera estamos creando tu sticker`)
-media = await quoted.download()
-let encmedia = await conn.sendImageAsSticker(from, media, m, { packname: global.author, author: global.packname })
-await fs.unlinkSync(encmedia)
-} else if (/video/.test(mime)) {
-if ((quoted.msg || quoted).seconds > 40) return reply('Máximo 40 segundo!')
-media = await quoted.download()
-let encmedia = await conn.sendVideoAsSticker(from, media, m, { packname: global.author, author: global.packname })
-await fs.unlinkSync(encmedia)
-} else {
-reply(`Envia una imagen/video con ${prefix + comando}\n(la duracion del video solo puede ser de 10 segundos)`)
+case 'sticker': {
+    if (/image/.test(mime)) {
+        reply(`Espera, estamos creando tu sticker...`)
+        media = await quoted.download()
+        let encmedia = await conn.sendImageAsSticker(from, media, m, { packname: global.author, author: global.packname })
+        await fs.unlinkSync(encmedia)
+    } else if (/video/.test(mime)) {
+        if ((quoted.msg || quoted).seconds > 40) return reply('¡Máximo 40 segundos!')
+        media = await quoted.download()
+        let encmedia = await conn.sendVideoAsSticker(from, media, m, { packname: global.author, author: global.packname })
+        await new Promise((resolve) => setTimeout(resolve, 2000)); 
+        await fs.unlinkSync(encmedia)
+    } else {
+        reply(`Envía una imagen/video con ${prefix + comando}\n(La duración del video solo puede ser de 10 segundos)`)
+    }
 }
-}
-break
+break;
+
 
 
 case 'attp':
