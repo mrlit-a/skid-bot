@@ -288,6 +288,26 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 
 switch (command) {
 
+
+case 's':
+ case 'sticker': {
+if (/image/.test(mime)) {
+reply(`espera estamos creando tu sticker`)
+media = await quoted.download()
+let encmedia = await conn.sendImageAsSticker(from, media, m, { packname: global.author, author: global.packname })
+await fs.unlinkSync(encmedia)
+} else if (/video/.test(mime)) {
+if ((quoted.msg || quoted).seconds > 40) return reply('Máximo 40 segundo!')
+media = await quoted.download()
+let encmedia = await conn.sendVideoAsSticker(from, media, m, { packname: global.author, author: global.packname })
+await fs.unlinkSync(encmedia)
+} else {
+reply(`Envia una imagen/video con ${prefix + comando}\n(la duracion del video solo puede ser de 10 segundos)`)
+}
+}
+break
+
+
 case 'attp':
   if (!text) return reply('ingresa algo para convertirlo a sticker :v')
   link = `https://api.lolhuman.xyz/api/attp?apikey=${lolkeysapi}&text=${text}`
