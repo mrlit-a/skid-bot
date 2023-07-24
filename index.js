@@ -57,18 +57,7 @@ const sock = makeWASocket({
     logger: pino({ level: 'silent' })
 })
 
-	conn.sendImageAsSticker = async ( path, quoted, options = {}) => {
-        let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-        let buffer
-        if (options && (options.packname || options.author)) {
-            buffer = await writeExifImg(buff, options)
-        } else {
-            buffer = await imageToWebp(buff)
-        }
-
-        await sock.sendMessage(m.chat, { sticker: { url: buffer }, ...options }, { quoted })
-        return buffer
-    }
+	
 
 sock.ev.on('messages.upsert', async chatUpdate => {
     //console.log(JSON.stringify(chatUpdate, undefined, 2))
