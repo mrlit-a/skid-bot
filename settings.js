@@ -16,8 +16,7 @@ global.menu = fs.readFileSync('./media/menu.jpg')
 global.hentai = fs.readFileSync('./media/hentai.jpg')
 global.simi = fs.readFileSync('./media/simi.jpeg')
 
-global.packname = 'skid bot'
-global.author = 'anti gata spam'
+
 
 global.mess = {
 admin: "𝚗𝚘 𝚎𝚛𝚎𝚜 𝚊𝚍𝚖𝚒𝚗",
@@ -29,7 +28,7 @@ wait: "𝚙𝚘𝚛 𝚏𝚊𝚟𝚘𝚛, 𝚎𝚜𝚙𝚎𝚛𝚊..."
 
 global.botname = "sᴋɪᴅ ʙᴏᴛ ᴍᴅ"
 global.packname = "sᴋɪᴅ ʙᴏᴛ =>"
-global.author = "gata mierda"
+global.author = "unete a skid bot :D"
 global.vs = '1.0.0'
 global.place = 'America/Bogota' // Aquí puede encontrar su ubicación https://momentjs.com/timezone/
 global.language = 'es' // Aquí puede encontrar su idioma https://cloud.google.com/translate/docs/languages?hl=es-419
