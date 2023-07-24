@@ -27,8 +27,8 @@ wait: "𝚙𝚘𝚛 𝚏𝚊𝚟𝚘𝚛, 𝚎𝚜𝚙𝚎𝚛𝚊..."
 }
 
 global.botname = "sᴋɪᴅ ʙᴏᴛ ᴍᴅ"
-global.packname = "sᴋɪᴅ ʙᴏᴛ =>"
-global.author = "unete a skid bot :D"
+global.packname = "sᴋɪᴅ ʙᴏᴛ ❥"
+global.author = "𝚍𝚒𝚎𝚐𝚊 𝚜𝚎 𝚕𝚊 𝚌𝚘𝚖𝚎"
 global.vs = '1.0.0'
 global.place = 'America/Bogota' // Aquí puede encontrar su ubicación https://momentjs.com/timezone/
 global.language = 'es' // Aquí puede encontrar su idioma https://cloud.google.com/translate/docs/languages?hl=es-419
