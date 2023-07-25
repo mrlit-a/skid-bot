@@ -336,7 +336,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
         if (!roof.pilih2)
           satoru.sendText(
             roof.p2,
-            `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`
+            `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`,
             m
           );
         roof.waktu_milih = setTimeout(() => {
