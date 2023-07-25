@@ -452,7 +452,7 @@ roof.id.startsWith("suit") &&
 )
 )
 return reply("esa persona esta jugando con otra :(")
-let id = "ppt_" + new Date() + * 1
+let id = "ppt_" + new Date() * 1
 let caption = `
 esto es solo  un test pon aceptar o rechazar`
 this.suit[id] = {
