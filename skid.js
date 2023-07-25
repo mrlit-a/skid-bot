@@ -298,7 +298,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 
       if (
         m.sender == roof.p2 &&
-        body == "aceptar" &&
+        body == "Aceptar" &&
         m.isGroup &&
         roof.status == "wait"
       ) {
