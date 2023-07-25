@@ -426,50 +426,50 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 	
 switch (command) {
 
-		case 'ppt':
-this.suit = this.suit ? this.suit : {}
-let poin = 10
-let poin_lose = 10
-let timeout = 60000
-if (
-Object.values(this.suit).find(
-(roof) =>
-roof.id.startsWith("ppt") &&
-[roof.p, roof.p2].includes(m.sender)
-)
-)
-return reply("primero completa o espera a que termine el juego anterior")
-if (m.mentionedJid[0] === m.sender)
-	return reply("no puedes jugar conmigo\nezquisofrenico de mierda")
-if (!m.mentionedJid[0])
-	return reply("con quien quieres jugar?\nvamos etiqueta a la persona")
-if (
-Object.values(this.suit).find (
-(roof) =>
-roof.id.startsWith("suit") &&
-[roof.p, roof.p2].includes(m.mentionedJid[0])
-)
-)
-return reply("esa persona esta jugando con otra :(")
-let id = "ppt_" + new Date() * 1
-let caption = `
-esto es solo  un test pon aceptar o rechazar`
-this.suit[id] = {
-	chat: await m.reply(caption),
-	id: id,
-	p: m.sender,
-	p2: m.mentionedJid[0],
-	status: "wait",
-	waktu: setTimeout(() =>
-	if (this.suit[id])
-		conn.sendText(m.chat, "_tiempo agotado_", m)
-	delete this.suit[id]
-}, 60000),
-poin,
-poin_lose,
-timeout,
+case 'ppt':
+  this.suit = this.suit ? this.suit : {};
+  let poin = 10;
+  let poin_lose = 10;
+  let timeout = 60000;
+  
+  if (Object.values(this.suit).find((roof) => roof.id.startsWith("ppt") && [roof.p, roof.p2].includes(m.sender))) {
+    return reply("primero completa o espera a que termine el juego anterior");
+  }
+  
+  if (m.mentionedJid[0] === m.sender) {
+    return reply("no puedes jugar conmigo\nezquisofrenico de mierda");
+  }
+  
+  if (!m.mentionedJid[0]) {
+    return reply("con quien quieres jugar?\nvamos etiqueta a la persona");
+  }
+  
+  if (Object.values(this.suit).find((roof) => roof.id.startsWith("suit") && [roof.p, roof.p2].includes(m.mentionedJid[0]))) {
+    return reply("esa persona esta jugando con otra :(");
+  }
+  
+  let id = "ppt_" + new Date() * 1;
+  let caption = `
+  esto es solo un test pon aceptar o rechazar`;
+  
+  this.suit[id] = {
+    chat: await m.reply(caption),
+    id: id,
+    p: m.sender,
+    p2: m.mentionedJid[0],
+    status: "wait",
+    waktu: setTimeout(() => {
+      if (this.suit[id]) {
+        conn.sendText(m.chat, "_tiempo agotado_", m);
+        delete this.suit[id];
+      }
+    }, 60000),
+    poin,
+    poin_lose,
+    timeout,
+  };
+  break;
 
-break
 		
 case 's':
 case 'sticker': {
