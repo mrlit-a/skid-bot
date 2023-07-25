@@ -65,7 +65,7 @@ function wikimedia(title) {
     })
 }
 
-async function skidGpt(query, symsg) {
+async function chatGpt(query, symsg) {
   const requestData = {
     method: "POST",
     headers: {
@@ -91,7 +91,7 @@ async function skidGpt(query, symsg) {
   return out;
 }
 
-async function callChatGptAPI(query, symsg) {
+async function skidGpt(query, symsg) {
   try {
     const requestData = {
       method: "POST",
@@ -204,4 +204,4 @@ function ringtone(title) {
     })
 }
 
-module.exports = { pinterest, wallpaper, wikimedia, quotesAnime, aiovideodl, umma, ringtone, skidGpt }
+module.exports = { pinterest, wallpaper, wikimedia, quotesAnime, aiovideodl, umma, ringtone, skidGpt, chatGpt }
