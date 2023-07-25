@@ -364,7 +364,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
       let g = /tijera/i;
       let b = /piedra/i;
       let k = /papel/i;
-      let reg = /^(tesoura|pedra|papel)/i;
+      let reg = /^(tijera|piedra|papel|Papel|Tijera|Piedra)/i;
       if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
         roof.pilih = reg.exec(m.text.toLowerCase())[0];
         roof.text = m.text;
@@ -410,10 +410,10 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
           roof.asal,
           `_*Resultado:*_${tie ? "\n" : ""}
 
-@${roof.p.split`@`[0]} jogou ${roof.text}! ${
+@${roof.p.split`@`[0]} eligio ${roof.text}! ${
             tie ? "" : roof.p == win ? ` ganaste!!\n` : `\n`
           }
-@${roof.p2.split`@`[0]} jogou ${roof.text2}! ${
+@${roof.p2.split`@`[0]} eligio ${roof.text2}! ${
             tie ? "" : roof.p2 == win ? ` ganaste!! \n` : `\n`
           }
 `.trim(),
