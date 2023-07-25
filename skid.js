@@ -456,7 +456,7 @@ let id = "ppt_" + new Date() * 1
 let caption = `
 esto es solo  un test pon aceptar o rechazar`
 this.suit[id] = {
-	chat: awaait m.reply(caption),
+	chat: await m.reply(caption),
 	id: id,
 	p: m.sender,
 	p2: m.mentionedJid[0],
