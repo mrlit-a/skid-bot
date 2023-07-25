@@ -281,7 +281,7 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
         m.isGroup &&
         roof.status == "wait"
       ) {
-        if (/^(no|rechazar)/i.test(m.text)) {
+        if (/^(no|rechazar|Rechazar|)/i.test(m.text)) {
           conn.sendTextWithMentions(
             m.chat,
             `@${roof.p2.split`@`[0]} no acepto el juego :v`,
@@ -406,6 +406,7 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 switch (command) {
 
 case 'ppt':
+if (!m.isGroup) return reply(mess.group);
   this.suit = this.suit ? this.suit : {};
   let poin = 10;
   let poin_lose = 10;
@@ -420,7 +421,7 @@ case 'ppt':
   }
   
   if (!m.mentionedJid[0]) {
-    return reply("con quien quieres jugar?\nvamos etiqueta a la persona");
+    return reply("*con quien quieres jugar?*\n*vamos etiqueta a la persona*");
   }
   
   if (Object.values(this.suit).find((roof) => roof.id.startsWith("suit") && [roof.p, roof.p2].includes(m.mentionedJid[0]))) {
@@ -445,7 +446,7 @@ let caption = `
     status: "wait",
     waktu: setTimeout(() => {
       if (this.suit[id]) {
-        conn.sendText(m.chat, `_se agoto el tiempo_\nal parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder`, m);
+        conn.sendText(m.chat, `*_se agoto el tiempo_*\n*al parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder*`, m);
         delete this.suit[id];
       }
     }, 60000),
