@@ -287,8 +287,191 @@ perfil = await getBuffer(ppimg)
 await conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
 }})}*/
 
+    //Suit PvP
+    this.suit = this.suit ? this.suit : {};
+    let roof = Object.values(this.suit).find(
+      (roof) => roof.id && roof.status && [roof.p, roof.p2].includes(m.sender)
+    );
+    if (roof) {
+      let win = "";
+      let tie = false;
+
+      if (
+        m.sender == roof.p2 &&
+        body == "aceptar" &&
+        m.isGroup &&
+        roof.status == "wait"
+      ) {
+        if (/^(no|rechazar)/i.test(m.text)) {
+          satoru.sendTextWithMentions(
+            m.chat,
+            `@${roof.p2.split`@`[0]} no acepto el juego :v`,
+            m
+          );
+          delete this.suit[roof.id];
+          return !0;
+        }
+        roof.status = "play";
+        roof.asal = m.chat;
+        clearTimeout(roof.waktu);
+        //delete roof[roof.id].waktu
+        satoru.sendText(
+          m.chat,
+          `
+┌〔 *mensaje privado 〕
+│
+├  *Jugador 1:* @${roof.p.split`@`[0]} 
+│
+├  *jugador 2:* @${roof.p2.split`@`[0]}
+│
+└ por favor ve el privado del bot `,
+          m,
+          { mentions: [roof.p, roof.p2] }
+        );
+        if (!roof.pilih)
+          conn.sendText(
+            roof.p,
+            `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`
+          );
+        if (!roof.pilih2)
+          satoru.sendText(
+            roof.p2,
+            `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`
+            m
+          );
+        roof.waktu_milih = setTimeout(() => {
+          if (!roof.pilih && !roof.pilih2)
+            satoru.sendText(
+              m.chat,
+              `ambos judagores no quieren jugar\nPPT cancelado`
+            );
+          else if (!roof.pilih || !roof.pilih2) {
+            win = !roof.pilih ? roof.p2 : roof.p;
+            satoru.sendTextWithMentions(
+              m.chat,
+              `@${
+                (roof.pilih ? roof.p2 : roof.p).split`@`[0]
+              } no escogio, el juego a terminado`,
+              m
+            );
+          }
+          delete this.suit[roof.id];
+          return !0;
+        }, roof.timeout);
+      }
+      let jwb = m.sender == roof.p;
+      let jwb2 = m.sender == roof.p2;
+      let g = /tijera/i;
+      let b = /piedra/i;
+      let k = /papel/i;
+      let reg = /^(tesoura|pedra|papel)/i;
+      if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
+        roof.pilih = reg.exec(m.text.toLowerCase())[0];
+        roof.text = m.text;
+        reply(
+          `elegiste ${m.text} ${
+            !roof.pilih2 ? `\n\nesperando al oponente...` : ""
+          }`
+        );
+        if (!roof.pilih2)
+          conn.sendText(
+            roof.p2,
+            "_el oponente ya eligio_\nte toca elegir",
+            0
+          );
+      }
+      if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
+        roof.pilih2 = reg.exec(m.text.toLowerCase())[0];
+        roof.text2 = m.text;
+        reply(
+          `Você escolheu ${m.text} ${
+            !roof.pilih ? `\n\nesperando al oponente...` : ""
+          }`
+        );
+        if (!roof.pilih)
+          conn.sendText(
+            roof.p,
+            "_el oponente ya eligio_\nte toca elegir",
+            0
+          );
+      }
+      let stage = roof.pilih;
+      let stage2 = roof.pilih2;
+      if (roof.pilih && roof.pilih2) {
+        clearTimeout(roof.waktu_milih);
+        if (b.test(stage) && g.test(stage2)) win = roof.p;
+        else if (b.test(stage) && k.test(stage2)) win = roof.p2;
+        else if (g.test(stage) && k.test(stage2)) win = roof.p;
+        else if (g.test(stage) && b.test(stage2)) win = roof.p2;
+        else if (k.test(stage) && b.test(stage2)) win = roof.p;
+        else if (k.test(stage) && g.test(stage2)) win = roof.p2;
+        else if (stage == stage2) tie = true;
+        conn.sendText(
+          roof.asal,
+          `_*Resultado:*_${tie ? "\n" : ""}
+
+@${roof.p.split`@`[0]} jogou ${roof.text}! ${
+            tie ? "" : roof.p == win ? ` ganaste!!\n` : `\n`
+          }
+@${roof.p2.split`@`[0]} jogou ${roof.text2}! ${
+            tie ? "" : roof.p2 == win ? ` ganaste!! \n` : `\n`
+          }
+`.trim(),
+          m,
+          { mentions: [roof.p, roof.p2] }
+        );
+        delete this.suit[roof.id];
+      }
+    }
+	
 switch (command) {
 
+		case 'ppt':
+{
+this.suit = this.suit ? this.suit : {}
+let poin = 10
+let poin_lose = 10
+let timeout = 60000
+if (
+Object.values(this.suit).find(
+(roof) =>
+roof.id.startsWith("ppt") &&
+[roof.p, roof.p2].includes(m.sender)
+)
+)
+return reply("primero completa o espera a que termine el juego anterior")
+if (m.mentionedJid[0] === m.sender)
+	return reply("no puedes jugar conmigo\nezquisofrenico de mierda")
+if (!m.mentionedJid[0])
+	return reply("con quien quieres jugar?\nvamos etiqueta a la persona")
+if (
+Object.values(this.suit).find (
+(roof) =>
+roof.id.startsWith("suit") &&
+[roof.p, roof.p2].includes(m.mentionedJid[0])
+)
+)
+return reply("esa persona esta jugando con otra :(")
+let id = "ppt_" + new Date() + * 1
+let caption = `
+esto es solo  un test pon aceptar o rechazar`
+this.suit[id] = {
+	chat: awaait m.reply(caption),
+	id: id,
+	p: m.sender,
+	p2: m.mentionedJid[0],
+	status: "wait",
+	waktu: setTimeout(() =>
+	if (this.suit[id])
+		conn.sendText(m.chat, "_tiempo agotado_", m)
+	delete this.suit[id]
+},60000),
+poin,
+poin_lose,
+timeout,
+}
+break
+		
 case 's':
 case 'sticker': {
     if (/image/.test(mime)) {
