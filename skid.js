@@ -303,7 +303,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
         roof.status == "wait"
       ) {
         if (/^(no|rechazar)/i.test(m.text)) {
-          satoru.sendTextWithMentions(
+          conn.sendTextWithMentions(
             m.chat,
             `@${roof.p2.split`@`[0]} no acepto el juego :v`,
             m
@@ -315,7 +315,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
         roof.asal = m.chat;
         clearTimeout(roof.waktu);
         //delete roof[roof.id].waktu
-        satoru.sendText(
+        conn.sendText(
           m.chat,
           `
 ┌〔 *mensaje privado 〕
@@ -334,14 +334,14 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
             `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`
           );
         if (!roof.pilih2)
-          satoru.sendText(
+          conn.sendText(
             roof.p2,
             `por favor escribe \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`,
             m
           );
         roof.waktu_milih = setTimeout(() => {
           if (!roof.pilih && !roof.pilih2)
-            satoru.sendText(
+            conn.sendText(
               m.chat,
               `ambos judagores no quieren jugar\nPPT cancelado`
             );
@@ -384,7 +384,7 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
         roof.pilih2 = reg.exec(m.text.toLowerCase())[0];
         roof.text2 = m.text;
         reply(
-          `Você escolheu ${m.text} ${
+          `elegiste ${m.text} ${
             !roof.pilih ? `\n\nesperando al oponente...` : ""
           }`
         );
@@ -427,7 +427,6 @@ await conn.sendMessage(num.id, {image: perfil, caption:`╭═══════
 switch (command) {
 
 		case 'ppt':
-{
 this.suit = this.suit ? this.suit : {}
 let poin = 10
 let poin_lose = 10
@@ -465,11 +464,11 @@ this.suit[id] = {
 	if (this.suit[id])
 		conn.sendText(m.chat, "_tiempo agotado_", m)
 	delete this.suit[id]
-},60000),
+}, 60000),
 poin,
 poin_lose,
 timeout,
-}
+
 break
 		
 case 's':
