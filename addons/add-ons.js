@@ -106,7 +106,7 @@ async function skidGpt(query, symsg) {
       })
     };
 
-    const response = await fetch("https://chatgpt-api.shn.hk/v1/", requestData);
+    const response = await fetch("https://free.churchless.tech/v1/chat/completions", requestData);
     const data = await response.json();
     return data;
   } catch (error) {
