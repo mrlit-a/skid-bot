@@ -266,27 +266,6 @@ m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) +
 chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 )}
 
-// bienvenidas y despedidas
-/*if (global.db.data.chats[m.chat].welcome) {
-conn.ev.on('group-participants.update', async (num) => {
-if (num.action === 'add') {
-try {
-ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
-} catch(e) {
-ppimg = noperfil
-}
-perfil = await getBuffer(ppimg)
-await conn.sendMessage(num.id, {image: perfil, caption: `╭══════════════⪩\n┃│ _bienvenido(a)_ @${num.participants[0].split("@")[0]} a ${groupName}\n┃│  por favor lee las reglas \n┃│ *espero disfrutes*\n┃│utiliza ${prefix}menu para ver mis comandos\n┃╰══⪨\n╰══════════════⪨`, mentions: num.participants});
-} else if (num.action === 'remove') {
-try {
-ppimg = await conn.profilePictureUrl(`${sender.split("@")[0]}@c.us`, "image")
-} catch(e) {
-ppimg = noperfil
-}
-perfil = await getBuffer(ppimg)
-await conn.sendMessage(num.id, {image: perfil, caption:`╭══════════════⪩\n┃│ *adios👋* @${num.participants[0].split("@")[0]}\n┃│ lamentamos que te vayas\n┃│ seguire mejorando para brindar una mejor experiencia\n┃╰══⪨\n╰══════════════⪨ `, mentions: num.participants});
-}})}*/
-
     //Suit PvP
     this.suit = this.suit ? this.suit : {};
     let roof = Object.values(this.suit).find(
@@ -437,7 +416,7 @@ case 'ppt':
   }
   
   if (m.mentionedJid[0] === m.sender) {
-    return reply("no puedes jugar conmigo\nezquisofrenico de mierda");
+    return reply("no puedes jugar contigo\nezquisofrenico de mierda");
   }
   
   if (!m.mentionedJid[0]) {
@@ -449,8 +428,14 @@ case 'ppt':
   }
   
   let id = "ppt_" + new Date() * 1;
-  let caption = `
-  esto es solo un test pon aceptar o rechazar`;
+let caption = `
+    ┌〔 *PPT* 🪨📄✂️ 〕
+    │ 
+    ├  *Jugador 1:* @${m.sender.split`@`[0]}
+    │ 
+    ├  *Jugador 2:* @${m.mentionedJid[0].split`@`[0]}
+    │ 
+    └ *elige* _aceptar_ _rechazar_`;
   
   this.suit[id] = {
     chat: await m.reply(caption),
@@ -460,7 +445,7 @@ case 'ppt':
     status: "wait",
     waktu: setTimeout(() => {
       if (this.suit[id]) {
-        conn.sendText(m.chat, "_tiempo agotado_", m);
+        conn.sendText(m.chat, `_se agoto el tiempo_\nal parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder`, m);
         delete this.suit[id];
       }
     }, 60000),
