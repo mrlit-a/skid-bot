@@ -13,8 +13,8 @@ if (global.conns instanceof Array) console.log()
 else global.conns = []
 
 const skbot = async (conn, m, from) => {
-const { sendImage, sendMessage } = conn
-const { reply, sender } = m
+const { sendMessage } = conn
+const { sender } = m
 const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${sender.split("@")[0]}`), log({ level: "silent" }));
 try {
 async function start() {
