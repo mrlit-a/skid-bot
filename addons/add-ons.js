@@ -65,55 +65,6 @@ function wikimedia(title) {
     })
 }
 
-async function chatGpt(query, symsg) {
-  const requestData = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Referer": "https://2chat.c3r.ink/",
-      "accept": "application/json, text/plain, */*"
-    },
-    body: JSON.stringify({
-      prompt: query,
-      options: {},
-      regenerate: false,
-      roomId: 1002,
-      uuid: Date.now(),
-      systemMessage: symsg,
-      top_p: 1,
-      temperature: 0.8
-    })
-  };
-
-  const response = await fetch("https://chatapicn.a3r.fun/api/chat-process", requestData);
-  const data = await response.text();
-  let out = JSON.parse(data.split("\n").pop());
-  return out;
-}
-
-async function skidGpt(query, symsg) {
-  try {
-    const requestData = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt: query,
-        systemMessage: symsg,
-        top_p: 1,
-        temperature: 0.8
-      })
-    };
-
-    const response = await fetch("https://free.churchless.tech/v1/chat/completions", requestData);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
-}
-
 
 function quotesAnime() {
     return new Promise((resolve, reject) => {
@@ -204,4 +155,4 @@ function ringtone(title) {
     })
 }
 
-module.exports = { pinterest, wallpaper, wikimedia, quotesAnime, aiovideodl, umma, ringtone, skidGpt, chatGpt }
+module.exports = { pinterest, wallpaper, wikimedia, quotesAnime, aiovideodl, umma, ringtone }
