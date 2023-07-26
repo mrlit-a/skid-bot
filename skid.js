@@ -15,6 +15,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const gpt = require('api-dylux')
 const mimetype = require("mime-types")
+const { skbot, conns } = require('./serbot.js')
 const webp = require("node-webpmux")
 const { pinterest } = require('./addons/add-ons.js')
 
@@ -404,6 +405,10 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
     }
 	
 switch (command) {
+
+	case 'serbot':
+skbot(conn, m, from)
+break
 
 case 'ppt':
 if (!m.isGroup) return reply(mess.group);
