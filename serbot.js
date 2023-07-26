@@ -94,6 +94,7 @@ start()
 } catch (e) {
 console.log(e)
 }
+start()
 }
 module.exports = { skbot, conns }
 
