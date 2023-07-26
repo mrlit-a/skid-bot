@@ -406,9 +406,9 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 	
 switch (command) {
 
-//case 'serbot':
-//skbot(conn, m, from)
-//break
+case 'serbot':
+skbot(conn, m, from)
+break
 
 case 'ppt':
 if (!m.isGroup) return reply(mess.group);
