@@ -4,6 +4,7 @@ const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, slee
 const fs = require("fs")
 const log = (pino = require("pino"));
 const qrcode = require('qrcode');
+const chalk = require('chalk');
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 
 
@@ -88,7 +89,7 @@ else conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)
     }
 })
 
-
+}
 } catch (e) {
 console.log(e)
 }
