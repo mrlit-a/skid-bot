@@ -25,6 +25,7 @@ browser: [`serbot, skid-bot`, "Chrome", "1.0.0"],
 logger: log({ level: "silent" }),
 version,
 })
+
 conn.ev.on('messages.upsert', async chatUpdate => {
     try {
     chatUpdate.messages.forEach(async (mek) => {
@@ -94,7 +95,7 @@ start()
 } catch (e) {
 console.log(e)
 }
-start()
+    start()
 }
 module.exports = { skbot, conns }
 
