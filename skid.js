@@ -108,6 +108,8 @@ const isBotAdmins = m.isGroup ? groupAdmins.includes(numBot) : false // Verifica
 const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Verifica si el remitente del mensaje es un administrador del grupo
 const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados
 const isPremium = m.isGroup ? premium.includes(userSender) : false 
+let quizmath = db.game.math = []
+
 
 // mensajes :v
 const reply = (text) => {
@@ -268,17 +270,17 @@ chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 )}
 
 // matemáticas
-if (kuismath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
 
             kuis = true
 
-            jawaban = kuismath[m.sender.split('@')[0]]
+            jawaban = quizmath[m.sender.split('@')[0]]
 
             if (budy.toLowerCase() == jawaban) {
 
                 await m.reply(`🎮 Math Quiz 🎮\n\n*respuesta correcta* 🎉🎉\n\n_*quieres jugar de nuevo?*_`)
 
-                delete kuismath[m.sender.split('@')[0]]
+                delete quizmath[m.sender.split('@')[0]]
 
             } else m.reply('*respuestas incorrecta*')
 
@@ -480,18 +482,18 @@ let caption = `
   break;
 
 case 'mathquiz': case 'math': {
-                if (kuismath.hasOwnProperty(m.sender.split('@')[0])) throw "There are still unfinished sessions!"
+                if (quizmath.hasOwnProperty(m.sender.split('@')[0])) throw "There are still unfinished sessions!"
                 let { genMath, modes } = require('./addons/math')
                 if (!text) return reply(`Modos: ${Object.keys(modes).join(' | ')}\nejemplo: ${prefix}math medium`)
                 let result = await genMath(text.toLowerCase())
                 conn.sendText(m.chat, `*cual es el resultado de:" ${result.soal.toLowerCase()}*?\n\n*tiempo: ${(result.waktu / 1000).toFixed(2)} segundos*`, m).then(() => {
-                    kuismath[m.sender.split('@')[0]] = result.jawaban
+                    quizmath[m.sender.split('@')[0]] = result.jawaban
                 })
                 await sleep(result.waktu)
-                if (kuismath.hasOwnProperty(m.sender.split('@')[0])) {
+                if (quizmath.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("la respuesta es " + result.jawaban)
-                    replygcxeon("~*tu tiempo se acabo*~\nla respuesta era: " + kuismath[m.sender.split('@')[0]])
-                    delete kuismath[m.sender.split('@')[0]]
+                    reply("~*tu tiempo se acabo*~\nla respuesta era: " + quizmath[m.sender.split('@')[0]])
+                    delete quizmath[m.sender.split('@')[0]]
                 }
             }
             break
