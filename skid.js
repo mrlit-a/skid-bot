@@ -276,7 +276,7 @@ if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
 
             jawaban = quizmath[m.sender.split('@')[0]]
 
-            if (budy.toLowerCase() == jawaban) {
+            if (body.toLowerCase() == jawaban) {
 
                 await m.reply(`🎮 Math Quiz 🎮\n\n*respuesta correcta* 🎉🎉\n\n_*quieres jugar de nuevo?*_`)
 
@@ -426,6 +426,37 @@ if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
 	
 switch (command) {
 
+case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':
+                try {
+                let set
+                if (/bass/.test(command)) set = '-af equalizer=f=54:width_type=o:width=2:g=20'
+                if (/blown/.test(command)) set = '-af acrusher=.1:1:64:0:log'
+                if (/deep/.test(command)) set = '-af atempo=4/4,asetrate=44500*2/3'
+                if (/earrape/.test(command)) set = '-af volume=12'
+                if (/fast/.test(command)) set = '-filter:a "atempo=1.63,asetrate=44100"'
+                if (/fat/.test(command)) set = '-filter:a "atempo=1.6,asetrate=22100"'
+                if (/nightcore/.test(command)) set = '-filter:a atempo=1.06,asetrate=44100*1.25'
+                if (/reverse/.test(command)) set = '-filter_complex "areverse"'
+                if (/robot/.test(command)) set = '-filter_complex "afftfilt=real=\'hypot(re,im)*sin(0)\':imag=\'hypot(re,im)*cos(0)\':win_size=512:overlap=0.75"'
+                if (/slow/.test(command)) set = '-filter:a "atempo=0.7,asetrate=44100"'
+                if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
+                if (/squirrel/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
+                if (/audio/.test(mime)) {
+                let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
+                let ran = getRandom('.mp3')
+                exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
+                fs.unlinkSync(media)
+                if (err) return replygcxeon(err)
+                let buff = fs.readFileSync(ran)
+                conn..sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
+                fs.unlinkSync(ran)
+                })
+                } else reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)
+                } catch (e) {
+                reply(e)
+                }
+                break
+                
 case 'serbot':
 skbot(conn, m, from)
 break
@@ -486,7 +517,7 @@ case 'mathquiz': case 'math': {
                 let { genMath, modes } = require('./addons/math')
                 if (!text) return reply(`Modos: ${Object.keys(modes).join(' | ')}\nejemplo: ${prefix}math medium`)
                 let result = await genMath(text.toLowerCase())
-                conn.sendText(m.chat, `*cual es el resultado de:" ${result.soal.toLowerCase()}*?\n\n*tiempo: ${(result.waktu / 1000).toFixed(2)} segundos*`, m).then(() => {
+                conn.sendText(m.chat, `*cual es el resultado de: ${result.soal.toLowerCase()}*?\n\n*tiempo: ${(result.waktu / 1000).toFixed(2)} segundos*`, m).then(() => {
                     quizmath[m.sender.split('@')[0]] = result.jawaban
                 })
                 await sleep(result.waktu)
