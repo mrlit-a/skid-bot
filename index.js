@@ -55,7 +55,7 @@ const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
     logger: pino({ level: 'silent' }),
-    browser: [`${botname}`,'Safari','3.0']
+    browser: [`skid bot`,'Safari','3.0']
 })
 
 	
