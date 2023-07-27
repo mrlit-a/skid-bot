@@ -469,6 +469,8 @@ try {
    }
 } catch (error) {
 m.reply(`hubo un error ${error}`)
+}
+break
 case 'serbot':
 skbot(conn, m, from)
 break
