@@ -448,7 +448,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 fs.unlinkSync(media)
                 if (err) return replygcxeon(err)
                 let buff = fs.readFileSync(ran)
-                conn..sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
+                conn.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
                 fs.unlinkSync(ran)
                 })
                 } else reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)
