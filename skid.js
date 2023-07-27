@@ -446,9 +446,9 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 let ran = getRandom('.mp3')
                 exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
                 fs.unlinkSync(media)
-                if (err) return reply.(err)
+                if (err) return reply(err)
                 let buff = fs.readFileSync(ran)
-                await conn.sendPresenceUpdate('recording', id) 
+                await conn.sendPresenceUpdate('recording', from) 
                 conn.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
                 fs.unlinkSync(ran)
                 })
