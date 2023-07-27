@@ -108,7 +108,7 @@ const isBotAdmins = m.isGroup ? groupAdmins.includes(numBot) : false // Verifica
 const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Verifica si el remitente del mensaje es un administrador del grupo
 const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados
 const isPremium = m.isGroup ? premium.includes(userSender) : false 
-let quizmath = db.game.math = []
+let quizmath = global.db.data.game.math = []
 
 
 // mensajes :v
