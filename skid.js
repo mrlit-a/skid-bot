@@ -448,7 +448,6 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 fs.unlinkSync(media)
                 if (err) return reply(err)
                 let buff = fs.readFileSync(ran)
-                await conn.sendPresenceUpdate('recording', from) 
                 conn.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
                 fs.unlinkSync(ran)
                 })
