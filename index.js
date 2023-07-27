@@ -54,7 +54,8 @@ async function startBot() {
 const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
-    logger: pino({ level: 'silent' })
+    logger: pino({ level: 'silent' }),
+    browser: [`${botname}`,'Safari','3.0']
 })
 
 	
