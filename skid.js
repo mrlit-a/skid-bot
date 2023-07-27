@@ -6,7 +6,7 @@
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
 const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias
 const gradient = require('gradient-string') // Aplicar gradientes de color al texto
-const { execSync } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
+const { execSync, exec, spawn  } = } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
 const chalk = require('chalk') // Estilizar el texto en la consola
 const os = require('os') // Proporciona información del sistema operativo
 const fs = require('fs') // Trabajar con el sistema de archivos
