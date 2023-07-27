@@ -453,7 +453,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 })
                 } else reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)
                 } catch (e) {
-                reply(e)
+                m.reply(`hubo un error... ${e}`)
                 }
                 break
                 
