@@ -456,7 +456,19 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 m.reply(`hubo un error... ${e}`)
                 }
                 break
-                
+case 'leerimagen':
+try {
+  if (/image/.test(mime)) { 
+     let url = await webp2png(await quoted.download()), 
+       res = await fetch(API("https://api.ocr.space", "/parse/imageurl", {apikey: "8e65f273cd88957", url})); 
+     if (res.status !== 200) throw res.statusText; 
+     let json = await res.json(); 
+     m.reply(json?.ParsedResults?.[0]?.ParsedText); 
+   } else { 
+   m.reply("*responde a una imagen!*")
+   }
+} catch (error) {
+m.reply(`hubo un error ${error}`)
 case 'serbot':
 skbot(conn, m, from)
 break
