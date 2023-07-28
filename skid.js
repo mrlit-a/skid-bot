@@ -563,6 +563,17 @@ case 'sticker': {
 break;
 
 
+case 'getcase':
+  if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });
+  if (!text) return m.reply(`no hay comando a buscar o que?`)
+  try {
+  bbreak = 'break'
+reply('case ' + `'${args[0]}'` + fs.readFileSync('./skid.js').toString().split(`case '${args[0]}'`)[1].split(bbreak)[0] + bbreak)
+} catch (err) {
+console.error(err)
+reply(" Error, tal vez no existe el comando")
+}
+break
 
 case 'attp':
   if (!text) return reply('ingresa algo para convertirlo a sticker :v')
