@@ -549,10 +549,10 @@ case 'sticker': {
 break;
 
 
-
 case 'getcase':
   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });
   if (!text) return m.reply(`no hay comando a buscar o que?`)
+
   const MAX_SIMILAR_CASES = 5
   const CASE_SENSITIVITY = false
 
