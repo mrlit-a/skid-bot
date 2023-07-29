@@ -549,17 +549,32 @@ case 'sticker': {
 break;
 
 
+
 case 'getcase':
   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });
   if (!text) return m.reply(`no hay comando a buscar o que?`)
+  const MAX_SIMILAR_CASES = 5
+  const CASE_SENSITIVITY = false
+
   try {
-  bbreak = 'break'
-reply('case ' + `'${args[0]}'` + fs.readFileSync('./skid.js').toString().split(`case '${args[0]}'`)[1].split(bbreak)[0] + bbreak)
-} catch (err) {
-console.error(err)
-reply(" Error, tal vez no existe el comando")
-}
-break
+    const searchcomand = args[0].toLowerCase() // ?
+    const commands = fs.readFileSync('./skid.js').toString()
+
+    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'`, 'g') : new RegExp(`case '(\\w*${searchcomand}\\w*)'`, 'gi')
+    const similarsk = commands.match(caseRegex)
+
+    if (!similarsk || similarsk.length === 0) {
+      reply("Error, tal vez no existe el comando. No se encontraron comandos similares.";
+    } else {
+      const suggestions = similarsk.slice(0, MAX_SIMILAR_CASES).map(caseText => caseText.split(`case '`)[1].split(`'`)[0])
+      reply(`No se encontró el commando exacto. \naqui tienes una lista de comandos similares:${suggestions.join(', ')}`)
+    }
+  } catch (err) {
+    console.error(err)
+    reply("Error al buscar el caso.")
+  }
+  break
+
 
 case 'attp':
   if (!text) return reply('ingresa algo para convertirlo a sticker :v')
