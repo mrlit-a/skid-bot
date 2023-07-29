@@ -566,8 +566,12 @@ case 'getcase':
     if (!similarsk || similarsk.length === 0) {
       reply(`Error, tal vez no existe el ${searchcomand}.\nNo se encontraron comandos similares.`)
     } else {
-      const suggestions = similarsk.slice(0, MAX_SIMILAR_CASES).map(caseText => caseText.split(`case '`)[1].split(`'`)[0])
-      reply(`*No se encontró el comando ${searchcomand}*\n*Aquí tienes una lista de comandos similares:*\n${suggestions.join('\n')}`)
+      const diegogay = similarsk.slice(0, MAX_SIMILAR_CASES).map(caseText => caseText.split(`case '`)[1].split(`'`)[0])
+      if (diegogay.includes(searchcomand)) {
+        reply(`*Se encontró el comando ${searchcomand}*\n${similarsk[0]}`)
+      } else {
+        reply(`*No se encontró el comando ${searchcomand}*\n*Aquí tienes una lista de comandos similares:*\n${diegogay.join('\n')}`)
+      }
     }
   } catch (err) {
     console.error(err)
