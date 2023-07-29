@@ -17,7 +17,7 @@ const gpt = require('api-dylux')
 const mimetype = require("mime-types")
 const { skbot, conns } = require('./serbot.js')
 const webp = require("node-webpmux")
-const { pinterest, webp2mp4, webp2png } = require('./addons/add-ons.js')
+const { pinterest } = require('./addons/add-ons.js')
 
 const color = (text, color) => { // Función 'color' que toma un texto y un color como parámetros
 return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)
@@ -456,21 +456,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 m.reply(`hubo un error... ${e}`)
                 }
                 break
-case 'leerimagen':
-try {
-  if (/image/.test(mime)) { 
-     let url = await webp2png(await quoted.download()), 
-       res = await fetch(API("https://api.ocr.space", "/parse/imageurl", {apikey: "8e65f273cd88957", url})); 
-     if (res.status !== 200) throw res.statusText; 
-     let json = await res.json(); 
-     m.reply(json?.ParsedResults?.[0]?.ParsedText); 
-   } else { 
-   m.reply("*responde a una imagen!*")
-   }
-} catch (error) {
-m.reply(`hubo un error ${error}`)
-}
-break
+
 case 'serbot':
 skbot(conn, m, from)
 break
