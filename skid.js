@@ -548,6 +548,7 @@ case 'sticker': {
 }
 break;
 
+
 case 'getcase':
   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });
   if (!text) return m.reply(`no hay comando a buscar o que?`)
@@ -560,20 +561,19 @@ case 'getcase':
     const commands = fs.readFileSync('./skid.js').toString()
 
     const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gsi') : new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gi')
+    const svmod = commands.match(caseRegex)
 
-    const similarsk = commands.match(caseRegex)
-
-    if (!similarsk || similarsk.length === 0) {
+    if (!svmod || svmod.length === 0) {
       reply(`Error, tal vez no existe el ${searchcomand}.\nNo se encontraron comandos similares.`)
     } else {
-      const suggestions = similarsk.slice(0, MAX_SIMILAR_CASES).map(caseText => caseText.trim())
-      reply(`*Se encontró el comando ${searchcomand}*\n${suggestions.join('\n')}`)
+      const skmod = svmod.map(match => match.trim())
+      reply(`*Se encontró el comando ${searchcomand}*\n${skmod.join('\n')}`)
     }
   } catch (err) {
     console.error(err)
     reply("Error al buscar el comando")
   }
-  break;
+  break
 
 
 
