@@ -86,7 +86,7 @@ else conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)
 }
 })
 
-conn.ev.on('creds.update', saveState)
+conn.ev.on('creds.update', saveCreds)
 
 conn.decodeJid = (jid) => {
 if (!jid) return jid
