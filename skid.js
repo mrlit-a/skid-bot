@@ -1,4 +1,4 @@
-lo// Código desde cero y comentarios hecho por: 
+// Código desde cero y comentarios hecho por: 
 // @gata_dios
 // @Skidy89
 
