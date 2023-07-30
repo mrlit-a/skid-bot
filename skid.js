@@ -559,7 +559,8 @@ case 'getcase':
     const searchcomand = args[0].toLowerCase()
     const commands = fs.readFileSync('./skid.js').toString()
 
-    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gs') : new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gis')
+    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gsi') : new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gi')
+
     const similarsk = commands.match(caseRegex)
 
     if (!similarsk || similarsk.length === 0) {
