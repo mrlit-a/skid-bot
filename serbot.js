@@ -25,7 +25,7 @@ const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `.
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
-const conn = makeWasocket({
+const conn = makeWaSocket({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
         browser: [`skid bot (subbot)`,'Safari','3.0'],
