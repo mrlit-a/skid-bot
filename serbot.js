@@ -20,7 +20,7 @@ else global.listJadibot = []
 const jadibot = async (conn, msg, from) => {
 const { sendImage, sendMessage } = conn;
 const { reply, sender } = m;
-let senderblt = `${conn.decodeJid(conn.user.id)}`
+let senderblt = m.sender
 const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" }));
 try {
 async function startconn() {
