@@ -458,7 +458,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 break
 
 case 'serbot':
-skbot(conn, m, from)
+await skbot(conn, m, from)
 break
 
 case 'ppt':
