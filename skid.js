@@ -461,6 +461,21 @@ case 'serbot':
 await jadibot(conn, m, from)
 break
 
+case 'bots': 
+try {
+let user = [... new Set([...global.conns.filter(numBot2 => conn.user).map(numBot2 => conn.user)])]
+te = "*sub bot Lista*\n\n"
+for (let i of user){
+y = await startBot.decodeJid(i.id)
+te += " × User : @" + y.split("@")[0] + "\n"
+te += " × Name : " + i.name + "\n\n"
+}
+conn.sendMessage(from,{text:te,mentions: [y], },{quoted:m})
+} catch (err) {
+reply(`No hay sub bot activos`)
+}
+break 
+		
 case 'ppt':
 if (!m.isGroup) return reply(mess.group);
   this.suit = this.suit ? this.suit : {};
