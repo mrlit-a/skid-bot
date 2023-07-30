@@ -1,5 +1,5 @@
 // Fix serbot module
-const { default: makeWaSocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys')
+const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys')
 const logg = (pino = require("pino"))
 const { Boom } = require('@hapi/boom')
 const yargs = require('yargs/yargs')
@@ -20,8 +20,8 @@ else global.listJadibot = []
 const jadibot = async (conn, msg, from) => {
 const { sendImage, sendMessage } = conn;
 const { reply, sender } = m;
-let userbot = `${conn.decodeJid(conn.user.id)}`
-const { state, saveState } = useMultiFileAuthState(`./jadibot/@${userbot.split("@")[0]}`)
+let senderblt = `${conn.decodeJid(conn.user.id)}`
+const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./database/rentbot/${senderblt.split("@")[0]}`), log({ level: "silent" }));
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
@@ -42,7 +42,7 @@ if (mek.key && mek.key.remoteJid === 'status@broadcast') return
 if (!conn.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
 if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 m = smsg(conn, m, store)
-require("./skid")(conn, m, chatUpdate, store)
+require("./skid.js")(conn, m, chatUpdate, store)
 } catch (err) {
 console.log(err)}
 })
