@@ -88,13 +88,6 @@ else conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)
 
 conn.ev.on('creds.update', saveCreds)
 
-conn.decodeJid = (jid) => {
-if (!jid) return jid
-if (/:\d+@/gi.test(jid)) {
-let decode = jidDecode(jid) || {}
-return decode.user && decode.server && decode.user + '@' + decode.server || jid
-} else return jid
-}
 
 conn.sendText = (jid, text, quoted = '', options) => conn.sendMessage(jid, { text: text, ...options }, { quoted })
 
