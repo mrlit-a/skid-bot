@@ -21,7 +21,7 @@ const jadibot = async (conn, msg, from) => {
 const { sendImage, sendMessage } = conn;
 const { reply, sender } = m;
 let senderblt = `${conn.decodeJid(conn.user.id)}`
-const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./database/rentbot/${senderblt.split("@")[0]}`), log({ level: "silent" }));
+const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./database/rentbot/${senderblt.split("@")[0]}`), logg({ level: "silent" }));
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
