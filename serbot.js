@@ -1,5 +1,5 @@
 // Fix serbot module
-const { default: makeWaSocket, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys')
+const { default: makeWaSocket, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys')
 const logg = (pino = require("pino"))
 const { Boom } = require('@hapi/boom')
 const yargs = require('yargs/yargs')
@@ -21,7 +21,7 @@ const jadibot = async (conn, msg, from) => {
 const { sendImage, sendMessage } = conn;
 const { reply, sender } = m;
 let userbot = `${conn.decodeJid(conn.user.id)}`
-const { state, saveState } = useSingleFileAuthState(`./jadibot/@${userbot.split("@")[0]}`)
+const { state, saveState } = useMultiFileAuthState(`./jadibot/@${userbot.split("@")[0]}`)
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
@@ -54,7 +54,7 @@ if (connection == "connecting") return
 if (connection){
 if (connection != "connecting") console.log("Connecting to jadibot..")
 }
-if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'Scan QR ini untuk jadi bot sementara\n\n1. Klik titik 3 di pojok kanan atas\n2. Klik Perangkat Tertaut\n3. Scan QR ini \nQR Expired dalam 30 detik', m)
+if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m)
 console.log(connection)
 if (connection == "open") {
 conn.id = conn.decodeJid(conn.user.id)
