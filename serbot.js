@@ -91,7 +91,6 @@ else conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)
     }
 })
 }
-start()
 } catch (e) {
 console.log(e)
 }
