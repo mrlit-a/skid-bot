@@ -25,13 +25,21 @@ const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `.
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
-const conn = await makeWaSocket({
-auth: state,
-printQRInTerminal: true,
-browser: ['skid bot', "Safari", "1.0.0"],
-logger: logg({ level: "silent" }),
-version,
-})
+const conn = makeWasocket({
+        logger: pino({ level: 'silent' }),
+        printQRInTerminal: true,
+        browser: [`skid bot (subbot)`,'Safari','3.0'],
+        auth: state,
+        getMessage: async (key) => {
+            if (store) {
+                const msg = await store.loadMessage(key.remoteJid, key.id)
+                return msg.message || undefined
+            }
+            return {
+                conversation: "skid bot!"
+            }
+        }
+    })
 
 conn.ev.on('messages.upsert', async chatUpdate => {
 try {
@@ -57,13 +65,10 @@ if (connection != "connecting") console.log("Connecting to jadibot..")
 if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m)
 console.log(connection)
 if (connection == "open") {
-conn.id = conn.decodeJid(conn.user.id)
+conn.id = senderbtl
 conn.time = Date.now()
 global.listJadibot.push(conn)
 await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`)
-let user = `${conn.decodeJid(conn.user.id)}`
-let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_`
-conn.sendMessage('5218442114446', {text: txt, mentions : [user]})
 }
 
 if (connection === 'close') {
