@@ -65,7 +65,7 @@ if (connection != "connecting") console.log("Connecting to jadibot..")
 if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m)
 console.log(connection)
 if (connection == "open") {
-conn.id = senderbtl
+conn.id = senderblt
 conn.time = Date.now()
 global.listJadibot.push(conn)
 await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`)
