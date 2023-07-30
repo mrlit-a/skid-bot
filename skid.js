@@ -560,13 +560,13 @@ case 'getcase':
     const searchcomand = args[0].toLowerCase()
     const commands = fs.readFileSync('./skid.js').toString()
 
-    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gsi') : new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gi')
+    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gsi') : new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gi')
     const svmod = commands.match(caseRegex)
 
     if (!svmod || svmod.length === 0) {
       reply(`Error, tal vez no existe el ${searchcomand}.\nNo se encontraron comandos similares.`)
     } else {
-      const skmod = svmod.map(match => match.trim())
+      const skmod = svmod.map(match => `case '${match[1]}'${match[2].trim()}`).slice(0, MAX_SIMILAR_CASES)
       reply(`*Se encontró el comando ${searchcomand}*\n${skmod.join('\n')}`)
     }
   } catch (err) {
