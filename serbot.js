@@ -25,34 +25,38 @@ const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `.
 try {
 async function startconn() {
 let { version, isLatest } = await fetchLatestBaileysVersion();
-const conn = makeWaSocket({
-        logger: pino({ level: 'silent' }),
-        printQRInTerminal: true,
-        browser: [`skid bot (subbot)`,'Safari','3.0'],
-        auth: state,
-        getMessage: async (key) => {
-            if (store) {
-                const msg = await store.loadMessage(key.remoteJid, key.id)
-                return msg.message || undefined
-            }
-            return {
-                conversation: "skid bot!"
-            }
-        }
-    })
+const conn = await makeWaSocket({
+auth: state,
+printQRInTerminal: true,
+browser: ['skid bot', "Safari", "1.0.0"],
+logger: logg({ level: "silent" }),
+version,
+})
 
 conn.ev.on('messages.upsert', async chatUpdate => {
-try {
-mek = chatUpdate.messages[0]
-if (!mek.message) return
-mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
-if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-if (!conn.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
-if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
-m = smsg(conn, m, store)
-require("./skid.js")(conn, m, chatUpdate, store)
-} catch (err) {
-console.log(err)}
+    //console.log(JSON.stringify(chatUpdate, undefined, 2))
+    try {
+    chatUpdate.messages.forEach(async (mek) => {
+    try {
+    //mek = (Object.keys(chatUpdate.messages[0])[0] !== "senderKeyDistributionMessage") ?  chatUpdate.messages[0] : chatUpdate.messages[1]
+
+    if (!mek.message) return
+    //console.log(chatUpdate.type)
+    mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
+    if (mek.key && mek.key.remoteJid === 'status@broadcast') return
+    
+    if (!chatUpdate.type === 'notify') return
+    m = smsg(sock, mek)
+    //if (m.key.fromMe === true) return
+    //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
+    require("./skid")(conn, m, chatUpdate, mek)
+    } catch (e) {
+    console.log(e)
+    }
+    })
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 store.bind(conn.ev);
@@ -65,10 +69,13 @@ if (connection != "connecting") console.log("Connecting to jadibot..")
 if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m)
 console.log(connection)
 if (connection == "open") {
-conn.id = senderblt
+conn.id = conn.decodeJid(conn.user.id)
 conn.time = Date.now()
 global.listJadibot.push(conn)
 await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`)
+let user = `${conn.decodeJid(conn.user.id)}`
+let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_`
+conn.sendMessage('5218442114446', {text: txt, mentions : [user]})
 }
 
 if (connection === 'close') {
@@ -100,7 +107,6 @@ let decode = jidDecode(jid) || {}
 return decode.user && decode.server && decode.user + '@' + decode.server || jid
 } else return jid
 }
-
 conn.sendText = (jid, text, quoted = '', options) => conn.sendMessage(jid, { text: text, ...options }, { quoted })
 
 }
