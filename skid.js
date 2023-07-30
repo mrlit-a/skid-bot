@@ -15,7 +15,7 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const gpt = require('api-dylux')
 const mimetype = require("mime-types")
-const { skbot, conns } = require('./serbot.js')
+const {jadibot, listJadibot } = require('./serbot.js')
 const webp = require("node-webpmux")
 const { pinterest } = require('./addons/add-ons.js')
 
@@ -458,7 +458,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 break
 
 case 'serbot':
-await skbot(conn, m, from)
+await jadibot(conn, m, from)
 break
 
 case 'ppt':
