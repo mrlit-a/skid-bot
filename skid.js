@@ -1,4 +1,4 @@
-// Código desde cero y comentarios hecho por: 
+lo// Código desde cero y comentarios hecho por: 
 // @gata_dios
 // @Skidy89
 
@@ -548,6 +548,7 @@ case 'sticker': {
 }
 break;
 
+
 case 'getcase':
   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });
   if (!text) return m.reply(`no hay comando a buscar o que?`)
@@ -559,7 +560,7 @@ case 'getcase':
     const searchcomand = args[0].toLowerCase()
     const commands = fs.readFileSync('./skid.js').toString()
 
-    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'(.*?)(?=(case |break;|}))`, 'gs') : new RegExp(`case '(\\w*${searchcomand}\\w*)'(.*?)(?=(case |break;|}))`, 'gis')
+    const caseRegex = CASE_SENSITIVITY ? new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gs') : new RegExp(`case '(\\w*${searchcomand}\\w*)'([\\s\\S]*?)break;`, 'gis')
     const similarsk = commands.match(caseRegex)
 
     if (!similarsk || similarsk.length === 0) {
