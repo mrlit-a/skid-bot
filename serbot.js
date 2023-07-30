@@ -46,7 +46,7 @@ conn.ev.on('messages.upsert', async chatUpdate => {
     if (mek.key && mek.key.remoteJid === 'status@broadcast') return
     
     if (!chatUpdate.type === 'notify') return
-    m = smsg(sock, mek)
+    m = smsg(conn, mek)
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
     require("./skid")(conn, m, chatUpdate, mek)
