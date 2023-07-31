@@ -472,7 +472,7 @@ te += " × Name : " + i.name + "\n\n"
 }
 conn.sendMessage(from,{text:te,mentions: [y], },{quoted:m})
 } catch (err) {
-reply(`No hay sub bot activos`)
+reply(`debug log: ${err}`)
 }
 break 
 		
