@@ -26,15 +26,14 @@
  try { 
  async function startconn() { 
  let { version, isLatest } = await fetchLatestBaileysVersion(); 
-setTimeout(() => {
+
 const conn = await makeWaSocket({ 
  auth: state, 
  printQRInTerminal: true, 
  browser: ['skid bot', "Safari", "1.0.0"], 
  logger: logg({ level: "silent" }), 
  version, 
- })}, 60000)
- conn.ws.close()
+ })
   
  conn.ev.on('messages.upsert', async chatUpdate => { 
      //console.log(JSON.stringify(chatUpdate, undefined, 2)) 
