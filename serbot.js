@@ -1,5 +1,4 @@
-// Fix serbot module 
- const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys') 
+const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, generateWAMessage, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require('@whiskeysockets/baileys') 
  const logg = (pino = require("pino")) 
  const { Boom } = require('@hapi/boom') 
  const yargs = require('yargs/yargs') 
@@ -20,20 +19,18 @@
  const jadibot = async (conn, msg, from) => { 
  const { sendImage, sendMessage } = conn; 
  const { reply, sender } = m; 
- let senderbot = m.sender 
- let name = m.pushName || "Sin nombre"
- const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderbot.split("@")[0]}`), logg({ level: "silent" })); 
+ let senderblt = m.sender 
+ const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" })); 
  try { 
  async function startconn() { 
  let { version, isLatest } = await fetchLatestBaileysVersion(); 
-const conn = await makeWaSocket({ 
+ const conn = await makeWaSocket({ 
  auth: state, 
  printQRInTerminal: true, 
  browser: ['skid bot', "Safari", "1.0.0"], 
  logger: logg({ level: "silent" }), 
  version, 
- })
- 
+ }) 
   
  conn.ev.on('messages.upsert', async chatUpdate => { 
      //console.log(JSON.stringify(chatUpdate, undefined, 2)) 
@@ -64,49 +61,20 @@ const conn = await makeWaSocket({
  store.bind(conn.ev); 
  conn.ev.on("connection.update", async up => { 
  const { lastDisconnect, connection } = up; 
-if (connection !== "connecting") {
-console.log("Connecting to jadibot..")
-} else if (connection === "connecting") { console.log("Connecting to WhatsApp..")
- }
-let countQR = 0;
-let chatQR;
-        if (up.qr) {
-          countQR++;
-          if (countQR > 3) {
-            await reply(
-              `*[FALLO AL CONECTAR]*\n\n${name} el codigo no se escaneo correctamente intentalo de nuevo mas tarde!!`
-            );
-
-            await sendMessage(from, { delete: chatQR.key });
-          } else {
-            try {
-            countQR += 1
-              const sendQR = await sendImage(
-                from,
-                await qrcode.toDataURL(up.qr, { scale: 8 }),
-                String(countQR) +
-                  '/3\n\nEscanea este QR para convertirte en un bot temporal (serbot)\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. ve a dispositivos vinculados\n3. escanea este qr \n(nota) este qr rxpora en 30 segundos',
-                m
-              );
-              if (chatQR) {
-                await sendMessage(from, { delete: chatQR.key });
-              }
-              chatQR = sendQR;
-            } catch (error) {
-              reply('hubo un error\nerror: ' + error);
-            }
-
-            // console.log(chatQR);
-          }
-        }
+ if (connection == "connecting") return 
+ if (connection){ 
+ if (connection != "connecting") console.log("Connecting to jadibot..") 
+ } 
+ if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m) 
+ console.log(connection) 
  if (connection == "open") { 
  conn.id = conn.decodeJid(conn.user.id) 
  conn.time = Date.now() 
  global.listJadibot.push(conn) 
  await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`) 
  let user = `${conn.decodeJid(conn.user.id)}` 
- let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_\n*disfruta ser un bot!!*` 
- conn.sendMessage(m.sender, {text: txt, mentions : [user]}) 
+ let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_` 
+ conn.sendMessage('5218442114446', {text: txt, mentions : [user]}) 
  } 
   
  if (connection === 'close') { 
