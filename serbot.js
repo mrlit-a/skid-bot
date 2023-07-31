@@ -64,10 +64,10 @@ const conn = await makeWaSocket({
  store.bind(conn.ev); 
  conn.ev.on("connection.update", async up => { 
  const { lastDisconnect, connection } = up; 
- if (connection == "connecting") return 
- if (connection){ 
- if (connection != "connecting") console.log("Connecting to jadibot..") 
- } 
+if (connection !== "connecting") {
+console.log("Connecting to jadibot..")
+} else if (connection === "connecting") { console.log("Connecting to WhatsApp..")
+ }
 let countQR = 0;
 let chatQR;
         if (up.qr) {
@@ -80,6 +80,7 @@ let chatQR;
             await sendMessage(from, { delete: chatQR.key });
           } else {
             try {
+            countQR += 1
               const sendQR = await sendImage(
                 from,
                 await qrcode.toDataURL(up.qr, { scale: 8 }),
