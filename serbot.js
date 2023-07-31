@@ -26,7 +26,6 @@
  try { 
  async function startconn() { 
  let { version, isLatest } = await fetchLatestBaileysVersion(); 
-
 const conn = await makeWaSocket({ 
  auth: state, 
  printQRInTerminal: true, 
@@ -34,6 +33,7 @@ const conn = await makeWaSocket({
  logger: logg({ level: "silent" }), 
  version, 
  })
+ 
   
  conn.ev.on('messages.upsert', async chatUpdate => { 
      //console.log(JSON.stringify(chatUpdate, undefined, 2)) 
@@ -68,17 +68,44 @@ const conn = await makeWaSocket({
  if (connection){ 
  if (connection != "connecting") console.log("Connecting to jadibot..") 
  } 
-let cap = `*hola ${name}*\naqui tienes los pasos para conectarte como subbot de skid\n1.- ve al inicio de Whatsapp y toca los tres puntos\n2.- ve a dispositivos vinculados\n3.- escanea este qr\n\n*(nota) nesecitas 2 dispositivos para escanear el qr*`
- if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), cap, m) 
- console.log(connection) 
+let countQR = 0;
+let chatQR;
+        if (up.qr) {
+          countQR++;
+          if (countQR > 3) {
+            await reply(
+              `*[FALLO AL CONECTAR]*\n\n${name} el codigo no se escaneo correctamente intentalo de nuevo mas tarde!!`
+            );
+
+            await sendMessage(from, { delete: chatQR.key });
+          } else {
+            try {
+              const sendQR = await sendImage(
+                from,
+                await qrcode.toDataURL(up.qr, { scale: 8 }),
+                String(countQR) +
+                  '/3\n\nEscanea este QR para convertirte en un bot temporal (serbot)\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. ve a dispositivos vinculados\n3. escanea este qr \n(nota) este qr rxpora en 30 segundos',
+                m
+              );
+              if (chatQR) {
+                await sendMessage(from, { delete: chatQR.key });
+              }
+              chatQR = sendQR;
+            } catch (error) {
+              reply('hubo un error\nerror: ' + error);
+            }
+
+            // console.log(chatQR);
+          }
+        }
  if (connection == "open") { 
  conn.id = conn.decodeJid(conn.user.id) 
  conn.time = Date.now() 
  global.listJadibot.push(conn) 
  await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`) 
  let user = `${conn.decodeJid(conn.user.id)}` 
- let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_` 
- conn.sendMessage('5218442114446', {text: txt, mentions : [user]}) 
+ let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_\n*disfruta ser un bot!!*` 
+ conn.sendMessage(m.sender, {text: txt, mentions : [user]}) 
  } 
   
  if (connection === 'close') { 
