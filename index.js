@@ -109,7 +109,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
                 type = m.mtype;
                 let t = m.messageTimestamp;
                 const gradient = require('gradient-string');
-                const groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : ''
+                const groupMetadata = m.isGroup ? await sock.groupMetadata(m.chat) : ''
                 const groupName = m.isGroup ? groupMetadata.subject : ''
                 
                 if (m.message) {
