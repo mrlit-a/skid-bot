@@ -95,7 +95,7 @@ if (db.data.settings[numberBot].autobio) {
  if (new Date() * 1 - setting.status > 1000) { 
  //let uptime = await runtime(process.uptime()) 
  const bio = `${XD}\n${runtime(process.uptime())}` 
- await conn.updateProfileStatus(bio) 
+ await sock.updateProfileStatus(bio) 
  setting.status = new Date() * 1 
  }}
     if (m.message) {
