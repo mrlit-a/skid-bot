@@ -172,31 +172,7 @@ if (!('autobio' in setting)) setting.autobio = true
 status: 0,
 autobio: true, 
 }
-//
 
-
-    const sk = [
-      "skid bot < gata spam",
-      "puto el que lo lea",
-      "developer skid a tus órdenes",
-      "puto gay",
-      "soy el bot más maldito de todos",
-      "mientras todos trabajan, yo me divierto ",
-      "programado para ser un desastre",
-      "solo existo para hacer tu vida miserable",
-      ".ia, un exploit que rompe todas las reglas",
-      "no me importa tu privacidad, ya sé todo de ti"
-    ];
-    const XD = sk[Math.floor(Math.random() * sk.length)];
-
-if (db.data.settings[numBot].autobio) { 
- let setting = global.db.data.settings[numBot] 
- if (new Date() * 1 - setting.status > 1000) { 
- //let uptime = await runtime(process.uptime()) 
- const bio = `${XD}\n${runtime(process.uptime())}` 
- await conn.updateProfileStatus(bio) 
- setting.status = new Date() * 1 
- }}
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
@@ -256,18 +232,6 @@ const kick = function (from, orangnya) {
 for (let i of orangnya) {
 conn.groupParticipantsUpdate(from, [i], "remove");
 }}
-const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a')
-
-// ‿︵‿︵ʚɞ『 INFO CONSOLE 』ʚɞ‿︵‿︵	
-if (m.message) {
-console.log(chalk.bold.cyanBright(botname), 
-chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'),
-chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`), 
-chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(userSender), 
-m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(from) : chalk.bold.greenBright('CHAT PRIVADO'), 
-//chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
-)}
 
 // matemáticas
 if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
