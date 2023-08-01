@@ -59,69 +59,76 @@ const sock = makeWASocket({
 })
 
 	
-
 sock.ev.on('messages.upsert', async chatUpdate => {
-    //console.log(JSON.stringify(chatUpdate, undefined, 2))
     try {
-    chatUpdate.messages.forEach(async (mek) => {
-    try {
-    //mek = (Object.keys(chatUpdate.messages[0])[0] !== "senderKeyDistributionMessage") ?  chatUpdate.messages[0] : chatUpdate.messages[1]
+        chatUpdate.messages.forEach(async (mek) => {
+            try {
+                if (!mek.message) return;
 
-    if (!mek.message) return
-    //console.log(chatUpdate.type)
-    mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
-    if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-    msg = JSON.parse(JSON.stringify(mek, undefined, 2))
-    if (!chatUpdate.type === 'notify') return
-    m = smsg(sock, mek)
-    numberBot = sock.user.id.split(":")[0] + "@s.whatsapp.net"
-    const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a')
-        const sk = [
-      "skid bot < gata spam",
-      "puto el que lo lea",
-      "developer skid a tus órdenes",
-      "puto gay",
-      "soy el bot más maldito de todos",
-      "mientras todos trabajan, yo me divierto ",
-      "programado para ser un desastre",
-      "solo existo para hacer tu vida miserable",
-      ".ia, un exploit que rompe todas las reglas",
-      "no me importa tu privacidad, ya sé todo de ti"
-    ];
-    const XD = sk[Math.floor(Math.random() * sk.length)];
+                mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message;
+                if (mek.key && mek.key.remoteJid === 'status@broadcast') return;
 
-if (db.data.settings[numberBot].autobio) { 
- let setting = global.db.data.settings[numberBot] 
- if (new Date() * 1 - setting.status > 1000) { 
- //let uptime = await runtime(process.uptime()) 
- const bio = `${XD}\n${runtime(process.uptime())}` 
- await sock.updateProfileStatus(bio) 
- setting.status = new Date() * 1 
- }}
-msgs = (message) => { // Función 'msgs' que toma un parámetro 'message'
-if (message.length >= 10) { // Longitud de 'message' es mayor o igual a 10 caracteres
-return `${message.substr(0, 500)}` // Devuelve los primeros 500 caracteres de 'message'
-} else { // Caso contrario
-return `${message}`}} // Devuelve 'message' completo
-type = m.mtype
-    if (m.message) {
-console.log(chalk.bold.cyanBright(botname), 
-chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'),
-chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`), 
-chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(m.pushname) + ' ➜', gradient.rainbow(m.sender), 
-m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'), 
-//chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
-)}
-    require("./skid")(sock, m, chatUpdate, mek)
-    } catch (e) {
-    console.log(e)
-    }
-    })
+                msg = JSON.parse(JSON.stringify(mek, undefined, 2));
+
+                if (!chatUpdate.type === 'notify') return;
+
+                m = smsg(sock, mek);
+                numberBot = sock.user.id.split(":")[0] + "@s.whatsapp.net";
+                const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a');
+
+/*                const sk = [
+                    "skid bot < gata spam",
+                    "puto el que lo lea",
+                    "developer skid a tus órdenes",
+                    "puto gay",
+                    "soy el bot más maldito de todos",
+                    "mientras todos trabajan, yo me divierto ",
+                    "programado para ser un desastre",
+                    "solo existo para hacer tu vida miserable",
+                    ".ia, un exploit que rompe todas las reglas",
+                    "no me importa tu privacidad, ya sé todo de ti"
+                ];
+                const XD = sk[Math.floor(Math.random() * sk.length)];
+
+                if (db.data.settings[numberBot].autobio) {
+                    let setting = global.db.data.settings[numberBot];
+                    if (new Date() * 1 - setting.status > 1000) {
+                        const bio = `${XD}\n${runtime(process.uptime())}`;
+                        await sock.updateProfileStatus(bio);
+                        setting.status = new Date() * 1;
+                    } */
+
+                msgs = (message) => {
+                    if (message.length >= 10) {
+                        return `${message.substr(0, 500)}`;
+                    } else {
+                        return `${message}`;
+                    }
+                };
+
+                type = m.mtype;
+                if (m.message) {
+                    console.log(chalk.bold.cyanBright(botname),
+                        chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
+                        chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
+                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(m.pushname) + ' ➜', gradient.rainbow(m.sender),
+                        m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'),
+                        //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
+                        chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
+                    );
+                }
+
+                require("./skid")(sock, m, chatUpdate, mek);
+            } catch (e) {
+                console.log(e);
+            }
+        });
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
-})
+});
+
+
 
 sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr, receivedPendingNotifications } = update;
