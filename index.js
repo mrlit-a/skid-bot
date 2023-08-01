@@ -107,7 +107,8 @@ sock.ev.on('messages.upsert', async chatUpdate => {
                 };
 
                 type = m.mtype;
-                let t = m.messageTimestamp
+                let t = m.messageTimestamp;
+                const gradient = require('gradient-string');
                 if (m.message) {
                     console.log(chalk.bold.cyanBright(botname),
                         chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
