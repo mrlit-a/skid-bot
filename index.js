@@ -71,7 +71,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     //console.log(chatUpdate.type)
     mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
     if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-    
+    msg = JSON.parse(JSON.stringify(mek, undefined, 2))
     if (!chatUpdate.type === 'notify') return
     m = smsg(sock, mek)
     numberBot = sock.user.id.split(":")[0] + "@s.whatsapp.net"
