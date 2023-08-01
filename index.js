@@ -9,6 +9,7 @@ const yargs = require('yargs/yargs')
 const { smsg } = require('./lib/fuctions')
 
 const { execSync } = require('child_process')
+const moment = require('moment-timezone')
 const pino = require('pino')
 const color = (text, color) => {
 return !color ? chalk.green(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)
