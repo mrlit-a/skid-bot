@@ -3,7 +3,6 @@ require("./settings")
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, proto , jidNormalizedUser,WAMessageStubType, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage } = require("@whiskeysockets/baileys")
 const { state, saveCreds } = await useMultiFileAuthState('./authFolder')
 const chalk = require('chalk')
-const moment = require('moment')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
 const { smsg } = require('./lib/fuctions')
@@ -108,6 +107,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
                 };
 
                 type = m.mtype;
+                let t = m.messageTimestamp
                 if (m.message) {
                     console.log(chalk.bold.cyanBright(botname),
                         chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
