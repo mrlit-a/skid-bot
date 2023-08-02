@@ -18,10 +18,11 @@ const moment = require('moment-timezone')
  if (global.listJadibot instanceof Array) console.log() 
  else global.listJadibot = [] 
   
- const jadibot = async (conn, msg, from) => { 
+ const jadibot = async (conn, msg, from, numBot2) => { 
  const { sendImage, sendMessage } = conn; 
  const { reply, sender } = m; 
  let senderblt = m.sender 
+ if (conn.user.jid !== numBot2) return m.reply(`solo el bot principal puede usar este comando`)
  const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" })); 
  try { 
  async function startconn() { 
