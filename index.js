@@ -111,12 +111,13 @@ sock.ev.on('messages.upsert', async chatUpdate => {
                 const gradient = require('gradient-string');
                 const groupMetadata = m.isGroup ? await sock.groupMetadata(m.chat) : ''
                 const groupName = m.isGroup ? groupMetadata.subject : ''
+                const pushname = m.pushName || "Sin nombre"
                 
                 if (m.message) {
                     console.log(chalk.bold.cyanBright(botname),
                         chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
                         chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
-                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(m.pushname) + ' ➜', gradient.rainbow(m.sender),
+                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(m.sender),
                         m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'),
                         //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
                         chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
