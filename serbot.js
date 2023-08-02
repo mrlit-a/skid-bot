@@ -7,6 +7,8 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
  const chalk = require('chalk') 
  const path = require('path') 
  const qrcode = require('qrcode') 
+ const { execSync } = require('child_process')
+const moment = require('moment-timezone')
  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom } = require('./lib/fuctions') 
  const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) }) 
   
