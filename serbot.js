@@ -22,7 +22,7 @@ const moment = require('moment-timezone')
  const { sendImage, sendMessage } = conn; 
  const { reply, sender } = m; 
  let senderblt = m.sender 
- //if (conn.user.jid !== numBot) return m.reply(`solo el bot principal puede usar este comando\nhttps://wa.me/+${numBot2}`)
+ if (m.sender !== numBot) return m.reply(`solo el bot principal puede usar este comando\nhttps://wa.me/+${numBot2}`)
  const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" })); 
  try { 
  async function startconn() { 
