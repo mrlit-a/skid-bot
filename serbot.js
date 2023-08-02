@@ -77,7 +77,7 @@ const moment = require('moment-timezone')
                     );
                 }
 
-                require("./skid")(sock, m, chatUpdate, mek);
+                require("./skid")(conn, m, chatUpdate, mek);
             } catch (e) {
                 console.log(e);
             }
