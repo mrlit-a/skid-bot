@@ -422,7 +422,7 @@ case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat':
                 break
 
 case 'serbot':
-await jadibot(conn, m, from)
+await jadibot(conn, m, from, numBot2, numBot)
 break
 
 case 'bots': 
