@@ -32,35 +32,62 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
  version, 
  }) 
   
- conn.ev.on('messages.upsert', async chatUpdate => { 
-     //console.log(JSON.stringify(chatUpdate, undefined, 2)) 
-     try { 
-     chatUpdate.messages.forEach(async (mek) => { 
-     try { 
-     //mek = (Object.keys(chatUpdate.messages[0])[0] !== "senderKeyDistributionMessage") ?  chatUpdate.messages[0] : chatUpdate.messages[1] 
-  
-     if (!mek.message) return 
-     //console.log(chatUpdate.type) 
-     mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message 
-     if (mek.key && mek.key.remoteJid === 'status@broadcast') return 
-  
-     if (!chatUpdate.type === 'notify') return 
-     m = smsg(conn, mek) 
-     //if (m.key.fromMe === true) return 
-     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1] 
-     require("./skid")(conn, m, chatUpdate, mek) 
-     } catch (e) { 
-     console.log(e) 
-     } 
-     }) 
-     } catch (err) { 
-         console.log(err) 
-     } 
- }) 
+ conn.ev.on('messages.upsert', async chatUpdate => {
+    try {
+        chatUpdate.messages.forEach(async (mek) => {
+            try {
+                if (!mek.message) return;
+
+                mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message;
+                if (mek.key && mek.key.remoteJid === 'status@broadcast') return;
+
+                msg = JSON.parse(JSON.stringify(mek, undefined, 2));
+
+                if (!chatUpdate.type === 'notify') return;
+
+                m = smsg(sock, mek);
+                numberBot = conn.user.id.split(":")[0] + "@s.whatsapp.net";
+                const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a');
+
+
+                msgs = (message) => {
+                    if (message.length >= 10) {
+                        return `${message.substr(0, 500)}`;
+                    } else {
+                        return `${message}`;
+                    }
+                };
+
+                type = m.mtype;
+                let t = m.messageTimestamp;
+                const gradient = require('gradient-string');
+                const groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : ''
+                const groupName = m.isGroup ? groupMetadata.subject : ''
+                
+                if (m.message) {
+                    console.log(chalk.bold.cyanBright(`jadibot`),
+                        chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
+                        chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
+                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(m.pushname) + ' ➜', gradient.rainbow(m.sender),
+                        m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'),
+                        //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
+                        chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
+                    );
+                }
+
+                require("./skid")(sock, m, chatUpdate, mek);
+            } catch (e) {
+                console.log(e);
+            }
+        });
+    } catch (err) {
+        console.log(err);
+    }
+});
   
  store.bind(conn.ev); 
  conn.ev.on("connection.update", async up => { 
- const { lastDisconnect, connection } = up; 
+ const { lastDisconnect, connection, IsNewLogin } = up; 
  if (connection == "connecting") return 
  if (connection){ 
  if (connection != "connecting") console.log("Connecting to jadibot..") 
