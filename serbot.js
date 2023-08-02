@@ -18,11 +18,11 @@ const moment = require('moment-timezone')
  if (global.listJadibot instanceof Array) console.log() 
  else global.listJadibot = [] 
   
- const jadibot = async (conn, msg, from, numBot2) => { 
+ const jadibot = async (conn, msg, from, numBot2, numBot ) => { 
  const { sendImage, sendMessage } = conn; 
  const { reply, sender } = m; 
  let senderblt = m.sender 
- if (conn.user.jid !== numBot2) return m.reply(`solo el bot principal puede usar este comando`)
+ if (conn.user.jid !== numBot) return m.reply(`solo el bot principal puede usar este comando\nhttps://wa.me/+${numBot2}`)
  const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" })); 
  try { 
  async function startconn() { 
@@ -66,12 +66,13 @@ const moment = require('moment-timezone')
                 const gradient = require('gradient-string');
                 const groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : ''
                 const groupName = m.isGroup ? groupMetadata.subject : ''
+                const pushname = m.pushName || "Sin nombre"
                 
                 if (m.message) {
                     console.log(chalk.bold.cyanBright(`jadibot`),
                         chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
                         chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
-                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(m.pushname) + ' ➜', gradient.rainbow(m.sender),
+                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(m.sender),
                         m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'),
                         //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
                         chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
