@@ -45,7 +45,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
 
                 if (!chatUpdate.type === 'notify') return;
 
-                m = smsg(sock, mek);
+                m = smsg(conn, mek);
                 numberBot = conn.user.id.split(":")[0] + "@s.whatsapp.net";
                 const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a');
 
