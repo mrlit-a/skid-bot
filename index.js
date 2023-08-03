@@ -3,12 +3,12 @@ require("./settings")
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason, proto , jidNormalizedUser,WAMessageStubType, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage } = require("@whiskeysockets/baileys")
 const { state, saveCreds } = await useMultiFileAuthState('./authFolder')
 const chalk = require('chalk')
+const moment = require('moment')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
 const { smsg } = require('./lib/fuctions')
 
 const { execSync } = require('child_process')
-const moment = require('moment-timezone')
 const pino = require('pino')
 const color = (text, color) => {
 return !color ? chalk.green(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)
@@ -59,82 +59,32 @@ const sock = makeWASocket({
 })
 
 	
+
 sock.ev.on('messages.upsert', async chatUpdate => {
+    //console.log(JSON.stringify(chatUpdate, undefined, 2))
     try {
-        chatUpdate.messages.forEach(async (mek) => {
-            try {
-                if (!mek.message) return;
+    chatUpdate.messages.forEach(async (mek) => {
+    try {
+    //mek = (Object.keys(chatUpdate.messages[0])[0] !== "senderKeyDistributionMessage") ?  chatUpdate.messages[0] : chatUpdate.messages[1]
 
-                mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message;
-                if (mek.key && mek.key.remoteJid === 'status@broadcast') return;
-
-                msg = JSON.parse(JSON.stringify(mek, undefined, 2));
-
-                if (!chatUpdate.type === 'notify') return;
-
-                m = smsg(sock, mek);
-                numberBot = sock.user.id.split(":")[0] + "@s.whatsapp.net";
-                const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a');
-
-/*                const sk = [
-                    "skid bot < gata spam",
-                    "puto el que lo lea",
-                    "developer skid a tus órdenes",
-                    "puto gay",
-                    "soy el bot más maldito de todos",
-                    "mientras todos trabajan, yo me divierto ",
-                    "programado para ser un desastre",
-                    "solo existo para hacer tu vida miserable",
-                    ".ia, un exploit que rompe todas las reglas",
-                    "no me importa tu privacidad, ya sé todo de ti"
-                ];
-                const XD = sk[Math.floor(Math.random() * sk.length)];
-
-                if (db.data.settings[numberBot].autobio) {
-                    let setting = global.db.data.settings[numberBot];
-                    if (new Date() * 1 - setting.status > 1000) {
-                        const bio = `${XD}\n${runtime(process.uptime())}`;
-                        await sock.updateProfileStatus(bio);
-                        setting.status = new Date() * 1;
-                    } */
-
-                msgs = (message) => {
-                    if (message.length >= 10) {
-                        return `${message.substr(0, 500)}`;
-                    } else {
-                        return `${message}`;
-                    }
-                };
-
-                type = m.mtype;
-                let t = m.messageTimestamp;
-                const gradient = require('gradient-string');
-                const groupMetadata = m.isGroup ? await sock.groupMetadata(m.chat) : ''
-                const groupName = m.isGroup ? groupMetadata.subject : ''
-                const pushname = m.pushName || "Sin nombre"
-                
-                if (m.message) {
-                    console.log(chalk.bold.cyanBright(botname),
-                        chalk.bold.magenta('\nHORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss')),
-                        chalk.bold.yellow('\nTIPO (SMS): ') + chalk.yellowBright(`${type}`),
-                        chalk.bold.cyan('\nUSUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(m.sender),
-                        m.isGroup ? chalk.bold.greenBright('\nGRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(m.chat) : chalk.bold.greenBright('chat privado'),
-                        //chalk.bold.red('\nETIQUETA: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-                        chalk.bold.white('\nMENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)
-                    );
-                }
-
-                require("./skid")(sock, m, chatUpdate, mek);
-            } catch (e) {
-                console.log(e);
-            }
-        });
-    } catch (err) {
-        console.log(err);
+    if (!mek.message) return
+    //console.log(chatUpdate.type)
+    mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
+    if (mek.key && mek.key.remoteJid === 'status@broadcast') return
+    
+    if (!chatUpdate.type === 'notify') return
+    m = smsg(sock, mek)
+    //if (m.key.fromMe === true) return
+    //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
+    require("./skid")(sock, m, chatUpdate, mek)
+    } catch (e) {
+    console.log(e)
     }
-});
-
-
+    })
+    } catch (err) {
+        console.log(err)
+    }
+})
 
 sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr, receivedPendingNotifications } = update;
@@ -168,7 +118,7 @@ sock.ev.on('connection.update', async (update) => {
         console.log(
             color('[SYS]', '#009FFF'),
             color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'),
-            color(`\n╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊🧡 Skid bot Se Conecto Correctamente a WhatsApp\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯` + receivedPendingNotifications, '#38ef7d')
+            color(`\n╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊Skid bot Se Conecto Correctamente a WhatsApp\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯` + receivedPendingNotifications, '#38ef7d')
         );
     }
 });
