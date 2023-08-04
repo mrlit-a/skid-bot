@@ -259,18 +259,17 @@ conn.groupParticipantsUpdate(from, [i], "remove");
 const time = moment(Number(msg.messageTimestamp + "000")).locale("es-mx").tz("America/Asuncion").format('MMMM Do YYYY, h:mm:ss a')
 
 // ‿︵‿︵ʚɞ『 INFO CONSOLE 』ʚɞ‿︵‿︵	
-const isBot = m.sender === numBot
-const isSubbot = global.listJadibot.includes(m.sender)
-
-const isJadi = isBot ? isSubBot : 'jadibot'
 if (m.message) {
-console.log(chalk.bold.cyanBright(isJadi), 
+console.log(
+chalk.bold.whiteBright(`┏╺╺╺╺╺╺╺╺╺╺╺┓`),
+chalk.bold.cyanBright(`\n ${botname}`), 
 chalk.bold.magenta('\n⏰ HORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'),
 chalk.bold.yellow('\n📥 TIPO (SMS): ') + chalk.yellowBright(`${type}`), 
 chalk.bold.cyan('\n👤 USUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(userSender), 
 m.isGroup ? chalk.bold.greenBright('\n👥 GRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(from) : chalk.bold.greenBright('📊 CHAT PRIVADO'), 
 //chalk.bold.red('\n️ Tag: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),
-chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
+chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)),
+chalk.bold.whiteBright(`┗╺╺╺╺╺╺╺╺╺╺╺┛`)
 )}
 
 // matemáticas
