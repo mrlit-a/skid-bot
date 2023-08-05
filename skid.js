@@ -3,7 +3,7 @@
 // @Skidy89
 
 // Importaciones 
-const { downloadContentFromMessage, generateWAMessageFromContent, prepareWAMessageMedia } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
+const { downloadContentFromMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
 const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias
 const gradient = require('gradient-string') // Aplicar gradientes de color al texto
 const { execSync, exec, spawn  } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
@@ -141,13 +141,14 @@ if (!('afkReason' in user)) user.afkReason = ''
 if (!isNumber(user.limit)) user.limit = 20
 if(!isNumber(user.money)) user.money = 100
 if(!isNumber(user.health)) user.health = 100
-if(!isNumber(user.premium)) user.premium = false
+if(!isNumber(user.warn)) user.warn = 0
  } else global.db.data.users[m.sender] = {
 afkTime: -1,
 afkReason: '',
 limit: 20,
 money: 100,
-health: 100
+health: 100,
+warn: 0,
 }
     
 let chats = global.db.data.chats[m.chat]
@@ -157,13 +158,15 @@ if (!('antilink' in chats)) chats.antilink = false
 if (!('ban' in chats)) chats.ban = false
 if (!('modeadmin' in chats)) chats.modeadmin = false
 if (!('welcome' in chats)) chats.welcome = true
+if (!('antiNsfw' in chats)) chats.welcome = false
 } else global.db.data.chats[m.chat] = {
 antilink: false,
 ban: false, 
-modeadmin: false,
+modeAdmin: false,
 welcome: true,
+antiNsfw: false,
 }
-let setting = global.db.data.settings[numBot]
+/*let setting = global.db.data.settings[numBot]
 if (typeof setting !== 'object') global.db.data.settings[numBot] = {}
 if (setting) {
 if (!isNumber(setting.status)) setting.status = 0
@@ -196,7 +199,7 @@ if (db.data.settings[numBot].autobio) {
  const bio = `${XD}\n${runtime(process.uptime())}` 
  await conn.updateProfileStatus(bio) 
  setting.status = new Date() * 1 
- }}
+ }} */
 	
 //antilink
 if (db.data.chats[m.chat].antilink) {
@@ -251,7 +254,9 @@ irq: 0
 const thumb = fs.readFileSync("./media/test.jpg")
 let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${userSender.split('@')[0]}:${userSender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
 const ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "status@broadcast"}, "message": {orderMessage: {itemCount: 2022,status: 200, thumbnail: thumb, surface: 200, message: "puta gata", orderTitle: "puto aiden me lo folle", sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
-const fdoc = {key : {participant : '0@s.whatsapp.net', ...(from ? { remoteJid: `status@broadcast` } : {}) },message: {documentMessage: {title: "A", jpegThumbnail: null}}}//const fgif = {key: {participant: `0@s.whatsapp.net`, ...(m.chat 
+const fdoc = {key : {participant : '0@s.whatsapp.net', ...(from ? { remoteJid: `status@broadcast` } : {}) },message: {documentMessage: {title: "A", jpegThumbnail: null}}}
+
+
 const kick = function (from, orangnya) {
 for (let i of orangnya) {
 conn.groupParticipantsUpdate(from, [i], "remove");
@@ -270,24 +275,7 @@ m.isGroup ? chalk.bold.greenBright('\n👥 GRUPO: ') + chalk.greenBright(groupNa
 chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))
 )}
 
-// matemáticas
-if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-
-            kuis = true
-
-            jawaban = quizmath[m.sender.split('@')[0]]
-
-            if (body.toLowerCase() == jawaban) {
-
-                await m.reply(`🎮 Math Quiz 🎮\n\n*respuesta correcta* 🎉🎉\n\n_*quieres jugar de nuevo?*_`)
-
-                delete quizmath[m.sender.split('@')[0]]
-
-            } else m.reply('*respuestas incorrecta*')
-
-        }
         
-
     //Suit PvP
     this.suit = this.suit ? this.suit : {};
     let roof = Object.values(this.suit).find(
@@ -306,7 +294,7 @@ if (quizmath.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
         if (/^(no|rechazar|Rechazar|)/i.test(m.text)) {
           conn.sendTextWithMentions(
             m.chat,
-            `@${roof.p2.split`@`[0]} no acepto el juego :v`,
+            `@${roof.p2.split`@`[0]} no acepto el juego\n*juego cancelado*`,
             m
           );
           delete this.suit[roof.id];
@@ -528,22 +516,6 @@ let caption = `
   };
   break;
 
-case 'mathquiz': case 'math': {
-                if (quizmath.hasOwnProperty(m.sender.split('@')[0])) throw "There are still unfinished sessions!"
-                let { genMath, modes } = require('./addons/math')
-                if (!text) return reply(`Modos: ${Object.keys(modes).join(' | ')}\nejemplo: ${prefix}math medium`)
-                let result = await genMath(text.toLowerCase())
-                conn.sendText(m.chat, `*cual es el resultado de: ${result.soal.toLowerCase()}*?\n\n*tiempo: ${(result.waktu / 1000).toFixed(2)} segundos*`, m).then(() => {
-                    quizmath[m.sender.split('@')[0]] = result.jawaban
-                })
-                await sleep(result.waktu)
-                if (quizmath.hasOwnProperty(m.sender.split('@')[0])) {
-                    console.log("la respuesta es " + result.jawaban)
-                    reply("~*tu tiempo se acabo*~\nla respuesta era: " + quizmath[m.sender.split('@')[0]])
-                    delete quizmath[m.sender.split('@')[0]]
-                }
-            }
-            break
 
 case 's':
 case 'sticker': {
@@ -769,20 +741,17 @@ case 'chatgpt':
   await sendAdMessage(res.text, 'chat gpt', 'exploit mode', chatgpt, 'https://wa.me/+5218442114446');
   break;
 
-case 'play':
-  if (!text) return conn.sendMessage(from, { text: `*ingrese nombre de alguna cancion*` }, { quoted: msg });
-  conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fdoc });
-  let aud = await fetch(`https://api.lolhuman.xyz/api/ytplay2?apikey=GataDios&query=${text}`);
-  let json = await aud.json();
-  let kingcore = await ytplay(text);
-  let audiodownload = json.result.audio;
-  if (!audiodownload) audiodownload = kingcore.result;
-  await conn.sendMessage(from, { audio: { url: audiodownload }, fileName: `error.mp3`, mimetype: 'audio/mp4' }, { quoted: msg });
-  break
+case 'play': 
+  if (!text) return conn.sendMessage(from, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗𝚊 𝚌𝚊𝚗𝚌𝚒𝚘𝚗` }, { quoted: msg })
+ let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytplay?apikey=${lolkeysapi}&query=${text}`)    
+ let lolh = await lolhuman.json() 
+ let n = lolh.result.text || 'error' 
+ await conn.sendMessage(from, { audio: { url: lolh.result.audio.link }, fileName: `error.mp3`, mimetype: 'audio/mp4' }, { quoted: msg })
+ break
 
 case 'play2':
-  if (!text) return conn.sendMessage(from, { text: `*ingrese nombre de alguna cancion*` }, { quoted: msg });
-  conn.sendMessage(from, { text: `*Aguarde un momento*` }, { quoted: fdoc });
+  if (!text) return conn.sendMessage(from, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗 𝚟𝚒𝚍𝚎𝚘` }, { quoted: msg });
+  conn.sendMessage(from, { text: `𝚎𝚜𝚙𝚎𝚛𝚊...` }, { quoted: fdoc });
   let mediaa = await ytplayvid(textoo);
   await conn.sendMessage(from, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });
   break
@@ -799,7 +768,7 @@ case 'update':
   break
 
 case 'simi': {
-  if (!text) return conn.sendMessage(from, { text: `*INGRESE UN TEXTO PARA HABLAR CONMIGO*` }, { quoted: msg });
+  if (!text) return conn.sendMessage(from, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚑𝚊𝚋𝚕𝚊𝚛 𝚌𝚘𝚗 𝚜𝚒𝚖𝚒` }, { quoted: msg });
   await conn.sendPresenceUpdate('composing', m.chat);
   let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);
   let res = anu.success;
@@ -846,6 +815,10 @@ break
                     e = String(e)
                     reply(e)
                 }
+            }
+            if (!Premium && command.money && global.db.data.users[m.sender].money < command.money * 1) {
+            sendAdMessage('no tenies dinero para usar este comando', 'pinche jodido 👻', menu, "https://www.pornhub.com')
+            continue
             }
         }
 
