@@ -3,7 +3,7 @@
  // @Skidy89 
   
  // Importaciones  
- const { downloadContentFromMessage, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp  
+ const { downloadContentFromMessage, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, relayMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp  
  const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias 
  const gradient = require('gradient-string') // Aplicar gradientes de color al texto 
  const { execSync, exec, spawn  } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo 
@@ -518,7 +518,7 @@ global.prefix = new RegExp('^¿', 'i')
    break; 
   
   
-case 'menu':
+/*case 'menu':
  let menu = `
  ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
 ╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
@@ -583,7 +583,7 @@ let ments = [me]
  } 
  }
  }, { quoted: fkontak })}
-break
+break*/
 
  
 case 's': 
