@@ -583,9 +583,10 @@ let ments = [me]
  } 
  }
  }, { quoted: fkontak })}
- break
+break
 
- case 's': 
+ 
+case 's': 
  case 'sticker': { 
      if (/image/.test(mime)) { 
          reply(`Espera, estamos creando tu sticker...`) 
