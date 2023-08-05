@@ -518,6 +518,73 @@ global.prefix = new RegExp('^¿', 'i')
    break; 
   
   
+case 'menu':
+ let menu = `
+ ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
+╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
+╭┤● ${prefix}serbot
+┃│● ${prefix}bass
+┃│● ${prefix}blown
+┃│● ${prefix}deep
+┃│● ${prefix}earrape
+┃│● ${prefix}fast
+┃│● ${prefix}fat
+┃│● ${prefix}nitghtcore
+┃│● ${prefix}reverse
+┃│● ${prefix}robot
+┃│● ${prefix}slow
+┃│● ${prefix}smooth
+┃│● ${prefix}squirrel
+┃│● ${prefix}yts
+┃│● ${prefix}play
+┃│● ${prefix}play2
+┃│● ${prefix}ppt @usuario
+┃│● ${prefix}s >imagen<
+┃│● ${prefix}sticker >imagen<
+┃│● ${prefix}attp
+┃│● ${prefix}promote
+┃│● ${prefix}demote
+┃│● ${prefix}leave
+┃│● ${prefix}kick
+┃│● ${prefix}banchat off/on
+┃│● ${prefix}welcome off/on
+┃│● ${prefix}blackpink
+┃│● ${prefix}avenger
+┃│● ${prefix}neon
+┃│● ${prefix}minion
+┃│● ${prefix}tagall
+┃│● ${prefix}hidetag
+┃│● ${prefix}toxic
+┃│● ${prefix}cloud
+┃│● ${prefix}simi
+┃│● ${prefix}update
+┃│● ${prefix}ia
+┃│● ${prefix}estado
+┃│● ${prefix}ping
+┃│● ${prefix}pinterest
+╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
+let me = m.sender
+let ments = [me]         
+ conn.sendMessage(from, {  
+ text: menu, 
+ contextInfo:{ 
+ forwardingScore: 9999999, 
+ isForwarded: true,  
+ mentionedJid:[sender], 
+ "externalAdReply": { 
+ "showAdAttribution": true, 
+ "renderLargerThumbnail": true, 
+ "title": botname,  
+ "containsAutoReply": true, 
+ "mediaType": 1,  
+ "thumbnail": menu, 
+ "mediaUrl": `https://www.github.com/Skidy89`, 
+ "sourceUrl": `https://www.github.com/Skidy89` 
+ } 
+ }
+ }, { quoted: fkontak })}
+ break
+
  case 's': 
  case 'sticker': { 
      if (/image/.test(mime)) { 
