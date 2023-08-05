@@ -818,7 +818,7 @@ break
             }
             if (!Premium && command.money && global.db.data.users[m.sender].money < command.money * 1) {
             sendAdMessage('no tenies dinero para usar este comando', 'pinche jodido 👻', menu, "https://www.pornhub.com")
-            continue
+            return
             }
         }
 
