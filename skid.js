@@ -518,7 +518,7 @@ global.prefix = new RegExp('^¿', 'i')
    break; 
   
   
-/*case 'menu':
+case 'menu':
  let menu = `
  ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
 ╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
@@ -563,27 +563,27 @@ global.prefix = new RegExp('^¿', 'i')
 ┃│● ${prefix}ping
 ┃│● ${prefix}pinterest
 ╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
-let me = m.sender
-let ments = [me]         
- conn.sendMessage(from, {  
- text: menu, 
- contextInfo:{ 
- forwardingScore: 9999999, 
- isForwarded: true,  
- mentionedJid:[sender], 
- "externalAdReply": { 
- "showAdAttribution": true, 
- "renderLargerThumbnail": true, 
- "title": botname,  
- "containsAutoReply": true, 
- "mediaType": 1,  
- "thumbnail": menu, 
- "mediaUrl": `https://www.github.com/Skidy89`, 
- "sourceUrl": `https://www.github.com/Skidy89` 
- } 
- }
- }, { quoted: fkontak })}
-break*/
+let me = m.sender;
+  let ments = [me];
+  conn.sendMessage(from, {
+    text: menu,
+    contextInfo: {
+      forwardingScore: 9999999,
+      isForwarded: true,
+      mentionedJid: [sender],
+      "externalAdReply": {
+        "showAdAttribution": true,
+        "renderLargerThumbnail": true,
+        "title": botname,
+        "containsAutoReply": true,
+        "mediaType": 1,
+        "thumbnail": menu,
+        "mediaUrl": `https://www.github.com/Skidy89`,
+        "sourceUrl": `https://www.github.com/Skidy89`
+      }
+    }
+  }, { quoted: fkontak });
+  break;
 
  
 case 's': 
