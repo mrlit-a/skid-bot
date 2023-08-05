@@ -3,7 +3,7 @@
 // @Skidy89
 
 // Importaciones 
-const { downloadContentFromMessage } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
+const { downloadContentFromMessage, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp 
 const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias
 const gradient = require('gradient-string') // Aplicar gradientes de color al texto
 const { execSync, exec, spawn  } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo
