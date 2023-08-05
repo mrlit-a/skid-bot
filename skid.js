@@ -817,11 +817,7 @@ global.prefix = new RegExp('^¿', 'i')
                      reply(e) 
                  } 
              } 
-             if (!Premium && command.money && global.db.data.users[m.sender].money < command.money * 1) { 
-             sendAdMessage('no tienes dinero para usar este comando', 'pinche jodido 👻', menu, "https://www.pornhub.com") 
-             return 
-             } 
-         } 
+       
   
  } 
   
