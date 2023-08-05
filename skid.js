@@ -540,32 +540,17 @@ global.prefix = new RegExp('^¿', 'i')
   
   
   
- case 'getcase': 
-   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg }); 
-   if (!text) return m.reply(`no hay comando a buscar o que?`) 
-  
-   const MAX_SIMILAR_CASES = 5 
-   const CASE_SENSITIVITY = false 
-  
-   try { 
-     const searchcomand = args[0].toLowerCase() 
-     const commands = fs.readFileSync('./skid.js').toString() 
-  
-     const caseRegex = CASE_SENSITIVITY ? new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'[\\s\\S]*?break;`, 'gsi') : new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'[\\s\\S]*?break;`, 'gi') 
-     const matches = commands.match(caseRegex) 
-  
-     if (!matches || matches.length === 0) { 
-       reply(`Error, tal vez no existe el ${searchcomand}.\nNo se encontraron comandos similares.`) 
-     } else { 
-       const suggestions = matches.map(match => match.replace(/\n/g, '').trim()) 
-       reply(`*Se encontró el comando ${searchcomand}*\n${suggestions.join('\n')}`) 
-     } 
-   } catch (err) { 
-     console.error(err) 
-     reply("Error al buscar el comando") 
-   } 
-   break; 
-  
+ case 'getcase':  
+    if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
+    if (!text) return m.reply(`no hay comando a buscar o que?`)  
+    try {  
+    bbreak = 'break'  
+  reply('case ' + `'${args[0]}'` + fs.readFileSync('./skid.js').toString().split(`case '${args[0]}'`)[1].split(bbreak)[0] + bbreak)  
+  } catch (err) {  
+  console.error(err)  
+  reply(" Error, tal vez no existe el comando")  
+  }  
+  break 
   
  case 'attp': 
    if (!text) return reply('ingresa algo para convertirlo a sticker :v') 
