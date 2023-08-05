@@ -519,7 +519,7 @@ global.prefix = new RegExp('^¿', 'i')
   
   
 case 'menu':
- let menu = `
+ let menuu = `
  ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
 ╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
 ╭┤● ${prefix}serbot
@@ -563,27 +563,17 @@ case 'menu':
 ┃│● ${prefix}ping
 ┃│● ${prefix}pinterest
 ╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
-let me = m.sender;
-  let ments = [me];
-  conn.sendMessage(from, {
-    text: menu,
-    contextInfo: {
-      forwardingScore: 9999999,
-      isForwarded: true,
-      mentionedJid: [sender],
-      "externalAdReply": {
-        "showAdAttribution": true,
-        "renderLargerThumbnail": true,
-        "title": botname,
-        "containsAutoReply": true,
-        "mediaType": 1,
-        "thumbnail": menu,
-        "mediaUrl": `https://www.github.com/Skidy89`,
-        "sourceUrl": `https://www.github.com/Skidy89`
-      }
-    }
-  }, { quoted: fkontak });
-  break;
+var messa = await prepareWAMessageMedia({ image: menu }, { upload: conn.waUploadToServer })
+var loc = generateWAMessageFromContent(from, proto.Message.fromObject({
+"liveLocationMessage": {
+"degreesLatitude": -18.49335858,
+"degreesLongitude": -62.19109138,
+"caption": menuu,
+"sequenceNumber": "1680110670076001",
+"jpegThumbnail": menu,
+}}), { userJid: conn.user.id})
+conn.relayMessage(from,loc.message, { messageId: loc.key.id })
+  break
 
  
 case 's': 
