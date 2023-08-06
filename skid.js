@@ -447,7 +447,7 @@ global.prefix = new RegExp('^¿', 'i')
                  break 
   
  case 'serbot':  
- await jadibot(conn, m, from) 
+ await jadibot(conn, m, from, numBot2) 
  break 
   
  case 'bots':  
