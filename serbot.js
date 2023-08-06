@@ -16,7 +16,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   if (global.listJadibot instanceof Array) console.log()  
   else global.listJadibot = []  
   
-  const jadibot = async (conn, msg, from) => {  
+  const jadibot = async (conn, msg, from, command, prefix) => {  
   const { sendImage, sendMessage } = conn;  
   const { reply, sender } = m;  
   let senderblt = m.sender  
