@@ -84,7 +84,6 @@ let countQR = 0;
             );
 
             await sendMessage(from, { delete: chatQR.key });
-            countQR = 0
           } else {
             try {
               const sendQR = await sendImage(
