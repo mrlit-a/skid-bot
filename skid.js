@@ -472,14 +472,8 @@ var loc = generateWAMessageFromContent(from, proto.Message.fromObject({
 }}), { userJid: conn.user.id})
 conn.relayMessage(from,loc.message, { messageId: loc.key.id })
   break;
-  /*await conn.relayMessage(m.chat, { requestPaymentMessage: { 
-   noteMessage: { extendedTextMessage: { text: wm, 
-   currencyCodeIso4217: 'USD', 
-   requestFrom: '0@s.whatsapp.net', 
-   expiryTimestamp: 8600, 
-   amount: 10000, 
-   background: './media/menus/Menu3.jpg' 
- }}}}, {})*/ //MENSAJE DE PAGO
+
+
  case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel': 
                  try { 
                  let set 
@@ -512,7 +506,6 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
                  break 
   
  case 'serbot': 
- if (conn.user.jid !== numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`) 
  await jadibot(conn, m, from) 
  break 
   
@@ -882,10 +875,7 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
                      reply(e) 
                  } 
              } 
-             if (!Premium && command.money && global.db.data.users[m.sender].money < command.money * 1) { 
-             sendAdMessage('no tienes dinero para usar este comando', 'pinche jodido 👻', menu, "https://www.pornhub.com") 
-             return 
-             } 
+             
          } 
   
  } 

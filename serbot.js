@@ -20,7 +20,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   const { sendImage, sendMessage } = conn;  
   const { reply, sender } = m;  
   let senderblt = m.sender  
-  if (conn.user.jid !== global.numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`)
+  if (conn.user.id !== global.numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`)
   const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" }));  
   try {  
   async function startconn() {  
