@@ -446,8 +446,7 @@ global.prefix = new RegExp('^¿', 'i')
                  } 
                  break 
   
- case 'serbot': 
- if (conn.user.jid !== global.conn.user.jid) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`) 
+ case 'serbot':  
  await jadibot(conn, m, from) 
  break 
   
