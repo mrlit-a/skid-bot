@@ -60,14 +60,14 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   })  
   
   store.bind(conn.ev);  
-  let countQR = 0; 
+let countQR = 0; 
 let chatQR; 
 conn.ev.on('connection.update', async (up) => { 
   // console.log(countQR); 
   if (countQR > 3) {
     await reply('*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.');
     await sendMessage(from, { delete: chatQR.key });
-    countQR = 0
+    countQR = 0; // Reinicia el contador a 0
   } else {
     console.log('RUNNING connection.update ........'); 
     const { lastDisconnect, connection } = up; 
@@ -88,7 +88,7 @@ conn.ev.on('connection.update', async (up) => {
         ); 
 
         await sendMessage(from, { delete: chatQR.key }); 
-        countQR = 0;
+        countQR = 0; // Reinicia el contador a 0
       } else { 
         try { 
           const sendQR = await sendImage( 
@@ -110,9 +110,8 @@ conn.ev.on('connection.update', async (up) => {
       } 
     }
   }
-});
-
-  if (connection == "open") {  
+}
+    if (connection == "open") {  
   conn.id = conn.decodeJid(conn.user.id)  
   conn.time = Date.now()  
   global.listJadibot.push(conn)  
