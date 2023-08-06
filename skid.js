@@ -505,6 +505,7 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
                  break 
   
  case 'serbot': 
+ if (m.isGroup) return m.reply(mess.priv)
  await jadibot(conn, m, from, command, prefix) 
  break 
   
