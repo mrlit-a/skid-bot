@@ -266,15 +266,14 @@ global.prefix = new RegExp('^¿', 'i')
  // ‿︵‿︵ʚɞ『 INFO CONSOLE 』ʚɞ‿︵‿︵         
  if (m.message) { 
  console.log( 
- chalk.bold.cyanBright(botname),  
+ chalk.bold.cyanBright(botname + `${conn.user.id == global.numBot2 ? '' : '(jadibot)'}`),  
  chalk.bold.magenta('\n⏰ HORARIO: ') + chalk.magentaBright(moment(t * 1000).tz(place).format('DD/MM/YY HH:mm:ss'), 
  chalk.bold.yellow('\n📥 TIPO (SMS): ') + chalk.yellowBright(`${type}`),  
  chalk.bold.cyan('\n👤 USUARIO: ') + chalk.cyanBright(pushname) + ' ➜', gradient.rainbow(userSender),  
  m.isGroup ? chalk.bold.greenBright('\n👥 GRUPO: ') + chalk.greenBright(groupName) + ' ➜ ' + gradient.rainbow(from) : chalk.bold.greenBright('📊 CHAT PRIVADO'),  
  //chalk.bold.red('\n️ Tag: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`), 
  chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`)) 
- )} 
-  
+ )}   
   
          //Suit PvP
     this.suit = this.suit ? this.suit : {};
