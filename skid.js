@@ -341,7 +341,7 @@ global.prefix = new RegExp('^¿', 'i')
               m.chat,
               `@${
                 (roof.pilih ? roof.p2 : roof.p).split`@`[0]
-              } não escoleu, game over`,
+              } no escogio, game over`,
               m
             );
           }
@@ -351,8 +351,8 @@ global.prefix = new RegExp('^¿', 'i')
       }
       let jwb = m.sender == roof.p;
       let jwb2 = m.sender == roof.p2;
-      let g = /tesoura/i;
-      let b = /pedra/i;
+      let g = /tijera/i;
+      let b = /piedra/i;
       let k = /papel/i;
       let reg = /^(tesoura|pedra|papel)/i;
       if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
