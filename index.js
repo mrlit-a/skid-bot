@@ -76,8 +76,8 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     m = smsg(sock, mek)
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
-    global.numBot = conn.user.id.split(":")[0] + "@s.whatsapp.net"
-    global.numBot2 = conn.user.id
+    global.numBot = sock.user.id.split(":")[0] + "@s.whatsapp.net"
+    global.numBot2 = sock.user.id
     require("./skid")(sock, m, chatUpdate, mek)
     } catch (e) {
     console.log(e)
