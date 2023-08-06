@@ -511,9 +511,9 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
  case 'bots':  
  try { 
  let user = [... new Set([...global.listJadibot.filter(numBot2 => conn.user).map(numBot2 => conn.user)])] 
- te = "*sub bot Lista*\n\n" 
+ te = "*lista de subbots*\n\n" 
  for (let i of user){ 
- y = await startBot.decodeJid(i.id) 
+ y = await startconn.decodeJid(i.id) 
  te += " × Usuario : @" + y.split("@")[0] + "\n" 
  te += " × Nombre : " + i.name + "\n\n" 
  } 
@@ -521,8 +521,7 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
  } catch (err) { 
  reply(`debug log: ${err}`) 
  } 
- break  
-  
+ break   
  case 'ppt': 
  if (!m.isGroup) return reply(mess.group); 
    this.suit = this.suit ? this.suit : {}; 
