@@ -110,7 +110,7 @@ conn.ev.on('connection.update', async (up) => {
       } 
     }
   }
-}
+})
     if (connection == "open") {  
   conn.id = conn.decodeJid(conn.user.id)  
   conn.time = Date.now()  
@@ -139,7 +139,7 @@ conn.ev.on('connection.update', async (up) => {
   console.log("Connection TimedOut, Reconnecting..."); startconn(); }  
   else conn.end(`Unknown DisconnectReason: ${reason}|${connection}`)  
   }  
-  })  
+  })
   
   conn.ev.on('creds.update', saveCreds)  
   
