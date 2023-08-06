@@ -414,7 +414,7 @@ global.prefix = new RegExp('^¿', 'i')
   
  switch (command) { 
   
- case 'menu':
+  case 'menu':
  let menuu = `
  ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
 ╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
@@ -459,17 +459,25 @@ global.prefix = new RegExp('^¿', 'i')
 ┃│● ${prefix}ping
 ┃│● ${prefix}pinterest
 ╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
-var messa = await prepareWAMessageMedia({ image: menu }, { upload: conn.waUploadToServer })
-var loc = generateWAMessageFromContent(from, proto.Message.fromObject({
-"liveLocationMessage": {
-"degreesLatitude": -18.49335858,
-"degreesLongitude": -62.19109138,
-"caption": menuu,
-"sequenceNumber": "1680110670076001",
-"jpegThumbnail": menu,
-}}), { userJid: conn.user.id})
-conn.relayMessage(from,loc.message, { messageId: loc.key.id })
-  break;
+conn.sendMessage(from, {  
+ text: menuu, 
+ contextInfo:{ 
+ forwardingScore: 9999999, 
+ isForwarded: true,  
+ mentionedJid:[m.sender], 
+ "externalAdReply": { 
+ "showAdAttribution": true, 
+ "renderLargerThumbnail": true, 
+ "title": botname,  
+ "containsAutoReply": true, 
+ "mediaType": 1,  
+ "thumbnail": menu, 
+ "mediaUrl": `https://wa.me/+5218442114446`, 
+ "sourceUrl": `https://wa.me/+5218442114446` 
+ } 
+ } 
+ }, { quoted: fkontak })
+  break
 
 case 'nowa':
 let regex = /x/g
