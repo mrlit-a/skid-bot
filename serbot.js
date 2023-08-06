@@ -60,7 +60,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   })  
   
   store.bind(conn.ev);  
-let countQR = 0; 
+  let countQR = 0; 
 let chatQR; 
 conn.ev.on('connection.update', async (up) => { 
   // console.log(countQR); 
@@ -68,50 +68,51 @@ conn.ev.on('connection.update', async (up) => {
     await reply('*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.');
     await sendMessage(from, { delete: chatQR.key });
     countQR = 0; // Reinicia el contador a 0
-  } else {
-    console.log('RUNNING connection.update ........'); 
-    const { lastDisconnect, connection } = up; 
-    if (connection == 'connecting') return; 
-    if (connection) { 
-      if (connection != 'connecting') 
-        console.log('Connecting to jadibot..'); 
-    } 
-
-    console.log(up); 
-
-    // console.log(countQR); 
-    if (up.qr) { 
-      countQR++; 
-      if (countQR > 3) { 
-        await reply( 
-          '*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.' 
-        ); 
-
-        await sendMessage(from, { delete: chatQR.key }); 
-        countQR = 0; // Reinicia el contador a 0
-      } else { 
-        try { 
-          const sendQR = await sendImage( 
-            from, 
-            await qrcode.toDataURL(up.qr, { scale: 8 }), 
-            String(countQR) + 
-              '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos', 
-            m 
-          ); 
-          if (chatQR) { 
-            await sendMessage(from, { delete: chatQR.key }); 
-          } 
-          chatQR = sendQR; 
-        } catch (error) { 
-          reply(`${error}`); 
-        } 
-
-        // console.log(chatQR); 
-      } 
-    }
+    return;
   }
-})
-    if (connection == "open") {  
+
+  console.log('RUNNING connection.update ........'); 
+  const { lastDisconnect, connection } = up; 
+  if (connection == 'connecting') return; 
+  if (connection) { 
+    if (connection != 'connecting') 
+      console.log('Connecting to jadibot..'); 
+  } 
+
+  console.log(up); 
+
+  // console.log(countQR); 
+  if (up.qr) { 
+    countQR++; 
+    if (countQR > 3) { 
+      await reply( 
+        '*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.' 
+      ); 
+
+      await sendMessage(from, { delete: chatQR.key }); 
+      countQR = 0; // Reinicia el contador a 0
+    } else { 
+      try { 
+        const sendQR = await sendImage( 
+          from, 
+          await qrcode.toDataURL(up.qr, { scale: 8 }), 
+          String(countQR) + 
+            '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos', 
+          m 
+        ); 
+        if (chatQR) { 
+          await sendMessage(from, { delete: chatQR.key }); 
+        } 
+        chatQR = sendQR; 
+      } catch (error) { 
+        reply(`${error}`); 
+      } 
+
+      // console.log(chatQR); 
+    } 
+  }
+}
+  if (connection == "open") {  
   conn.id = conn.decodeJid(conn.user.id)  
   conn.time = Date.now()  
   global.listJadibot.push(conn)  
