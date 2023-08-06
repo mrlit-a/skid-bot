@@ -90,8 +90,7 @@ global.prefix = new RegExp('^¿', 'i')
  const sender = m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid // Obtiene el remitente del mensaje según el tipo de chat (individual o grupo) 
  const mime = (quoted.msg || quoted).mimetype || '' // Tipo de archivo adjunto del mensaje citado o del propio mensaje 
  const isMedia = /image|video|sticker|audio/.test(mime) // Verifica si el mensaje contiene un archivo multimedia (imagen, video, sticker o audio) 
- const numBot = conn.user.id.split(":")[0] + "@s.whatsapp.net" // JID del Bot 
-
+ 
  const mentions = [] 
  if (m.message[type].contextInfo) {  
  if (m.message[type].contextInfo.mentionedJid) { 
@@ -506,7 +505,7 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
                  break 
   
  case 'serbot': 
- await jadibot(conn, m, from, prefix, command) 
+ await jadibot(conn, m, from) 
  break 
   
  case 'bots':  
