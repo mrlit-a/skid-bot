@@ -3,7 +3,7 @@
  // @Skidy89 
   
  // Importaciones  
- const { downloadContentFromMessage, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia, relayMessage, generateWAMessageFromContent } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp  
+ const { downloadContentFromMessage, generateWAMessageContent, generateWAMessage, prepareWAMessageMedia } = require('@whiskeysockets/baileys'); // trabajar a través de descargas por Whatsapp  
  const moment = require('moment-timezone') // Trabajar con fechas y horas en diferentes zonas horarias 
  const gradient = require('gradient-string') // Aplicar gradientes de color al texto 
  const { execSync, exec, spawn  } = require('child_process') // Función 'execSync' del módulo 'child_process' para ejecutar comandos en el sistema operativo 
@@ -91,7 +91,7 @@ global.prefix = new RegExp('^¿', 'i')
  const mime = (quoted.msg || quoted).mimetype || '' // Tipo de archivo adjunto del mensaje citado o del propio mensaje 
  const isMedia = /image|video|sticker|audio/.test(mime) // Verifica si el mensaje contiene un archivo multimedia (imagen, video, sticker o audio) 
  const numBot = conn.user.id.split(":")[0] + "@s.whatsapp.net" // JID del Bot 
- const numBot2 = conn.user.id // Número de teléfono del bot 
+
  const mentions = [] 
  if (m.message[type].contextInfo) {  
  if (m.message[type].contextInfo.mentionedJid) { 
@@ -341,7 +341,7 @@ global.prefix = new RegExp('^¿', 'i')
               m.chat,
               `@${
                 (roof.pilih ? roof.p2 : roof.p).split`@`[0]
-              } no escogio, game over`,
+              } no escogio,, game over`,
               m
             );
           }
@@ -351,8 +351,8 @@ global.prefix = new RegExp('^¿', 'i')
       }
       let jwb = m.sender == roof.p;
       let jwb2 = m.sender == roof.p2;
-      let g = /tijera/i;
-      let b = /piedra/i;
+      let g = /tesoura/i;
+      let b = /pedra/i;
       let k = /papel/i;
       let reg = /^(tesoura|pedra|papel)/i;
       if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
@@ -412,9 +412,74 @@ global.prefix = new RegExp('^¿', 'i')
         );
         delete this.suit[roof.id];
       }
-    }  
+    }
+  
  switch (command) { 
   
+ case 'menu':
+ let menuu = `
+ ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
+╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
+╭┤● ${prefix}serbot
+┃│● ${prefix}bass
+┃│● ${prefix}blown
+┃│● ${prefix}deep
+┃│● ${prefix}earrape
+┃│● ${prefix}fast
+┃│● ${prefix}fat
+┃│● ${prefix}nitghtcore
+┃│● ${prefix}reverse
+┃│● ${prefix}robot
+┃│● ${prefix}slow
+┃│● ${prefix}smooth
+┃│● ${prefix}squirrel
+┃│● ${prefix}yts
+┃│● ${prefix}play
+┃│● ${prefix}play2
+┃│● ${prefix}ppt @usuario
+┃│● ${prefix}s >imagen<
+┃│● ${prefix}sticker >imagen<
+┃│● ${prefix}attp
+┃│● ${prefix}promote
+┃│● ${prefix}demote
+┃│● ${prefix}leave
+┃│● ${prefix}kick
+┃│● ${prefix}banchat off/on
+┃│● ${prefix}welcome off/on
+┃│● ${prefix}blackpink
+┃│● ${prefix}avenger
+┃│● ${prefix}neon
+┃│● ${prefix}minion
+┃│● ${prefix}tagall
+┃│● ${prefix}hidetag
+┃│● ${prefix}toxic
+┃│● ${prefix}cloud
+┃│● ${prefix}simi
+┃│● ${prefix}update
+┃│● ${prefix}ia
+┃│● ${prefix}estado
+┃│● ${prefix}ping
+┃│● ${prefix}pinterest
+╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
+var messa = await prepareWAMessageMedia({ image: menu }, { upload: conn.waUploadToServer })
+var loc = generateWAMessageFromContent(from, proto.Message.fromObject({
+"liveLocationMessage": {
+"degreesLatitude": -18.49335858,
+"degreesLongitude": -62.19109138,
+"caption": menuu,
+"sequenceNumber": "1680110670076001",
+"jpegThumbnail": menu,
+}}), { userJid: conn.user.id})
+conn.relayMessage(from,loc.message, { messageId: loc.key.id })
+  break;
+  /*await conn.relayMessage(m.chat, { requestPaymentMessage: { 
+   noteMessage: { extendedTextMessage: { text: wm, 
+   currencyCodeIso4217: 'USD', 
+   requestFrom: '0@s.whatsapp.net', 
+   expiryTimestamp: 8600, 
+   amount: 10000, 
+   background: './media/menus/Menu3.jpg' 
+ }}}}, {})*/ //MENSAJE DE PAGO
  case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel': 
                  try { 
                  let set 
@@ -446,8 +511,9 @@ global.prefix = new RegExp('^¿', 'i')
                  } 
                  break 
   
- case 'serbot':  
- await jadibot(conn, m, from, numBot2, prefix, command) 
+ case 'serbot': 
+ if (conn.user.jid !== numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`) 
+ await jadibot(conn, m, from) 
  break 
   
  case 'bots':  
@@ -517,65 +583,7 @@ global.prefix = new RegExp('^¿', 'i')
    break; 
   
   
-case 'menu':
- let menuu = `
- ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩
-╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き
-╭┤● ${prefix}serbot
-┃│● ${prefix}bass
-┃│● ${prefix}blown
-┃│● ${prefix}deep
-┃│● ${prefix}earrape
-┃│● ${prefix}fast
-┃│● ${prefix}fat
-┃│● ${prefix}nitghtcore
-┃│● ${prefix}reverse
-┃│● ${prefix}robot
-┃│● ${prefix}slow
-┃│● ${prefix}smooth
-┃│● ${prefix}squirrel
-┃│● ${prefix}yts
-┃│● ${prefix}play
-┃│● ${prefix}play2
-┃│● ${prefix}ppt @usuario
-┃│● ${prefix}s >imagen<
-┃│● ${prefix}sticker >imagen<
-┃│● ${prefix}attp
-┃│● ${prefix}promote
-┃│● ${prefix}demote
-┃│● ${prefix}leave
-┃│● ${prefix}kick
-┃│● ${prefix}banchat off/on
-┃│● ${prefix}welcome off/on
-┃│● ${prefix}blackpink
-┃│● ${prefix}avenger
-┃│● ${prefix}neon
-┃│● ${prefix}minion
-┃│● ${prefix}tagall
-┃│● ${prefix}hidetag
-┃│● ${prefix}toxic
-┃│● ${prefix}cloud
-┃│● ${prefix}simi
-┃│● ${prefix}update
-┃│● ${prefix}ia
-┃│● ${prefix}estado
-┃│● ${prefix}ping
-┃│● ${prefix}pinterest
-╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨`
-var messa = await prepareWAMessageMedia({ image: menu }, { upload: conn.waUploadToServer })
-var loc = generateWAMessageFromContent(from, proto.Message.fromObject({
-"liveLocationMessage": {
-"degreesLatitude": -18.49335858,
-"degreesLongitude": -62.19109138,
-"caption": menuu,
-"sequenceNumber": "1680110670076001",
-"jpegThumbnail": menu,
-}}), { userJid: conn.user.id})
-conn.relayMessage(from,loc.message, { messageId: loc.key.id })
-  break
-
- 
-case 's': 
+ case 's': 
  case 'sticker': { 
      if (/image/.test(mime)) { 
          reply(`Espera, estamos creando tu sticker...`) 
@@ -597,17 +605,32 @@ case 's':
   
   
   
- case 'getcase':  
-    if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
-    if (!text) return m.reply(`no hay comando a buscar o que?`)  
-    try {  
-    bbreak = 'break'  
-  reply('case ' + `'${args[0]}'` + fs.readFileSync('./skid.js').toString().split(`case '${args[0]}'`)[1].split(bbreak)[0] + bbreak)  
-  } catch (err) {  
-  console.error(err)  
-  reply(" Error, tal vez no existe el comando")  
-  }  
-  break 
+ case 'getcase': 
+   if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg }); 
+   if (!text) return m.reply(`no hay comando a buscar o que?`) 
+  
+   const MAX_SIMILAR_CASES = 5 
+   const CASE_SENSITIVITY = false 
+  
+   try { 
+     const searchcomand = args[0].toLowerCase() 
+     const commands = fs.readFileSync('./skid.js').toString() 
+  
+     const caseRegex = CASE_SENSITIVITY ? new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'[\\s\\S]*?break;`, 'gsi') : new RegExp(`case\\s+'(\\w*${searchcomand}\\w*)'[\\s\\S]*?break;`, 'gi') 
+     const matches = commands.match(caseRegex) 
+  
+     if (!matches || matches.length === 0) { 
+       reply(`Error, tal vez no existe el ${searchcomand}.\nNo se encontraron comandos similares.`) 
+     } else { 
+       const suggestions = matches.map(match => match.replace(/\n/g, '').trim()) 
+       reply(`*Se encontró el comando ${searchcomand}*\n${suggestions.join('\n')}`) 
+     } 
+   } catch (err) { 
+     console.error(err) 
+     reply("Error al buscar el comando") 
+   } 
+   break; 
+  
   
  case 'attp': 
    if (!text) return reply('ingresa algo para convertirlo a sticker :v') 
@@ -859,7 +882,10 @@ case 's':
                      reply(e) 
                  } 
              } 
-
+             if (!Premium && command.money && global.db.data.users[m.sender].money < command.money * 1) { 
+             sendAdMessage('no tienes dinero para usar este comando', 'pinche jodido 👻', menu, "https://www.pornhub.com") 
+             return 
+             } 
          } 
   
  } 

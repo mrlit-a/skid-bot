@@ -16,11 +16,11 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   if (global.listJadibot instanceof Array) console.log()  
   else global.listJadibot = []  
   
-  const jadibot = async (conn, msg, from, numBot2, prefix, command) => {  
+  const jadibot = async (conn, msg, from) => {  
   const { sendImage, sendMessage } = conn;  
   const { reply, sender } = m;  
   let senderblt = m.sender  
-//  if (conn.user.jid !== global.conn.user.jid) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`)
+  if (conn.user.jid !== global.numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${numBot2.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`)
   const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" }));  
   try {  
   async function startconn() {  
@@ -60,51 +60,15 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   })  
   
   store.bind(conn.ev);  
-      let countQR = 0;
-      let chatQR;
-      conn.ev.on('connection.update', async (up) => {
-        // console.log(countQR);
-        if (countQR > 3) return;
-        console.log('RUNNING connection.update ........');
-        const { lastDisconnect, connection } = up;
-        if (connection == 'connecting') return;
-        if (connection) {
-          if (connection != 'connecting')
-            console.log('Connecting to jadibot..');
-        }
-
-        console.log(up);
-
-        // console.log(countQR);
-        if (up.qr) {
-          countQR++;
-          if (countQR > 3) {
-            await reply(
-              '*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.'
-            );
-
-            await sendMessage(from, { delete: chatQR.key });
-          } else {
-            try {
-              const sendQR = await sendImage(
-                from,
-                await qrcode.toDataURL(up.qr, { scale: 8 }),
-                String(countQR) +
-                  '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos',
-                m
-              );
-              if (chatQR) {
-                await sendMessage(from, { delete: chatQR.key });
-              }
-              chatQR = sendQR;
-            } catch (error) {
-              reply(`${error}`);
-            }
-
-            // console.log(chatQR);
-          }
-        }
-    if (connection == "open") {  
+  conn.ev.on("connection.update", async up => {  
+  const { lastDisconnect, connection } = up;  
+  if (connection == "connecting") return  
+  if (connection){  
+  if (connection != "connecting") console.log("Connecting to jadibot..")  
+  }  
+  if (up.qr) await sendImage(m.chat, await qrcode.toDataURL(up.qr,{scale : 8}), 'skid', m)  
+  console.log(connection)  
+  if (connection == "open") {  
   conn.id = conn.decodeJid(conn.user.id)  
   conn.time = Date.now()  
   global.listJadibot.push(conn)  
