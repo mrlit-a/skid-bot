@@ -505,7 +505,7 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
                  break 
   
  case 'serbot': 
- await jadibot(conn, m, from, prefix, command) 
+ await jadibot(conn, m, from, command, prefix) 
  break 
   
  case 'bots':  
