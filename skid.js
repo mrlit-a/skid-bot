@@ -510,12 +510,12 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
   
  case 'bots':  
  try { 
- let user = [... new Set([...global.conns.filter(numBot2 => conn.user).map(numBot2 => conn.user)])] 
+ let user = [... new Set([...global.listJadibot.filter(numBot2 => conn.user).map(numBot2 => conn.user)])] 
  te = "*sub bot Lista*\n\n" 
  for (let i of user){ 
  y = await startBot.decodeJid(i.id) 
- te += " × User : @" + y.split("@")[0] + "\n" 
- te += " × Name : " + i.name + "\n\n" 
+ te += " × Usuario : @" + y.split("@")[0] + "\n" 
+ te += " × Nombre : " + i.name + "\n\n" 
  } 
  conn.sendMessage(from,{text:te,mentions: [y], },{quoted:m}) 
  } catch (err) { 

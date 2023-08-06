@@ -28,7 +28,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   const conn = await makeWaSocket({  
   auth: state,  
   printQRInTerminal: true,  
-  browser: ['skid bot', "Safari", "1.0.0"],  
+  browser: ['skid bot (jadibot)', "Safari", "1.0.0"],  
   logger: logg({ level: "silent" }),  
   version,  
   })  
@@ -74,8 +74,8 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
   global.listJadibot.push(conn)  
   await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_`)  
   let user = `${conn.decodeJid(conn.user.id)}`  
-  let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_`  
-  conn.sendMessage('5218442114446', {text: txt, mentions : [user]})  
+  /* let txt = `*nuevo bot*\n\n _× Usuario : @${user.split("@")[0]}_`  
+  conn.sendMessage('5218442114446', {text: txt, mentions : [user]})  */
   }  
   
   if (connection === 'close') {  
