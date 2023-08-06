@@ -508,20 +508,22 @@ conn.relayMessage(from,loc.message, { messageId: loc.key.id })
  await jadibot(conn, m, from, command, prefix) 
  break 
   
- case 'bots':  
- try { 
- let user = [... new Set([...global.listJadibot.filter(numBot2 => conn.user).map(numBot2 => conn.user)])] 
- te = "*lista de subbots*\n\n" 
- for (let i of user){ 
- y = await startconn.decodeJid(i.id) 
- te += " × Usuario : @" + y.split("@")[0] + "\n" 
- te += " × Nombre : " + i.name + "\n\n" 
- } 
- conn.sendMessage(from,{text:te,mentions: [y], },{quoted:m}) 
- } catch (err) { 
- reply(`debug log: ${err}`) 
- } 
- break   
+ case 'bots': 
+try {
+let user = [... new Set([...global.listJadibot.filter(conn => conn.user).map(conn => conn.user)])]
+te = "*lista de subbots*\n\n"
+for (let i of user){
+y = await conn.decodeJid(i.id)
+te += " × User : @" + y.split("@")[0] + "\n"
+te += " × Name : " + i.name + "\n\n"
+}
+conn.sendMessage(from ,{text: te, mentions: [y], },{quoted: m})
+} catch (err) {
+reply(`*no hay subbots activos*`)
+}
+break
+
+
  case 'ppt': 
  if (!m.isGroup) return reply(mess.group); 
    this.suit = this.suit ? this.suit : {}; 
