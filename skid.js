@@ -472,8 +472,8 @@ conn.sendMessage(from, {
  "containsAutoReply": true, 
  "mediaType": 1,  
  "thumbnail": menu, 
- "mediaUrl": `https://wa.me/+5218442114446`, 
- "sourceUrl": `https://wa.me/+5218442114446` 
+ "mediaUrl": `https://api.whatsapp.com/send/?phone=5218441029462&text=¿serbot&type=phone_number&app_absent=0`, 
+ "sourceUrl": `https://api.whatsapp.com/send/?phone=5218441029462&text=¿serbot&type=phone_number&app_absent=0` 
  } 
  } 
  }, { quoted: fkontak })
