@@ -109,8 +109,8 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    conn.time = Date.now()   
    global.listJadibot.push(conn)   
    await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_\n *NOTA: el bot se puede reiniciar si deja de recibir comandos use ${prefix + command} para volver a conectarte*`)   
-   let user = `${conn.decodeJid(conn.user.id)}`   
-   conn.sendMessage(user { text: test }, { quoted m })
+/*   let user = `${conn.decodeJid(conn.user.id)}`   
+   conn.sendMessage(user { text: test }, { quoted m }) */
    }   
   
    if (connection === 'close') {   
