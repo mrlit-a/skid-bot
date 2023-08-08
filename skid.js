@@ -415,7 +415,7 @@
   
    case 'menu': 
  conn.sendMessage(from, {   
-  text: skmenu(pushname),  
+  text: skmenu(prefix, pushname),  
   contextInfo:{  
   forwardingScore: 9999999,  
   isForwarded: true,   
