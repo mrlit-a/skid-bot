@@ -90,7 +90,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
                  from, 
                  await qrcode.toDataURL(up.qr, { scale: 8 }), 
                  String(countQR) + 
-                   '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos\njadibot hecho por @Skidy89', 
+                   '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos\n\njadibot hecho por @Skidy89', 
                  m 
                ); 
                if (chatQR) { 
@@ -109,9 +109,11 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    conn.time = Date.now()   
    global.listJadibot.push(conn)   
    await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_\n *NOTA: el bot se puede reiniciar si deja de recibir comandos use ${prefix + command} para volver a conectarte*`)   
-/*   let user = `${conn.decodeJid(conn.user.id)}`   
-   conn.sendMessage(user { text: test }, { quoted m }) */
    }   
+   
+   if (connection === "open") {
+   await conn.sendMessage(m.chat, { text: `*ya estas conectado*\n*por favor espera a que se carguen tus mensajes` }, { quoted: m })
+   }
   
    if (connection === 'close') {   
    let reason = new Boom(lastDisconnect?.error)?.output.statusCode   
