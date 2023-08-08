@@ -349,8 +349,8 @@
        } 
        let jwb = m.sender == roof.p; 
        let jwb2 = m.sender == roof.p2; 
-       let g = /tesoura/i; 
-       let b = /pedra/i; 
+       let g = /tijera/i; 
+       let b = /piedra/i; 
        let k = /papel/i; 
        let reg = /^(tesoura|pedra|papel)/i; 
        if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) { 
@@ -620,7 +620,7 @@
           await new Promise((resolve) => setTimeout(resolve, 2000));   
           await fs.unlinkSync(encmedia)  
       } else {  
-          reply(`Envía una imagen/video con ${prefix + comando}\n(La duración del video solo puede ser de 10 segundos)`)  
+          reply(`Envía una imagen/video con ${prefix + command}\n(La duración del video solo puede ser de 10 segundos)`)  
       }  
   }  
   break;  
