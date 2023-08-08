@@ -614,6 +614,35 @@ case 'fake':
     };  
     break;  
   
+
+case 'fake':
+    var gh = body.slice(11);
+    var mentioned = m.message.extendedTextMessage && m.message.extendedTextMessage.contextInfo && m.message.extendedTextMessage.contextInfo.mentionedJid ? m.message.extendedTextMessage.contextInfo.mentionedJid[0] : null;
+    var replace = gh.split("|")[0];
+    var target = gh.split("|")[1];
+    var bot = gh.split("|")[2];
+
+    if (mentioned && target && bot) {
+      var quotedMessage = {
+        key: {
+          fromMe: false,
+          participant: mentioned
+        },
+        message: {
+          conversation: target
+        }
+      };
+
+      var sendMessageOptions = {
+        text: `${bot}`,
+        quoted: quotedMessage
+      };
+
+      conn.sendMessage(from, sendMessageOptions, { quoted: quotedMessage });
+    } else {
+      conn.sendMessage(from, { text: 'Uso incorrecto del comando. Ejemplo: ${prefix + command} @usuario1|Este es el mensaje falso|Hola, esto es un mensaje real que se citará' });
+    }
+    break;
   
   case 's':  
   case 'sticker': {  
