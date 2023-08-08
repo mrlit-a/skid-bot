@@ -134,7 +134,7 @@
   
   //base de datos  
   let isNumber = x => typeof x === 'number' && !isNaN(x)  
-  let user = global.db.data.users[m.sender]  
+  global.user = global.db.data.users[m.sender]  
   if (typeof user !== 'object') global.db.data.users[m.sender] = {}  
   if (user) {  
   if (!isNumber(user.afkTime)) user.afkTime = -1  
