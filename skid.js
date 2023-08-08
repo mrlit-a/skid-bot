@@ -12,7 +12,8 @@
   const fs = require('fs') // Trabajar con el sistema de archivos  
   const fetch = require('node-fetch')  
   const axios = require('axios')  
-  const cheerio = require('cheerio')  
+  const cheerio = require('cheerio')
+  const { skmenu } = require('./lib/menu.js')
 
   const mimetype = require("mime-types")  
   const {jadibot, listJadibot } = require('./serbot.js')  
@@ -67,8 +68,8 @@
   if (m.key.id.startsWith("BAE5")) return  
   var budy = (typeof m.text == 'string' ? m.text : '') // Asignar a la variable budy el valor m.text si es cadena          
   //var prefix = prefa ? /^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi.test(body) ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi)[0] : "" : prefa ?? global.prefix  
- global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
-// global.prefix = new RegExp('^¿', 'i') 
+ // global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
+ global.prefix = new RegExp('^¿', 'i') 
   var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : '' // Almacenar el prefijo predeterminado  
   const isCmd = body.startsWith(prefix) // Verificar si el contenido de body comienza con el valor almacenado en prefix.  
   const from = m.chat // Remitente del mensaje  
@@ -413,52 +414,8 @@
   switch (command) {  
   
    case 'menu': 
-  let menuu = ` 
-  ╭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪩ 
- ╰╮女⃟⃟女𝐈𝐍𝐅𝐎 𝐁𝐎𝐓/𝐔𝐒𝐄𝐑❈⃟き 
- ╭┤● ${prefix}serbot 
- ┃│● ${prefix}bass 
- ┃│● ${prefix}blown 
- ┃│● ${prefix}deep 
- ┃│● ${prefix}earrape 
- ┃│● ${prefix}fast 
- ┃│● ${prefix}fat 
- ┃│● ${prefix}nitghtcore 
- ┃│● ${prefix}reverse 
- ┃│● ${prefix}robot 
- ┃│● ${prefix}slow 
- ┃│● ${prefix}smooth 
- ┃│● ${prefix}squirrel 
- ┃│● ${prefix}yts 
- ┃│● ${prefix}play 
- ┃│● ${prefix}play2 
- ┃│● ${prefix}ppt @usuario 
- ┃│● ${prefix}s >imagen< 
- ┃│● ${prefix}sticker >imagen< 
- ┃│● ${prefix}attp 
- ┃│● ${prefix}promote 
- ┃│● ${prefix}demote 
- ┃│● ${prefix}leave 
- ┃│● ${prefix}kick 
- ┃│● ${prefix}banchat off/on 
- ┃│● ${prefix}welcome off/on 
- ┃│● ${prefix}blackpink 
- ┃│● ${prefix}avenger 
- ┃│● ${prefix}neon 
- ┃│● ${prefix}minion 
- ┃│● ${prefix}tagall 
- ┃│● ${prefix}hidetag 
- ┃│● ${prefix}toxic 
- ┃│● ${prefix}cloud 
- ┃│● ${prefix}simi 
- ┃│● ${prefix}update 
- ┃│● ${prefix}ia 
- ┃│● ${prefix}estado 
- ┃│● ${prefix}ping 
- ┃│● ${prefix}pinterest 
- ╰▬▭ ▭▬▭▬▭▬▭▬▭▬▭▬▭▬▭ ⪨` 
  conn.sendMessage(from, {   
-  text: menuu,  
+  text: skmenu(pushname),  
   contextInfo:{  
   forwardingScore: 9999999,  
   isForwarded: true,   
@@ -501,16 +458,18 @@
   
   
   case 'public':
-  if(!botnm) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'solo bots pueden usar esto 😵‍💫')
+  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
   conn.public = true
   m.reply('*ahora el bot es de uso publico*')
   break
   
   case 'self':
-  if(!botnm) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres  bot 😵‍💫')
+  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
   conn.public = false
   m.reply('*ahora el bot es de uso privado*')
   break
+  
+  
   
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
