@@ -508,7 +508,7 @@ case 'fake':
 		var replace = gh.split("|")[0];
 		var target = gh.split("|")[1];
 		var bot = gh.split("|")[2];
-		conn.fakeReply(m.chat `${bot}`, `${target}`, `${replace}`)
+		conn.fakeReply(m.chat, `${bot}`, `${target}`, `${replace}`)
 		break
 
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
