@@ -111,9 +111,6 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_\n *NOTA: el bot se puede reiniciar si deja de recibir comandos use ${prefix + command} para volver a conectarte*`)   
    }   
    
-   if (connection === "open") {
-   await conn.sendMessage(m.chat, { text: `*ya estas conectado*\n*por favor espera a que se carguen tus mensajes*` }, { quoted: m })
-   }
   
    if (connection === 'close') {   
    let reason = new Boom(lastDisconnect?.error)?.output.statusCode   
