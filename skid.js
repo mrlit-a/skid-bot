@@ -214,14 +214,12 @@
   conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})  
   conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')}}  
   
-  //Banea chat  
-  if (db.data.chats[m.chat].ban && !isCreator) {  
-  return  
-  }  
-  if (db.data.chats[m.chat].onlyadmins && !isGroupAdmins) {  
-  return  
-  }  
+
   
+  if (!conn.public) {
+    if (!m.key.fromMe) return
+    }
+
   // Tiempo de Actividad del bot  
   const used = process.memoryUsage()  
   const cpus = os.cpus().map(cpu => {  
@@ -502,7 +500,18 @@
  break 
   
   
-
+  case 'public':
+  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+  conn.public = true
+  m.reply('*ahora el bot es de uso publico*')
+  break
+  
+  case 'public':
+  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+  conn.public = false
+  m.reply('*ahora el bot es de uso privado*')
+  break
+  
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
                   let set  
