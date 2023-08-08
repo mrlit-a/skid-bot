@@ -104,7 +104,7 @@
   const participants = m.isGroup ? await groupMetadata.participants : '' // Lista de participantes del grupo  
   const groupAdmins = m.isGroup ? await getGroupAdmins(participants) : '' // // Lista de administradores del grupo  
   
-  const isBotAdmins = m.isGroup ? groupAdmins.includes(numBot) : false // Verifica si el bot es un administrador del grupo  
+  const isBotAdmins = m.isGroup ? groupAdmins.includes(botnm) : false // Verifica si el bot es un administrador del grupo  
   const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Verifica si el remitente del mensaje es un administrador del grupo  
   const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados  
   const isPremium = m.isGroup ? premium.includes(userSender) : false   
