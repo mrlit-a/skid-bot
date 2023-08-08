@@ -506,7 +506,7 @@
   m.reply('*ahora el bot es de uso publico*')
   break
   
-  case 'public':
+  case 'self':
   if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
   conn.public = false
   m.reply('*ahora el bot es de uso privado*')
