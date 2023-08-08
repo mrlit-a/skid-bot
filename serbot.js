@@ -112,7 +112,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    }   
    
    if (connection === "open") {
-   await conn.sendMessage(m.chat, { text: `*ya estas conectado*\n*por favor espera a que se carguen tus mensajes` }, { quoted: m })
+   await conn.sendMessage(m.chat, { text: `*ya estas conectado*\n*por favor espera a que se carguen tus mensajes*` }, { quoted: m })
    }
   
    if (connection === 'close') {   
