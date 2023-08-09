@@ -474,13 +474,13 @@ break
 
   
   case 'public':
-  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+  if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
   conn.public = true
   m.reply('*ahora el bot es de uso publico*')
   break
   
   case 'self':
-  if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+  if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
   conn.public = false
   m.reply('*ahora el bot es de uso privado*')
   break
