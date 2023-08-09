@@ -72,8 +72,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     if (mek.key && mek.key.remoteJid === 'status@broadcast') return
     
     if (!sock.public && !m.key.fromMe && !chatUpdate.type === 'notify') return
-    const m = smsg(sock, mek)
-    let chats = global.db.data.chats[m.chat]
+    m = smsg(sock, mek)
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
     global.numBot = sock.user.id.split(":")[0] + "@s.whatsapp.net"
@@ -88,7 +87,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     }
 })
 
-// adaptado por skid
+/*// adaptado por skid
 if (global.db.data.chats[m.chat].welcome) {
 sock.ev.on('group-participants.update', async (anu) => {
 console.log(anu)
@@ -208,7 +207,7 @@ sock.sendMessage(anu.id,
 console.log(err)
 }
 })
-}
+}*/
 
 sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr, receivedPendingNotifications } = update;
