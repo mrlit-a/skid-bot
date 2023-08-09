@@ -17,11 +17,12 @@
   const QrCode = require('qrcode-reader')
   const qrcode = require('qrcode')
   const { TelegraPh, UploadFileUgu, webp2mp4File, floNime } = require('./lib/uploader.js')
-  const { toAudio, toPTT, toVideo, ffmpeg } = require('./lib/converter.js')
+  const { toAudio, toPTT, toVideo } = require('./lib/converter.js')
   const mimetype = require("mime-types")  
   const {jadibot, listJadibot } = require('./serbot.js')  
   const webp = require("node-webpmux")  
   const { pinterest } = require('./addons/add-ons.js')  
+  const ffmpeg = require('fluent-ffmpeg')
   
   const color = (text, color) => { // Función 'color' que toma un texto y un color como parámetros  
   return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)  
