@@ -74,7 +74,7 @@
   global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
   var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : '' // Almacenar el prefijo predeterminado  
   const isCmd = body.startsWith(prefix) // Verificar si el contenido de body comienza con el valor almacenado en prefix.  
-  const from = m.chat // Remitente del mensaje  
+  global.from = m.chat // Remitente del mensaje  
   const msg = JSON.parse(JSON.stringify(mek, undefined, 2)) // Mensaje convertido a formato JSON  
   const content = JSON.stringify(m.message) // Contenido del mensaje convertido a formato JSON  
   const type = m.mtype // Tipo de mensaje  

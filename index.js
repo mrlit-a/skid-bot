@@ -86,9 +86,10 @@ sock.ev.on('messages.upsert', async chatUpdate => {
         console.log(err)
     }
 })
+let chats = global.db.data.chats[from]
 
-/*// adaptado por skid
-if (global.db.data.chats[m.chat].welcome) {
+// adaptado por skid
+if (global.db.data.chats[from].welcome) {
 sock.ev.on('group-participants.update', async (anu) => {
 console.log(anu)
 try {
@@ -207,7 +208,7 @@ sock.sendMessage(anu.id,
 console.log(err)
 }
 })
-}*/
+}
 
 sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr, receivedPendingNotifications } = update;
