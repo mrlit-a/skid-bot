@@ -134,44 +134,9 @@
   const isQuotedMsg = type === 'extendedTextMessage' && content.includes('Message') // Mensaje citado de cualquier tipo  
   const isViewOnce = (type === 'viewOnceMessage') // Verifica si el tipo de mensaje es (mensaje de vista única)  
   
-  //base de datos  
-  let isNumber = x => typeof x === 'number' && !isNaN(x)  
-  let user = global.db.data.users[m.sender]  
-  if (typeof user !== 'object') global.db.data.users[m.sender] = {}  
-  if (user) {  
-  if (!isNumber(user.afkTime)) user.afkTime = -1  
-  if (!('afkReason' in user)) user.afkReason = ''  
-  if (!isNumber(user.limit)) user.limit = 20  
-  if(!isNumber(user.money)) user.money = 100  
-  if(!isNumber(user.health)) user.health = 100  
-  if(!isNumber(user.warn)) user.warn = 0  
-   } else global.db.data.users[m.sender] = {  
-  afkTime: -1,  
-  afkReason: '',  
-  limit: 20,  
-  money: 100,  
-  health: 100,  
-  warn: 0,  
-  }  
-  
-  let chats = global.db.data.chats[m.chat]  
-  if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}  
-  if (chats) {  
-  if (!('antilink' in chats)) chats.antilink = false  
-  if (!('ban' in chats)) chats.ban = false  
-  if (!('modeadmin' in chats)) chats.modeadmin = false  
-  if (!('welcome' in chats)) chats.welcome = false
-  if (!('audios' in chats)) chats.audios = false
-  if (!('antiNsfw' in chats)) chats.welcome = false  
-  } else global.db.data.chats[m.chat] = {  
-  antilink: false,  
-  isBanned: false,   
-  modeAdmin: false,  
-  welcome: false,  
-  audios: false,
-  antiNsfw: false,  
-  audios: false,
-  }  
+  let user = global.db.data.users[m.sender]
+  let chats = global.db.data.users[m.sender]
+
   /*let setting = global.db.data.settings[numBot]  
   if (typeof setting !== 'object') global.db.data.settings[numBot] = {}  
   if (setting) {  
@@ -208,7 +173,7 @@
    }} */  
   
   //antilink  
-  if (db.data.chats[m.chat].antilink) {  
+  if (global.db.data.chats[m.chat].antilink) {  
   if (budy.match(`chat.whatsapp.com`)) {  
   let delet = m.key.participant  
   let bang = m.key.id  
