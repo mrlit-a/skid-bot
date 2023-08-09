@@ -809,7 +809,7 @@ case 'wetglass':
 		case 'horrorblood':
 		case 'thunder':
 			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
-			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/textprome/${comando}?apikey=${apikey}&text=${q}` } })
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}` } })
 			break
   
   case 'hidetag':  
