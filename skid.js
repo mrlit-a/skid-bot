@@ -30,7 +30,8 @@
   const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom } = require('./lib/fuctions')  
   const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") // Importa los objetos 'makeWASocket' y 'proto' desde el módulo '@whiskeysockets/baileys'  
   const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')  
-  const speed = require("performance-now")
+  const speed = require("performance-now")  
+  const ffmpeg = require("fluent-ffmpeg")  
   
   const msgs = (message) => { // Función 'msgs' que toma un parámetro 'message'  
   if (message.length >= 10) { // Longitud de 'message' es mayor o igual a 10 caracteres  
@@ -70,8 +71,7 @@
   if (m.key.id.startsWith("BAE5")) return  
   var budy = (typeof m.text == 'string' ? m.text : '') // Asignar a la variable budy el valor m.text si es cadena          
   //var prefix = prefa ? /^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi.test(body) ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi)[0] : "" : prefa ?? global.prefix  
- global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
- //global.prefix = new RegExp('^¿', 'i') 
+  global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
   var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : '' // Almacenar el prefijo predeterminado  
   const isCmd = body.startsWith(prefix) // Verificar si el contenido de body comienza con el valor almacenado en prefix.  
   const from = m.chat // Remitente del mensaje  
@@ -904,6 +904,24 @@ case 'tomp4': case 'tovideo': {
   }  
   break  
   
+  case 'ia':
+  if (!text) return m.reply(`*ingresa un texto para hablar con chatgpt`)
+  try {     
+ let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
+ let hasill = await tioress.json() 
+ m.reply(`${hasill.result}`.trim())    
+ } catch {
+ try {
+ conn.sendPresenceUpdate('composing', m.chat); 
+ const syms1 = `Actuaras como un Bot de WhatsApp el cual fue creado por skid, tu seras skid bot.`; 
+ const fgapi1 = await fetch(`https://api-fgmods.ddns.net/api/info/openai?text=${text}&symsg=${syms1}&apikey=EHGx97RQ`); 
+ const fgjson1 = await fgapi1.json(); 
+ if (fgjson1.result == 'error' || fgjson1.result == '' || !fgjson1.result) return XD; // causar error undefined para lanzar msg de error 
+ const fgjson1_result = await translate(`${fgjson1.result}`, {to: 'es', autoCorrect: true}); 
+ m.reply(fgjson1_result.text.trim());
+ } catch {
+ }}
+ break
   case 'pinterest':  
   if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
   m.reply(mess.wait)  
