@@ -472,8 +472,8 @@
   
   
   case 'toimg': case 'jpg':
-	m.reply(mess.wait)
         if (!m.quoted) return reply(`_Responde a cualquier sticker_`)
+        	m.reply(mess.wait)
         let mime = m.quoted.mtype
 if (mime =="imageMessage" || mime =="stickerMessage")
 {
@@ -486,9 +486,10 @@ if (mime =="imageMessage" || mime =="stickerMessage")
 fs.unlinkSync(name)
         })
         
-} else return m.reply(`Por favor responde a un sticker`)
-    
+} else { return m.reply(`Por favor responde a un sticker`)
+}   
     break
+    
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
                   let set  
