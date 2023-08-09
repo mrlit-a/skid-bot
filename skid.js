@@ -136,7 +136,7 @@
   
   let user = global.db.data.users[m.sender]
   let chats = global.db.data.users[m.sender]
-  let setting = global.db.data.settings[numBot]  
+ // let setting = global.db.data.settings[numBot]  
   
   
   //antilink  
