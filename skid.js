@@ -135,8 +135,8 @@
   const isViewOnce = (type === 'viewOnceMessage') // Verifica si el tipo de mensaje es (mensaje de vista única)  
   
   let user = global.db.data.users[m.sender]
-  let chats = global.db.data.users[m.sender]
- // let setting = global.db.data.settings[numBot]  
+  let chats = global.db.data.users[m.chat]
+  //let setting = global.db.data.settings[numBot]  
   
   
   //antilink  
@@ -459,6 +459,19 @@ escribe *me rindo* para acptar tu derrota`
   
  break 
   
+  case 'grupo':
+    if (!m.isGroup) return reply(mess.group);  
+    if (!isBotAdmins) return reply(mess.botAdmin);  
+    if (!isGroupAdmins) return reply(mess.admin)
+  if (args[0] === 'abrir') {
+enviar(`*GRUPO ABIERTO CON EXITO✅*`)
+await andres.groupSettingUpdate(from, 'not_announcement')
+} else if (args[0] === 'cerrar') {
+enviar(`*GRUPO CERRADO CON EXITO✅*`)
+await andres.groupSettingUpdate(from, 'announcement')
+}
+break
+
   
   case 'public':
   if(!isCreator) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
