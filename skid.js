@@ -168,7 +168,7 @@
   isBanned: false,   
   modeAdmin: false,  
   welcome: false,  
-  audios: false
+  audios: false,
   antiNsfw: false,  
   audios: false,
   }  
