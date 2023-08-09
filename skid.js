@@ -476,7 +476,7 @@
 	const getRandom = (ext) => {
             return `${Math.floor(Math.random() * 10000)}${ext}`
         }
-        if (!m.quoted) return replygcxeon(`_Responde a cualquier sticker_`)
+        if (!m.quoted) return reply(`_Responde a cualquier sticker_`)
         let mime = m.quoted.mtype
 if (mime =="imageMessage" || mime =="stickerMessage")
 {
