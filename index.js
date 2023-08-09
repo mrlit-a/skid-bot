@@ -57,8 +57,130 @@ const sock = makeWASocket({
     logger: pino({ level: 'silent' }),
     browser: [`skid bot`,'Safari','3.0']
 })
+let chats = global.db.data.chats[m.chat]
 
-	
+
+// adaptado por skid
+if (global.db.data.chats[m.chat].welcome) {
+sock.ev.on('group-participants.update', async (anu) => {
+console.log(anu)
+try {
+let metadata = await sock.groupMetadata(anu.id)
+let participants = anu.participants
+for (let num of participants) {
+try {
+ppuser = await sock.profilePictureUrl(num, 'image')
+} catch (err) {
+ppuser = noperfil
+}
+try {
+ppgroup = await sock.profilePictureUrl(anu.id, 'image')
+} catch (err) {
+ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
+}
+//welcome\\
+memb = metadata.participants.length
+sk-OnWelcome = await getBuffer(ppuser)
+skLft = await getBuffer(ppuser)
+                if (anu.action == 'add') {
+                const sk-OnBuffer = await getBuffer(ppuser)
+                let skidName = num
+                const time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+	            const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
+	            const member = metadata.participants.length
+                sk-text = `┌─❖
+│「 👋 」
+└┬❖ 「  @${skidName.split("@")[0]}  」
+   │✑  𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 
+   │✑  ${metadata.subject}
+   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
+   │✑ ${member}th
+   │✑  𝗝𝗼𝗶𝗻𝗲𝗱 : 
+   │✑ ${time} ${date}
+   └───────────────┈ ⳹`
+sock.sendMessage(anu.id,
+ { text: sk-text,
+ contextInfo:{
+ mentionedJid:[num],
+ "externalAdReply": {"showAdAttribution": true,
+ "containsAutoReply": true,
+ "title": ` ${global.botname}`,
+"body": `👻 skid 👻`,
+ "previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": sk-OnWelcome,
+"sourceUrl": `${wagrupo}`}}})
+                } else if (anu.action == 'remove') {
+                	const sk-OnBuffer = await getBuffer(ppuser)
+                    const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+	                const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
+                	let skidName = num
+                    const members = metadata.participants.length
+                    sk-text = `┌─❖
+│「 𝗚𝗼𝗼𝗱𝗯𝘆𝗲 👋 」
+└┬❖ 「 @${skidName.split("@")[0]}  」
+   │✑  𝗟𝗲𝗳𝘁 
+   │✑ ${metadata.subject}
+   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
+   │✑ ${members}th
+   │✑  𝗧𝗶𝗺𝗲 : 
+   │✑  ${sk-time} ${date}
+   └───────────────┈ ⳹`
+sock.sendMessage(anu.id,
+ { text: sk-text,
+ contextInfo:{
+ mentionedJid:[num],
+ "externalAdReply": {"showAdAttribution": true,
+ "containsAutoReply": true,
+ "title": ` ${global.botname}`,
+"body": `👻 skid 👻`,
+ "previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": skLft,
+"sourceUrl": `${wagrupo}`}}})
+} else if (anu.action == 'promote') {
+const sk-OnBuffer = await getBuffer(ppuser)
+const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
+let skidName = num
+sk-text = `*@${skidName.split("@")[0]}, ahora es admin 🥳*`
+   sock.sendMessage(anu.id,
+ { text: sk-text,
+ contextInfo:{
+ mentionedJid:[num],
+ "externalAdReply": {"showAdAttribution": true,
+ "containsAutoReply": true,
+ "title": ` ${global.botname}`,
+"body": `👻 skid 👻`,
+ "previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": sk-OnWelcome,
+"sourceUrl": `${wagrupo}`}}})
+} else if (anu.action == 'demote') {
+const sk-OnBuffer = await getBuffer(ppuser)
+const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
+let skidName = num
+sk-text = `*@${skidName.split("@")[0]}, ya no es admin 😵‍💫*`
+sock.sendMessage(anu.id,
+ { text: sk-text,
+ contextInfo:{
+ mentionedJid:[num],
+ "externalAdReply": {"showAdAttribution": true,
+ "containsAutoReply": true,
+ "title": ` ${global.botname}`,
+"body": `👻 skid 👻`,
+ "previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": skLft,
+"sourceUrl": `${wagrupo}`}}})
+}
+}
+} catch (err) {
+console.log(err)
+}
+})
+}
 
 sock.ev.on('messages.upsert', async chatUpdate => {
     //console.log(JSON.stringify(chatUpdate, undefined, 2))

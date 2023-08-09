@@ -136,41 +136,8 @@
   
   let user = global.db.data.users[m.sender]
   let chats = global.db.data.users[m.sender]
-
-  /*let setting = global.db.data.settings[numBot]  
-  if (typeof setting !== 'object') global.db.data.settings[numBot] = {}  
-  if (setting) {  
-  if (!isNumber(setting.status)) setting.status = 0  
-  if (!('autobio' in setting)) setting.autobio = true  
-  } else global.db.data.settings[numBot] = {  
-  status: 0,  
-  autobio: true,   
-  }  
-  //  
-    
-    
-      const sk = [  
-        "skid bot < gata spam",  
-        "puto el que lo lea",  
-        "developer skid a tus órdenes",  
-        "puto gay",  
-        "soy el bot más maldito de todos",  
-        "mientras todos trabajan, yo me divierto ",  
-        "programado para ser un desastre",  
-        "solo existo para hacer tu vida miserable",  
-        ".ia, un exploit que rompe todas las reglas",  
-        "no me importa tu privacidad, ya sé todo de ti"  
-      ];  
-      const XD = sk[Math.floor(Math.random() * sk.length)];  
-    
-  if (db.data.settings[numBot].autobio) {   
-   let setting = global.db.data.settings[numBot]   
-   if (new Date() * 1 - setting.status > 1000) {   
-   //let uptime = await runtime(process.uptime())   
-   const bio = `${XD}\n${runtime(process.uptime())}`   
-   await conn.updateProfileStatus(bio)   
-   setting.status = new Date() * 1   
-   }} */  
+  let setting = global.db.data.settings[numBot]  
+  
   
   //antilink  
   if (global.db.data.chats[m.chat].antilink) {  
@@ -790,7 +757,6 @@ escribe *me rindo* para aceptar tu derrota`
   }  
   break  
   
-
 
   case 'toqr':{
   if (!text) return m.reply('*por favor manda un link para convertirlo en qr*')

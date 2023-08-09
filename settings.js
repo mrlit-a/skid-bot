@@ -2,13 +2,12 @@ const chalk = require("chalk")
 const fs = require("fs")
 
 global.owner = [
+["5218442114446"],
 ["595992611272", "nombre1", true],
 ["50664668406", "nombre2", true],
-["5218442114446"],
 ["593968585383"], 
 ['584125778026'],
-["5492266613038"],
-["543458437331"]
+["5492266613038"]
 ]
 
 global.noperfil = fs.readFileSync('./media/sinfoto.jpg')
@@ -17,7 +16,8 @@ global.query = fs.readFileSync('./media/query.jpg')
 global.menu = fs.readFileSync('./media/menu.jpg')
 global.hentai = fs.readFileSync('./media/hentai.jpg')
 global.simi = fs.readFileSync('./media/simi.jpeg')
-
+global.wagrupo = 'https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ'
+global.script = 'https://www.github.com/Skidy89/skid-bot'
 
 
 global.mess = {
