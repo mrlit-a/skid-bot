@@ -857,32 +857,6 @@ case 'fake':
   
   
           default: 
-          if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(araara|ara ara)/gi)) {    
-let vn = './audios/Ara.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(a)/gi)) {    
-let vn = './audios/a.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(bañate|bañame)/gi)) {    
-let vn = './audios/banate.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(sexo|sexo anal)/gi)) {    
-let vn = './audios/mauu1.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(uwu|UWU)/gi)) {    
-let vn = './audios/UWU.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(un pato|patito >-<)/gi)) {    
-let vn = './audios/pato.mp3'
-this.sendPresenceUpdate('composing', m.chat);   
-this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
-
-
               if (budy.startsWith('>')) {  
                   if (!isCreator) return  
                   try {  
