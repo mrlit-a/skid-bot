@@ -80,15 +80,15 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 }
 //welcome\\
 memb = metadata.participants.length
-sk-OnWelcome = await getBuffer(ppuser)
+imskOnWelcome = await getBuffer(ppuser)
 skLft = await getBuffer(ppuser)
                 if (anu.action == 'add') {
-                const sk-OnBuffer = await getBuffer(ppuser)
+                const imskOnBuffer = await getBuffer(ppuser)
                 let skidName = num
                 const time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
 	            const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
 	            const member = metadata.participants.length
-                sk-text = `┌─❖
+                imsktext = `┌─❖
 │「 👋 」
 └┬❖ 「  @${skidName.split("@")[0]}  」
    │✑  𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 
@@ -99,7 +99,7 @@ skLft = await getBuffer(ppuser)
    │✑ ${time} ${date}
    └───────────────┈ ⳹`
 sock.sendMessage(anu.id,
- { text: sk-text,
+ { text: imsktext,
  contextInfo:{
  mentionedJid:[num],
  "externalAdReply": {"showAdAttribution": true,
@@ -108,15 +108,15 @@ sock.sendMessage(anu.id,
 "body": `👻 skid 👻`,
  "previewType": "PHOTO",
 "thumbnailUrl": ``,
-"thumbnail": sk-OnWelcome,
+"thumbnail": imskOnWelcome,
 "sourceUrl": `${wagrupo}`}}})
                 } else if (anu.action == 'remove') {
-                	const sk-OnBuffer = await getBuffer(ppuser)
-                    const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+                	const imskOnBuffer = await getBuffer(ppuser)
+                    const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
 	                const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
                 	let skidName = num
                     const members = metadata.participants.length
-                    sk-text = `┌─❖
+                    imsktext = `┌─❖
 │「 𝗚𝗼𝗼𝗱𝗯𝘆𝗲 👋 」
 └┬❖ 「 @${skidName.split("@")[0]}  」
    │✑  𝗟𝗲𝗳𝘁 
@@ -124,10 +124,10 @@ sock.sendMessage(anu.id,
    │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
    │✑ ${members}th
    │✑  𝗧𝗶𝗺𝗲 : 
-   │✑  ${sk-time} ${date}
+   │✑  ${imsktime} ${date}
    └───────────────┈ ⳹`
 sock.sendMessage(anu.id,
- { text: sk-text,
+ { text: imsktext,
  contextInfo:{
  mentionedJid:[num],
  "externalAdReply": {"showAdAttribution": true,
@@ -139,13 +139,13 @@ sock.sendMessage(anu.id,
 "thumbnail": skLft,
 "sourceUrl": `${wagrupo}`}}})
 } else if (anu.action == 'promote') {
-const sk-OnBuffer = await getBuffer(ppuser)
-const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+const imskOnBuffer = await getBuffer(ppuser)
+const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
 const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
 let skidName = num
-sk-text = `*@${skidName.split("@")[0]}, ahora es admin 🥳*`
+imsktext = `*@${skidName.split("@")[0]}, ahora es admin 🥳*`
    sock.sendMessage(anu.id,
- { text: sk-text,
+ { text: imsktext,
  contextInfo:{
  mentionedJid:[num],
  "externalAdReply": {"showAdAttribution": true,
@@ -154,16 +154,16 @@ sk-text = `*@${skidName.split("@")[0]}, ahora es admin 🥳*`
 "body": `👻 skid 👻`,
  "previewType": "PHOTO",
 "thumbnailUrl": ``,
-"thumbnail": sk-OnWelcome,
+"thumbnail": imskOnWelcome,
 "sourceUrl": `${wagrupo}`}}})
 } else if (anu.action == 'demote') {
-const sk-OnBuffer = await getBuffer(ppuser)
-const sk-time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
+const imskOnBuffer = await getBuffer(ppuser)
+const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
 const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
 let skidName = num
-sk-text = `*@${skidName.split("@")[0]}, ya no es admin 😵‍💫*`
+imsktext = `*@${skidName.split("@")[0]}, ya no es admin 😵‍💫*`
 sock.sendMessage(anu.id,
- { text: sk-text,
+ { text: imsktext,
  contextInfo:{
  mentionedJid:[num],
  "externalAdReply": {"showAdAttribution": true,
