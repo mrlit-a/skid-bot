@@ -471,7 +471,27 @@
   break
   
   
-  
+  case 'toimg': case 'jpg':
+	m.reply(mess.wait)
+	const getRandom = (ext) => {
+            return `${Math.floor(Math.random() * 10000)}${ext}`
+        }
+        if (!m.quoted) return replygcxeon(`_Responde a cualquier sticker_`)
+        let mime = m.quoted.mtype
+if (mime =="imageMessage" || mime =="stickerMessage")
+{
+        let media = await conn.downloadAndSaveMediaMessage(m.quoted)
+        let name = await getRandom('.png')
+        exec(`ffmpeg -i ${media} ${name}`, (err) => {
+        	fs.unlinkSync(media)
+            let buffer = fs.readFileSync(name)
+            conn.sendMessage(m.chat, { image: buffer }, { quoted: m })      
+fs.unlinkSync(name)
+        })
+        
+} else return m.reply(`Por favor responde a un sticker`)
+    
+    break
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
                   let set  
