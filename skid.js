@@ -39,16 +39,16 @@
   } else { // Caso contrario  
   return `${message}`}} // Devuelve 'message' completo  
   
-  const getCmd = (id) => { //Función llamada 'getCmd' que toma un parámetro 'id'  
+  const getCmd = (id) => {
   const stickerdb = JSON.parse(fs.readFileSync('./database/stickerdb.json'))  
   let anu = null;  
-  Object.keys(stickerdb).forEach(nganu => { // Itera sobre las claves del objeto 'stickerdb' utilizando 'forEach'  
-  if (stickerdb[nganu].id === id) { // Si el valor de la propiedad 'id' en el objeto 'stickerdb[nganu]' es igual a 'id'  
+  Object.keys(stickerdb).forEach(nganu => { 
+  if (stickerdb[nganu].id === id) { 
   anu = nganu  
   }})  
-  if (anu !== null) { // De lo contrario  
-  return stickerdb[anu].cmd // Devolver el valor de la propiedad 'cmd' en el objeto 'stickerdb[anu]'  
-  }}  
+  if (anu !== null) {  
+  return stickerdb[anu].cmd  
+  }}
   const getFileBuffer = async (mediakey, MediaType) => {  
   const stream = await downloadContentFromMessage(mediakey, MediaType)  
   let buffer = Buffer.from([])  
@@ -279,6 +279,72 @@
   chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))  
   )}    
   
+  
+  // ttt game ( adaptado }
+  	    this.game = this.game ? this.game : {}
+	    let room13 = Object.values(this.game).find(room13 => room13.id && room13.game && room13.state && room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender) && room13.state == 'PLAYING')
+	    if (room13) {
+	    let ok
+	    let isWin = !1
+	    let isTie = !1
+	    let isSurrender = !1
+	    //reply(`[DEBUG]\n${parseInt(m.text)}`)
+	    if (!/^([1-9]|(me)?give up|surr?ender|off|skip|me rindo)$/i.test(m.text)) return
+	    isSurrender = !/^[1-9]$/.test(m.text)
+	    if (m.sender !== room13.game.currentTurn) { 
+	    if (!isSurrender) return !0
+	    }
+	    if (!isSurrender && 1 > (ok = room13.game.turn(m.sender === room13.game.playerO, parseInt(m.text) - 1))) {
+	    reply({
+	    '-3': 'Juego terminado',
+	    '-2': 'Invalido',
+	    '-1': 'posicion invalida',
+	    0: 'posicion invalida',
+	    }[ok])
+	    return !0
+	    }
+	    if (m.sender === room13.game.winner) isWin = true
+	    else if (room13.game.board === 511) isTie = true
+	    let arr = room13.game.render().map(v => {
+	    return {
+	    X: '❌',
+	    O: '⭕',
+	    1: '1️⃣',
+	    2: '2️⃣',
+	    3: '3️⃣',
+	    4: '4️⃣',
+	    5: '5️⃣',
+	    6: '6️⃣',
+	    7: '7️⃣',
+	    8: '8️⃣',
+	    9: '9️⃣',
+	    }[v]
+	    })
+	    if (isSurrender) {
+	    room13.game._currentTurn = m.sender === room13.game.playerX
+	    isWin = true
+	    }
+	    let winner = isSurrender ? room13.game.currentTurn : room13.game.winner
+	    let str = `room13 ID: ${room13.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+${isWin ? `@${winner.split('@')[0]} gano!!` : isTie ? `Game over` : `Turno de ${['❌', '⭕'][1 * room13.game._currentTurn]} (@${room13.game.currentTurn.split('@')[0]})`}
+❌: @${room13.game.playerX.split('@')[0]}
+⭕: @${room13.game.playerO.split('@')[0]}
+
+escribe *me rindo* para acptar tu derrota`
+	    if ((room13.game._currentTurn ^ isSurrender ? room13.x : room13.o) !== m.chat)
+	    room13[room13.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
+	    if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
+	    await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
+	    if (isTie || isWin) {
+	    delete this.game[room13.id]
+	    }
+	    }
+	    
           //Suit PvP 
      this.suit = this.suit ? this.suit : {}; 
      let roof = Object.values(this.suit).find( 
@@ -629,9 +695,70 @@ case 'fake':
   }  
   break;  
   
+case 'ttc': case 'ttt': case 'tictactoe': {
+            let TicTacToe = require("./lib/tictactoe")
+            this.game = this.game ? this.game : {}
+            if (Object.values(this.game).find(room13 => room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender))) return replygcxeon(`You Are Still In The Game`)
+            let room13 = Object.values(this.game).find(room13 => room13.state === 'WAITING' && (text ? room13.name === text : true))
+            if (room13) {
+            room13.o = m.chat
+            room13.game.playerO = m.sender
+            room13.state = 'PLAYING'
+            let arr = room13.game.render().map(v => {
+            return {
+            X: '❌',
+            O: '⭕',
+            1: '1️⃣',
+            2: '2️⃣',
+            3: '3️⃣',
+            4: '4️⃣',
+            5: '5️⃣',
+            6: '6️⃣',
+            7: '7️⃣',
+            8: '8️⃣',
+            9: '9️⃣',
+            }[v]
+            })
+            let str = `room13 ID: ${room13.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+esperando a @${room13.game.currentTurn.split('@')[0]}
+
+escribe *me rindo* para aceptar tu derrota`
+            if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
+            await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
+            } else {
+            room13 = {
+            id: 'tictactoe-' + (+new Date),
+            x: m.chat,
+            o: '',
+            game: new TicTacToe(m.sender, 'o'),
+            state: 'WAITING'
+            }
+            if (text) room13.name = text
+            reply('esperando jugador' + (text ? ` Escriba el comando ${prefix}${command} ${text}` : ''))
+            this.game[room13.id] = room13
+            }
+            }
+            break
   
-  
-  
+  case 'delttc': case 'delttt': {
+            this.game = this.game ? this.game : {}
+            try {
+            if (this.game) {
+            delete this.game
+            conn.sendText(m.chat, `Se elimino la session tictactoe 🎮`, m)
+            } else if (!this.game) {
+            reply(`no existe ninguna session tictactoe 🎮`)
+            } else throw '?'
+            } catch (e) {
+            reply(`${e}`)
+            }
+            }
+            break
   case 'getcase':  
     if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
     if (!text) return m.reply(`no hay comando a buscar o que?`)  
