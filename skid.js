@@ -464,11 +464,11 @@ escribe *me rindo* para acptar tu derrota`
     if (!isBotAdmins) return reply(mess.botAdmin);  
     if (!isGroupAdmins) return reply(mess.admin)
   if (args[0] === 'abrir') {
-enviar(`*GRUPO ABIERTO CON EXITO✅*`)
+m.reply(`*GRUPO ABIERTO CON EXITO✅*`)
 await andres.groupSettingUpdate(from, 'not_announcement')
 } else if (args[0] === 'cerrar') {
-enviar(`*GRUPO CERRADO CON EXITO✅*`)
-await andres.groupSettingUpdate(from, 'announcement')
+m.reply(`*GRUPO CERRADO CON EXITO✅*`)
+await conn.groupSettingUpdate(from, 'announcement')
 }
 break
 
