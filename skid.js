@@ -713,25 +713,104 @@ case 'fake':
   }
   break
 
-  case 'blackpink':  
-  case 'bloodfrosted':  
-  case 'neon':  
-  case 'minion':  
-  case 'toxic':  
-  case 'cloud':  
-  case 'hallowen':  
-    if (!text) return m.reply('*por favor pon un texto para convertirlo a logo*')
-    lol = `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}`  
-    sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)  
-    break  
-  
-  case 'avenger':  
-  case 'space':  
-  case 'avenger':  
-    if (!text) return m.reply('*por favor pon un texto para convertirlo a logo*')
-    lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`  
-    sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)  
-    break  
+
+case 'wetglass':
+		case 'multicolor3d':
+		case 'watercolor':
+		case 'luxurygold':
+		case 'galaxywallpaper':
+		case 'lighttext':
+		case 'beautifulflower':
+		case 'puppycute':
+		case 'royaltext':
+		case 'heartshaped':
+		case 'birthdaycake':
+		case 'galaxystyle':
+		case 'hologram3d':
+		case 'greenneon':
+		case 'glossychrome':
+		case 'greenbush':
+		case 'metallogo':
+		case 'noeltext':
+		case 'glittergold':
+		case 'textcake':
+		case 'starsnight':
+		case 'wooden3d':
+		case 'textbyname':
+		case 'writegalacy':
+		case 'galaxybat':
+		case 'snow3d':
+		case 'birthdayday':
+		case 'goldplaybutton':
+		case 'silverplaybutton':
+		case 'freefire':
+			if (args.length == 0) return reply(`Example: ${prefixo + comando} andres vpn`)
+			andres.sendMessage(from, { image: { url: `https://api.lolhuman.xyz/api/ephoto1/${comando}?apikey=${apikey}&text=${q}` } })
+			break
+			
+			case 'shadow':
+		case 'cup':
+		case 'cup1':
+		case 'romance':
+		case 'smoke':
+		case 'burnpaper':
+		case 'lovemessage':
+		case 'undergrass':
+		case 'love':
+		case 'coffe':
+		case 'woodheart':
+		case 'woodenboard':
+		case 'summer3d':
+		case 'wolfmetal':
+		case 'nature3d':
+		case 'underwater':
+		case 'golderrose':
+		case 'summernature':
+		case 'letterleaves':
+		case 'glowingneon':
+		case 'fallleaves':
+		case 'flamming':
+		case 'harrypotter':
+		case 'carvedwood':
+			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/photooxy1/${comando}?apikey=${apikey}&text=${q}` }}, {quoted: m })
+			break
+			
+			case 'blackpink':
+		case 'neon':
+		case 'greenneon':
+		case 'advanceglow':
+		case 'futureneon':
+		case 'sandwriting':
+		case 'sandsummer':
+		case 'sandengraved':
+		case 'metaldark':
+		case 'neonlight':
+		case 'holographic':
+		case 'text1917':
+		case 'minion':
+		case 'deluxesilver':
+		case 'newyearcard':
+		case 'bloodfrosted':
+		case 'halloween':
+		case 'jokerlogo':
+		case 'fireworksparkle':
+		case 'natureleaves':
+		case 'bokeh':
+		case 'toxic':
+		case 'strawberry':
+		case 'box3d':
+		case 'roadwarning':
+		case 'breakwall':
+		case 'icecold':
+		case 'luxury':
+		case 'cloud':
+		case 'summersand':
+		case 'horrorblood':
+		case 'thunder':
+			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/textprome/${comando}?apikey=${apikey}&text=${q}` } })
+			break
   
   case 'hidetag':  
     if (!m.isGroup) return reply(mess.group);  
