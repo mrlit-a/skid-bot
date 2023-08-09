@@ -745,7 +745,7 @@ case 'wetglass':
 		case 'silverplaybutton':
 		case 'freefire':
 			if (args.length == 0) return reply(`Example: ${prefixo + comando} andres vpn`)
-			andres.sendMessage(from, { image: { url: `https://api.lolhuman.xyz/api/ephoto1/${comando}?apikey=${apikey}&text=${q}` } })
+			andres.sendMessage(from, { image: { url: `https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${lolkeysapi}&text=${text}` } })
 			break
 			
 			case 'shadow':
@@ -773,7 +773,7 @@ case 'wetglass':
 		case 'harrypotter':
 		case 'carvedwood':
 			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
-			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/photooxy1/${comando}?apikey=${apikey}&text=${q}` }}, {quoted: m })
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/photooxy1/${command}?apikey=${lolkeysapi}&text=${text}` }}, {quoted: m })
 			break
 			
 			case 'blackpink':
