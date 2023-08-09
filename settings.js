@@ -7,7 +7,7 @@ global.owner = [
 ["50664668406", "nombre2", true],
 ["593968585383"], 
 ['584125778026'],
-["5492266613038"]
+["543458437331"]
 ]
 
 global.noperfil = fs.readFileSync('./media/sinfoto.jpg')
