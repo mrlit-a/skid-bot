@@ -72,7 +72,7 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     if (mek.key && mek.key.remoteJid === 'status@broadcast') return
     
     if (!sock.public && !m.key.fromMe && !chatUpdate.type === 'notify') return
-    m = smsg(sock, mek)
+    const m = smsg(sock, mek)
     let chats = global.db.data.chats[m.chat]
     //if (m.key.fromMe === true) return
     //if (m.mtype === 'senderKeyDistributionMessage') mek = chatUpdate.messages[1]
