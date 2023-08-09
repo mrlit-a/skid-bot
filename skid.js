@@ -31,7 +31,6 @@
   const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") // Importa los objetos 'makeWASocket' y 'proto' desde el módulo '@whiskeysockets/baileys'  
   const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')  
   const speed = require("performance-now")  
-  const ffmpeg = require("fluent-ffmpeg")  
   
   const msgs = (message) => { // Función 'msgs' que toma un parámetro 'message'  
   if (message.length >= 10) { // Longitud de 'message' es mayor o igual a 10 caracteres  
