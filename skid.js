@@ -14,7 +14,10 @@
   const axios = require('axios')  
   const cheerio = require('cheerio')
   const { skmenu } = require('./lib/menu.js')
-
+  const QrCode = require('qrcode-reader')
+  const qrcode = require('qrcode')
+  const { TelegraPh, UploadFileUgu, webp2mp4File, floNime } = require('./lib/uploader.js')
+  const { toAudio, toPTT, toVideo, ffmpeg } = require('./lib/converter.js')
   const mimetype = require("mime-types")  
   const {jadibot, listJadibot } = require('./serbot.js')  
   const webp = require("node-webpmux")  
@@ -68,8 +71,8 @@
   if (m.key.id.startsWith("BAE5")) return  
   var budy = (typeof m.text == 'string' ? m.text : '') // Asignar a la variable budy el valor m.text si es cadena          
   //var prefix = prefa ? /^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi.test(body) ? body.match(/^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^]/gi)[0] : "" : prefa ?? global.prefix  
-  global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
- //global.prefix = new RegExp('^¿', 'i') 
+ // global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
+ global.prefix = new RegExp('^¿', 'i') 
   var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : '' // Almacenar el prefijo predeterminado  
   const isCmd = body.startsWith(prefix) // Verificar si el contenido de body comienza con el valor almacenado en prefix.  
   const from = m.chat // Remitente del mensaje  
@@ -724,7 +727,68 @@ case 'fake':
     }  
   }  
   break  
-  
+
+case 'tomp4': case 'tovideo': {
+                if (!quoted) return m.reply('Responde a un sticker')
+                if (!/webp/.test(mime)) return m.reply(`responde a un sticker con *${prefix + command}*`)
+                m.reply(mess.wait)
+                let media = await conn.downloadAndSaveMediaMessage(quoted)
+                let webpToMp4 = await webp2mp4File(media)
+                await conn.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: "'su sticker fue convertido correctamente" } }, { quoted: m })
+                await fs.unlinkSync(media)
+            }
+            break
+            case 'toaud': case 'toaudio': {
+            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`responder al video/audio que desea usar como audio con ${prefix + command}`)
+            if (!quoted) return m.reply(`responder al video/audio que desea usar como audio con ${prefix + command}`)
+            m.reply(mess.wait)
+            let media = await quoted.download()
+            let audio = await toAudio(media, 'mp4')
+            conn.sendMessage(m.chat, {audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
+            }
+            break
+            case 'tomp3': {
+            if (/document/.test(mime)) return m.reply(`responde al video/audio que desea convertir a MP3 con ${prefix + command}`)
+            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`responde al video/audio que desea convertir a MP3 con ${prefix + command}`)
+            if (!quoted) return m.reply(`responde al video/audio que desea convertir a MP3 con  ${prefix + command}`)
+            m.reply(mess.wait)
+            let media = await quoted.download()
+            let audio = await toAudio(media, 'mp4')
+            conn.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `${conn.user.name}.mp3`}, { quoted : m })
+            }
+            break
+            case 'tovn': case 'toptt': {
+            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Responda el video/audio que desea que sea VN con ${prefix + command}`)
+            if (!quoted) return m.reply(`Responda el video/audio que desea que sea VN con ${prefix + command}`)
+            m.reply(mess.wait)
+            let media = await quoted.download()
+            let audio = await toPTT(media, 'mp4')
+            conn.sendMessage(m.chat, {audio: audio, mimetype:'audio/mpeg', ptt:true }, {quoted:m})
+            }
+            break
+            case 'togif': {
+                if (!quoted) return m.reply('*responde a un video*')
+                if (!/webp/.test(mime)) return m.reply(`responde a un sticker con *${prefix + command}*`)
+                m.reply(mess.wait)
+                let media = await conn.downloadAndSaveMediaMessage(quoted)
+                let webpToMp4 = await webp2mp4File(media)
+                await conn.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'su sticker fue convertido correctamente ' }, gifPlayback: true }, { quoted: m })
+                await fs.unlinkSync(media)
+            }
+            break
+            case 'toqr':{
+  if (!text) return m.reply('*por favor manda un link para convertirlo en qr*')
+
+   let qruwu = await qrcode.toDataURL(q, { scale: 35 })
+   let data = new Buffer.from(qruwu.replace('data:image/png;base64,', ''), 'base64')
+   let buff = getRandom('.jpg')
+   await fs.writeFileSync('./'+buff, data)
+   let medi = fs.readFileSync('./' + buff)
+  await conn.sendMessage(from, { image: medi, caption: `*aqui tienes tu qr*\n*${botname}*`}, { quoted: m })
+   setTimeout(() => { fs.unlinkSync(buff) }, 10000)
+  }
+  break
+
   case 'blackpink':  
   case 'bloodfrosted':  
   case 'neon':  
@@ -732,7 +796,7 @@ case 'fake':
   case 'toxic':  
   case 'cloud':  
   case 'hallowen':  
-    if (!text) { m.reply('test') }  
+    if (!text) return m.reply('*por favor pon un texto para convertirlo a logo*')
     lol = `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}`  
     sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)  
     break  
@@ -740,7 +804,7 @@ case 'fake':
   case 'avenger':  
   case 'space':  
   case 'avenger':  
-    if (!text) { m.reply('test') }  
+    if (!text) return m.reply('*por favor pon un texto para convertirlo a logo*')
     lol = `https://api.lolhuman.xyz/api/textprome2/${command}?apikey=${lolkeysapi}&text=${text}`  
     sendImageAsUrl(lol, `aqui esta su texto en estilo ${command}`)  
     break  
