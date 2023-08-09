@@ -136,7 +136,7 @@
   
   //base de datos  
   let isNumber = x => typeof x === 'number' && !isNaN(x)  
-  global.user = global.db.data.users[m.sender]  
+  let user = global.db.data.users[m.sender]  
   if (typeof user !== 'object') global.db.data.users[m.sender] = {}  
   if (user) {  
   if (!isNumber(user.afkTime)) user.afkTime = -1  
@@ -160,14 +160,17 @@
   if (!('antilink' in chats)) chats.antilink = false  
   if (!('ban' in chats)) chats.ban = false  
   if (!('modeadmin' in chats)) chats.modeadmin = false  
-  if (!('welcome' in chats)) chats.welcome = true  
+  if (!('welcome' in chats)) chats.welcome = false
+  if (!('audios' in chats)) chats.audios = false
   if (!('antiNsfw' in chats)) chats.welcome = false  
   } else global.db.data.chats[m.chat] = {  
   antilink: false,  
-  ban: false,   
+  isBanned: false,   
   modeAdmin: false,  
-  welcome: true,  
+  welcome: false,  
+  audios: false
   antiNsfw: false,  
+  audios: false,
   }  
   /*let setting = global.db.data.settings[numBot]  
   if (typeof setting !== 'object') global.db.data.settings[numBot] = {}  
@@ -472,24 +475,7 @@
   break
   
   
-  case 'toimg': case 'jpg':
-        if (!m.quoted) return reply(`_Responde a cualquier sticker_`)
-        	m.reply(mess.wait)
-        let mime = m.quoted.mtype
-if (mime =="imageMessage" || mime =="stickerMessage")
-{
-        let media = await conn.downloadAndSaveMediaMessage(m.quoted)
-        let name = await getRandom('.png')
-        exec(`ffmpeg -i ${media} ${name}`, (err) => {
-        	fs.unlinkSync(media)
-            let buffer = fs.readFileSync(name)
-            conn.sendMessage(m.chat, { image: buffer }, { quoted: m })      
-fs.unlinkSync(name)
-        })
-        
-} else { return m.reply(`Por favor responde a un sticker`)
-}   
-    break
+  
     
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
@@ -677,23 +663,6 @@ case 'fake':
     await conn.sendMessage(from, { image: { url: search.all[0].thumbnail }, caption: teks }, { quoted: fkontak });  
     break  
   
-  case 'welcome':  
-  case 'modeadmin':  
-  case 'antilink': {  
-    if (!m.isGroup) return reply(mess.group);  
-    if (!isBotAdmins) return reply(mess.botAdmin);  
-    if (!isGroupAdmins) return reply(mess.admin);  
-    if (args[0] === "on") {  
-      if (db.data.chats[m.chat].command) return reply(`Activo`);  
-      db.data.chats[m.chat].antilink = true;  
-      reply(`✅El ${command} se activo con exito!`);  
-    } else if (args[0] === "off") {  
-      if (!db.data.chats[m.chat].antilink) return reply(`off`);  
-      db.data.chats[m.chat].antilink = false;  
-      reply(`${command} desactivado !`);  
-    }  
-  }  
-  break  
   
   case 'leave': {  
     if (!isCreator) return reply(`*este comando solo es para mi jefe*`);  
@@ -729,71 +698,9 @@ case 'fake':
   }  
   break  
   
-  case 'banchat': {  
-    if (!m.isGroup) return reply(mess.group);  
-    if (!isBotAdmins) return reply(mess.botAdmin);  
-    if (!isGroupAdmins) return reply(mess.admin);  
-    if (args[0] === "on") {  
-      if (db.data.chats[m.chat].ban) return reply(`*Chat baneado*`);  
-      db.data.chats[m.chat].ban = true;  
-      reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`);  
-    } else if (args[0] === "off") {  
-      if (!db.data.chats[m.chat].ban) return reply(`*Chat desbaneado*`);  
-      db.data.chats[m.chat].ban = false;  
-      reply(`𝚎𝚜𝚝𝚎 𝚌𝚑𝚊𝚝 𝚏𝚞𝚎 𝚍𝚎𝚜𝚋𝚊𝚗𝚎𝚊𝚍𝚘 𝚌𝚘𝚗 𝚎𝚡𝚒𝚝𝚘`);  
-    }  
-  }  
-  break  
 
-case 'tomp4': case 'tovideo': {
-                if (!quoted) return m.reply('Responde a un sticker')
-                if (!/webp/.test(mime)) return m.reply(`responde a un sticker con *${prefix + command}*`)
-                m.reply(mess.wait)
-                let media = await conn.downloadAndSaveMediaMessage(quoted)
-                let webpToMp4 = await webp2mp4File(media)
-                await conn.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: "'su sticker fue convertido correctamente" } }, { quoted: m })
-                await fs.unlinkSync(media)
-            }
-            break
-            case 'toaud': case 'toaudio': {
-            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`responder al video/audio que desea usar como audio con ${prefix + command}`)
-            if (!quoted) return m.reply(`responder al video/audio que desea usar como audio con ${prefix + command}`)
-            m.reply(mess.wait)
-            let media = await quoted.download()
-            let audio = await toAudio(media, 'mp4')
-            conn.sendMessage(m.chat, {audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
-            }
-            break
-            case 'tomp3': {
-            if (/document/.test(mime)) return m.reply(`responde al video/audio que desea convertir a MP3 con ${prefix + command}`)
-            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`responde al video/audio que desea convertir a MP3 con ${prefix + command}`)
-            if (!quoted) return m.reply(`responde al video/audio que desea convertir a MP3 con  ${prefix + command}`)
-            m.reply(mess.wait)
-            let media = await quoted.download()
-            let audio = await toAudio(media, 'mp4')
-            conn.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `${conn.user.name}.mp3`}, { quoted : m })
-            }
-            break
-            case 'tovn': case 'toptt': {
-            if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Responda el video/audio que desea que sea VN con ${prefix + command}`)
-            if (!quoted) return m.reply(`Responda el video/audio que desea que sea VN con ${prefix + command}`)
-            m.reply(mess.wait)
-            let media = await quoted.download()
-            let audio = await toPTT(media, 'mp4')
-            conn.sendMessage(m.chat, {audio: audio, mimetype:'audio/mpeg', ptt:true }, {quoted:m})
-            }
-            break
-            case 'togif': {
-                if (!quoted) return m.reply('*responde a un video*')
-                if (!/webp/.test(mime)) return m.reply(`responde a un sticker con *${prefix + command}*`)
-                m.reply(mess.wait)
-                let media = await conn.downloadAndSaveMediaMessage(quoted)
-                let webpToMp4 = await webp2mp4File(media)
-                await conn.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'su sticker fue convertido correctamente ' }, gifPlayback: true }, { quoted: m })
-                await fs.unlinkSync(media)
-            }
-            break
-            case 'toqr':{
+
+  case 'toqr':{
   if (!text) return m.reply('*por favor manda un link para convertirlo en qr*')
 
    let qruwu = await qrcode.toDataURL(q, { scale: 35 })
@@ -949,7 +856,33 @@ case 'tomp4': case 'tovideo': {
   break  
   
   
-          default:  
+          default: 
+          if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(araara|ara ara)/gi)) {    
+let vn = './audios/Ara.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(a)/gi)) {    
+let vn = './audios/a.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(bañate|bañame)/gi)) {    
+let vn = './audios/banate.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(sexo|sexo anal)/gi)) {    
+let vn = './audios/mauu1.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(uwu|UWU)/gi)) {    
+let vn = './audios/UWU.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+if (!global.db.chats[m.chat].isBanned && global.db.chats[m.chat].audios && text.match(/(un pato|patito >-<)/gi)) {    
+let vn = './audios/pato.mp3'
+this.sendPresenceUpdate('composing', m.chat);   
+this.sendMessage(m.chat, { audio: { url: vn }, fileName: 'error.mp3', mimetype: 'audio/mp4', ptt: true }, { quoted: m })}
+
+
               if (budy.startsWith('>')) {  
                   if (!isCreator) return  
                   try {  
