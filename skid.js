@@ -189,6 +189,18 @@ if (global.db.data.chats[m.chat].antiArabe) {
     if (!m.key.fromMe) return
     }
 
+
+    for (let jid of mentionUser) {
+      let user = global.db.users[jid];
+      if (!user) continue;
+      let afkTime = user.afkTime;
+      if (!afkTime || afkTime < 0) continue;
+      let reason = user.afkReason || '';
+      lolreply(
+        `*[❗] no lo etiquetes [❗]*\n
+*el esta afk ${reason ? 'por la razon ' + reason : 'sin motivo alguno'}*\n*durante ${clockString(new Date() - afkTime)}*`.trim()
+      )
+    }
   // Tiempo de Actividad del bot  
   const used = process.memoryUsage()  
   const cpus = os.cpus().map(cpu => {  
@@ -622,6 +634,20 @@ break
     };  
     break;  
   
+      case 'afk':
+        {
+          if (!m.isGroup) return reply(mess.group);
+          if (!text) return lolreply(`*[❗] uso incorrecto [❗]*\n${prefix + command} nesecito dormir`);
+          let user = global.db.users[m.sender];
+          user.afkTime = +new Date();
+          user.afkReason = args.join(' ');
+          m.reply(
+            `${m.pushName} ahora esta afk \n Razon : ${
+              args.join(' ') ? args.join(' ') : ''
+            }`
+          );
+        }
+        break
 
 case 'fake':
     var gh = body.slice(11);
