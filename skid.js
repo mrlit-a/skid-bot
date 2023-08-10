@@ -174,8 +174,8 @@ if (global.db.data.chats[m.chat].antiArabe) {
       let user = global.db.data.users[m.sender]
       m.reply(
         `
-Dejas de estar afk${user.afkReason ? ' después ' + user.afkReason : ''}
-Durante ${clockString(new Date() - user.afkTime)}
+*Dejas de estar afk ${user.afkReason ? ' después de estar inactivo por' + user.afkReason : ''*}
+*Durante ${clockString(new Date() - user.afkTime)}*
 `.trim()
       );
       user.afkTime = -1;
@@ -202,7 +202,7 @@ Durante ${clockString(new Date() - user.afkTime)}
 
 
     for (let jid of mentionUser) {
-      let user = global.db.users[jid];
+      let user = global.db.data.users[jid];
       if (!user) continue;
       let  Time = user.afkTime;
       if (!afkTime || afkTime < 0) continue;
