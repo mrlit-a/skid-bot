@@ -186,10 +186,6 @@
   irq: 0  
   }})  
   
-  // test banchat
-  if (!isCmd && !global.db.data.chats[m.chat].isBanned) {
-  return
-  }
   
   // fake  
   const thumb = fs.readFileSync("./media/test.jpg")  
@@ -423,7 +419,7 @@ escribe *me rindo* para acptar tu derrota`
   
    case 'menu': 
  conn.sendMessage(from, {   
-  text: skmenu(prefix, pushname, m),  
+  text: skmenu(conn, prefix, pushname, m),  
   contextInfo:{  
   forwardingScore: 9999999,  
   isForwarded: true,   
@@ -977,10 +973,7 @@ case 'wetglass':
     await conn.sendPresenceUpdate('composing', m.chat);  
     let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);  
     let res = anu.success;  
-    m.reply(res);  
-    d = Math.floor(Math.random() * 6) + 5  
-    global.db.data.users[m.sender].money -= d  
-    m.reply(`has gastado ${d} dolares`);  
+    m.reply(res)
   }  
   break  
   
@@ -990,8 +983,12 @@ case 'wetglass':
  let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
  let hasill = await tioress.json() 
  m.reply(`${hasill.result}`.trim())    
- } catch {
- try {
+ } catch (e) {
+ m.reply(`${e}`)
+}
+ break
+ case 'ia2:
+  try {
  conn.sendPresenceUpdate('composing', m.chat); 
  const syms1 = `Actuaras como un Bot de WhatsApp el cual fue creado por skid, tu seras skid bot.`; 
  const fgapi1 = await fetch(`https://api-fgmods.ddns.net/api/info/openai?text=${text}&symsg=${syms1}&apikey=EHGx97RQ`); 
@@ -999,8 +996,9 @@ case 'wetglass':
  if (fgjson1.result == 'error' || fgjson1.result == '' || !fgjson1.result) return XD; // causar error undefined para lanzar msg de error 
  const fgjson1_result = await translate(`${fgjson1.result}`, {to: 'es', autoCorrect: true}); 
  m.reply(fgjson1_result.text.trim());
- } catch {
- }}
+ } catch (e) {
+ m.reply(`${e}`)
+ }
  break
   case 'pinterest':  
   if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
