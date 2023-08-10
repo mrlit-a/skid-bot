@@ -418,7 +418,7 @@ escribe *me rindo* para acptar tu derrota`
   
    case 'menu': 
  conn.sendMessage(from, {   
-  text: skmenu(prefix, pushname),  
+  text: skmenu(prefix, pushname, m),  
   contextInfo:{  
   forwardingScore: 9999999,  
   isForwarded: true,   
