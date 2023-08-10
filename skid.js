@@ -649,7 +649,7 @@ break
         {
           if (!m.isGroup) return reply(mess.group);
           if (!text) return lolreply(`*[❗] uso incorrecto [❗]*\n${prefix + command} nesecito dormir`);
-          let user = global.db.users[m.sender];
+          let user = global.db.data.users[m.sender];
           user.afkTime = +new Date();
           user.afkReason = args.join(' ');
           m.reply(
