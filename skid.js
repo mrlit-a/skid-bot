@@ -995,8 +995,7 @@ case 'wetglass':
  const fgapi1 = await fetch(`https://api-fgmods.ddns.net/api/info/openai?text=${text}&symsg=${syms1}&apikey=EHGx97RQ`); 
  const fgjson1 = await fgapi1.json(); 
  if (fgjson1.result == 'error' || fgjson1.result == '' || !fgjson1.result) return XD; // causar error undefined para lanzar msg de error 
- const fgjson1_result = await translate(`${fgjson1.result}`, {to: 'es', autoCorrect: true}); 
- m.reply(fgjson1_result.text.trim());
+ m.reply(fgjson1.text.trim());
  } catch (e) {
  m.reply(`${e}`)
  }
