@@ -170,7 +170,18 @@ isForwarded: true,
 if (global.db.data.chats[m.chat].antiArabe) {
   if (m.chat && m.sender.startsWith('212')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 }
-  
+  if (global.db.data.users[m.sender].afkTime > -1) {
+      let user = global.db.data.users[m.sender]
+      m.reply(
+        `
+Dejas de estar afk${user.afkReason ? ' después ' + user.afkReason : ''}
+Durante ${clockString(new Date() - user.afkTime)}
+`.trim()
+      );
+      user.afkTime = -1;
+      user.afkReason = '';
+    }
+    
   if (global.db.data.chats[m.chat].antilink) {  
   if (budy.match(`chat.whatsapp.com`)) {  
   let delet = m.key.participant  
@@ -193,7 +204,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
     for (let jid of mentionUser) {
       let user = global.db.users[jid];
       if (!user) continue;
-      let afkTime = user.afkTime;
+      let  Time = user.afkTime;
       if (!afkTime || afkTime < 0) continue;
       let reason = user.afkReason || '';
       lolreply(
