@@ -112,15 +112,39 @@
   const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false // Verifica si el remitente del mensaje es un administrador del grupo  
   const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados  
   const isPremium = m.isGroup ? premium.includes(userSender) : false   
-  let quizmath = global.db.data.game.math = []  
+  let quizmath = global.db.data.game.math = [] 
+  const mentionUser = [
+      ...new Set([
+        ...(m.mentionedJid || []),
+        ...(m.quoted ? [m.quoted.sender] : []),
+      ]),
+    ];
   
   
   // mensajes :v  
   const reply = (text) => {  
-  m.reply(text)} // Enviar una respuesta  
+  m.reply(text)} 
   const sendAdMessage = (text, title, body, image, url) => { conn.sendMessage(from, {text: text, contextInfo: { externalAdReply: { title: title, body: body, mediaUrl: url, sourceUrl: url, previewType: 'PHOTO', showAdAttribution: true, thumbnail: image, sourceUrl: url }}}, {})}  
   const sendImage = ( image, caption ) => { conn.sendMessage(from, { image: image, caption: caption }, { quoted: m })}  
   const sendImageAsUrl = ( url, caption ) => { conn.sendMessage(from, { image:  {url: url }, caption: caption }, { quoted: m })}  
+  const lolreply = (teks) => {
+conn.sendMessage(m.chat,
+{ text: teks,
+contextInfo:{
+mentionedJid:[sender],
+forwardingScore: 9999999,
+isForwarded: true, 
+"externalAdReply": {
+"showAdAttribution": true,
+"containsAutoReply": true,
+"title": ` ${global.botname}`,
+"body": `${ownername}`,
+"previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": menu,
+"sourceUrl": `${wagrupo}`}}},
+{ quoted: m})
+}
   
   // ‿︵‿︵ʚɞ『 TIPOS DE MENSAJES Y CITADOS 』ʚɞ‿︵‿︵  
   const isAudio = type == 'audioMessage' // Mensaje de Audio  
@@ -137,10 +161,16 @@
   
   let user = global.db.data.users[m.sender]
   let chats = global.db.data.users[m.chat]
-  //let setting = global.db.data.settings[numBot]  
+  let setting = global.db.data.settings[conn.user.jid]  
   
   
-  //antilink  
+  if (global.db.data.chats[m.chat].antiFake) {
+  if (m.chat && m.sender.startsWith('1') return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+}
+if (global.db.data.chats[m.chat].antiArabe) {
+  if (m.chat && m.sender.startsWith('212') return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+}
+  
   if (global.db.data.chats[m.chat].antilink) {  
   if (budy.match(`chat.whatsapp.com`)) {  
   let delet = m.key.participant  
@@ -278,7 +308,6 @@ escribe *me rindo* para acptar tu derrota`
 	    delete this.game[room13.id]
 	    }
 	    }
-	    
           //Suit PvP 
      this.suit = this.suit ? this.suit : {}; 
      let roof = Object.values(this.suit).find( 
@@ -988,18 +1017,7 @@ case 'wetglass':
  m.reply(`${e}`)
 }
  break
- case 'ia2':
-  try {
- conn.sendPresenceUpdate('composing', m.chat); 
- const syms1 = `Actuaras como un Bot de WhatsApp el cual fue creado por skid, tu seras skid bot.`; 
- const fgapi1 = await fetch(`https://api-fgmods.ddns.net/api/info/openai?text=${text}&symsg=${syms1}&apikey=EHGx97RQ`); 
- const fgjson1 = await fgapi1.json(); 
- if (fgjson1.result == 'error' || fgjson1.result == '' || !fgjson1.result) return XD; // causar error undefined para lanzar msg de error 
- m.reply(fgjson1.text.trim());
- } catch (e) {
- m.reply(`${e}`)
- }
- break
+
   case 'pinterest':  
   if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
   m.reply(mess.wait)  

@@ -18,7 +18,7 @@ global.hentai = fs.readFileSync('./media/hentai.jpg')
 global.simi = fs.readFileSync('./media/simi.jpeg')
 global.wagrupo = 'https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ'
 global.script = 'https://www.github.com/Skidy89/skid-bot'
-
+global.ownername = `skid`
 
 global.mess = {
 admin: "𝚗𝚘 𝚎𝚛𝚎𝚜 𝚊𝚍𝚖𝚒𝚗",
