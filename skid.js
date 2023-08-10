@@ -165,10 +165,10 @@ isForwarded: true,
   
   
   if (global.db.data.chats[m.chat].antiFake) {
-  if (m.chat && m.sender.startsWith('1') return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+  if (m.chat && m.sender.startsWith('1')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 }
 if (global.db.data.chats[m.chat].antiArabe) {
-  if (m.chat && m.sender.startsWith('212') return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+  if (m.chat && m.sender.startsWith('212')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 }
   
   if (global.db.data.chats[m.chat].antilink) {  
