@@ -74,7 +74,7 @@
   global.prefix = new RegExp('^[°•π÷×¶∆£¢€¥®™+✓_=/|~!?@#$%^&.©^' + '*/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.\\-.@'.replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']', 'i')  
   var prefix = global.prefix.test(body) ? body.match(global.prefix)[0] : '' // Almacenar el prefijo predeterminado  
   const isCmd = body.startsWith(prefix) // Verificar si el contenido de body comienza con el valor almacenado en prefix.  
-  global.from = m.chat // Remitente del mensaje  
+  const from = m.chat // Remitente del mensaje  
   const msg = JSON.parse(JSON.stringify(mek, undefined, 2)) // Mensaje convertido a formato JSON  
   const content = JSON.stringify(m.message) // Contenido del mensaje convertido a formato JSON  
   const type = m.mtype // Tipo de mensaje  
@@ -185,6 +185,11 @@
   idle: 0,  
   irq: 0  
   }})  
+  
+  // test banchat
+  if (!isCmd && !global.db.data.chats[m.chat].isBanned) {
+  return
+  }
   
   // fake  
   const thumb = fs.readFileSync("./media/test.jpg")  
@@ -619,7 +624,7 @@ case 'fake':
     } else {
       conn.sendMessage(from, { text: 'Uso incorrecto del comando. Ejemplo: ${prefix + command} @usuario1|Este es el mensaje falso|Hola, esto es un mensaje real que se citará' });
     }
-    break;
+    break
   
   case 's':  
   case 'sticker': {  
@@ -757,7 +762,7 @@ escribe *me rindo* para aceptar tu derrota`
     if (!isBotAdmins) return reply(mess.botAdmin);  
     if (!isGroupAdmins) return reply(mess.admin);  
     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';  
-    await conn.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)));  
+    await conn.groupParticipantsUpdate(m.chat, [users], 'promote')
   }  
   break  
   
@@ -766,7 +771,7 @@ escribe *me rindo* para aceptar tu derrota`
     if (!isBotAdmins) return reply(mess.botAdmin);  
     if (!isGroupAdmins) return reply(mess.admin);  
     let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';  
-    await conn.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)));  
+    await conn.groupParticipantsUpdate(m.chat, [users], 'demote')
   }  
   break  
   
