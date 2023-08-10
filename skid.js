@@ -987,7 +987,7 @@ case 'wetglass':
  m.reply(`${e}`)
 }
  break
- case 'ia2:
+ case 'ia2':
   try {
  conn.sendPresenceUpdate('composing', m.chat); 
  const syms1 = `Actuaras como un Bot de WhatsApp el cual fue creado por skid, tu seras skid bot.`; 
