@@ -831,6 +831,16 @@ escribe *me rindo* para aceptar tu derrota`
             }
             }
             break
+            
+            
+            case 'acortar':
+            if (!text) return m.reply(`*[❗] INFO [❗]*\n*Ingresa un link para acortar!!*)
+            let shortUrl1 = await (await fetch(`https://tinyurl.com/api-create.php?url=${args[0]}`)).text()  
+            if (!shortUrl1) return m.reply('*[❗] ERROR [❗]*)
+            let done = `*LINK ACORTADO CORRECTAMENTE*\n*link: ${text}*\nLink Acortado: ${shortUrl1}`
+            m.reply(done)
+            break
+            
   case 'getcase':  
     if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
     if (!text) return m.reply(`no hay comando a buscar o que?`)  
