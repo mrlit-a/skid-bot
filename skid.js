@@ -201,7 +201,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
 
 
     for (let jid of mentionUser) {
-      let user = global.db.data.users[jid];
+      let user = global.db.data.users[jid]
       if (!user) continue;
       let  Time = user.afkTime;
       if (!afkTime || afkTime < 0) continue;
