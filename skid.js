@@ -836,7 +836,7 @@ escribe *me rindo* para aceptar tu derrota`
             case 'acortar':
             if (!text) return m.reply(`*[❗] INFO [❗]*\n*Ingresa un link para acortar!!*`)
             let shortUrl1 = await (await fetch(`https://tinyurl.com/api-create.php?url=${args[0]}`)).text()  
-            if (!shortUrl1) return m.reply('*[❗] ERROR [❗]*)
+            if (!shortUrl1) return m.reply('*[❗] ERROR [❗]*`)
             let done = `*LINK ACORTADO CORRECTAMENTE*\n*link: ${text}*\nLink Acortado: ${shortUrl1}`
             m.reply(done)
             break
