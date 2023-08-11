@@ -23,7 +23,7 @@
   const webp = require("node-webpmux")  
   const { pinterest } = require('./addons/add-ons.js')  
   const ffmpeg = require('fluent-ffmpeg')
-  const translate = require('@vitalets/google-translate-api')
+  const JavaScriptObfuscator = require('javascript-obfuscator')
   
   const color = (text, color) => { // Función 'color' que toma un texto y un color como parámetros  
   return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)  
@@ -837,9 +837,24 @@ escribe *me rindo* para aceptar tu derrota`
             if (!text) return m.reply(`*[❗] INFO [❗]*\n*Ingresa un link para acortar!!*`)
             let shortUrl1 = await (await fetch(`https://tinyurl.com/api-create.php?url=${args[0]}`)).text()  
             if (!shortUrl1) return m.reply(`*[❗] ERROR [❗]*`)
-            let done = `*LINK ACORTADO CORRECTAMENTE*\n*link: ${text}*\nLink Acortado: ${shortUrl1}`
+            let done = `*LINK ACORTADO CORRECTAMENTE*\n*link: ${text}*\n*Link Acortado: ${shortUrl1}*`
             m.reply(done)
             break
+            
+            case 'ofuscar':
+              if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
+   function obfuscateCode(code) { 
+     return JavaScriptObfuscator.obfuscate(code, { 
+       compact: false, 
+       controlFlowFlattening: true, 
+       deadCodeInjection: true, 
+       simplify: true, 
+       numbersToExpressions: true, 
+     }).getObfuscatedCode(); 
+   } 
+   let obfuscatedCode = await obfuscateCode(text); 
+   conn.sendMessage(m.chat, {text: obfuscatedCode}, {quoted: m});
+   break
             
   case 'getcase':  
     if (!isCreator) return conn.sendMessage(from, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
