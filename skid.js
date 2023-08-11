@@ -170,7 +170,7 @@ isForwarded: true,
 if (global.db.data.chats[m.chat].antiArabe) {
   if (m.chat && m.sender.startsWith('212')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
 }
-  if (global.db.data.users[m.sender].afkTime > -1) {
+/*  if (global.db.data.users[m.sender].afkTime > -1) {
       let user = global.db.data.users[m.sender]
       m.reply(
         `
@@ -179,7 +179,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
       );
       user.afkTime = -1;
       user.afkReason = '';
-    }
+    } */
     
   if (global.db.data.chats[m.chat].antilink) {  
   if (budy.match(`chat.whatsapp.com`)) {  
@@ -200,7 +200,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
     }
 
 
-    for (let jid of mentionUser) {
+/*    for (let jid of mentionUser) {
       let user = global.db.data.users[jid]
       if (!user) continue;
       let  Time = user.afkTime;
@@ -210,7 +210,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
         `*[❗] no lo etiquetes [❗]*\n
 *el esta afk ${reason ? 'por la razon ' + reason : 'sin motivo alguno'}*\n*durante ${clockString(new Date() - afkTime)}*`.trim()
       )
-    }
+    } */
   // Tiempo de Actividad del bot  
   const used = process.memoryUsage()  
   const cpus = os.cpus().map(cpu => {  
