@@ -73,8 +73,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
          if (connection) { 
            if (connection != 'connecting') 
              console.log('Connecting to jadibot..'); 
-             reply('*[❗] estableciendo conexion...*')
-         } 
+         }
   
          console.log(up); 
   
