@@ -113,6 +113,7 @@
   const isBaneed = m.isGroup ? blockList.includes(userSender) : false // Verifica si el remitente del mensaje está en la lista de bloqueados  
   const isPremium = m.isGroup ? premium.includes(userSender) : false   
   let quizmath = global.db.data.game.math = [] 
+  const who = m.quoted ? m.quoted.sender : m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   const mentionUser = [
       ...new Set([
         ...(m.mentionedJid || []),
@@ -598,6 +599,27 @@ break
   m.reply('*ahora el bot es de uso privado*')
   break
   
+  
+  case 'casar':
+  let member = participants.map(u => u.id)
+  let me = m.sender
+  let love = member[Math.floor(Math.random() * member.length)]
+  conn.sendMessage(m.chat, { text: `*te deberias casar con ${love.split('@')[0]} hacen una bonita pareja*`,
+contextInfo:{
+mentionedJid:[me, jodoh],
+forwardingScore: 9999999,
+isForwarded: true, 
+"externalAdReply": {
+"showAdAttribution": true,
+"containsAutoReply": true,
+"title": ` ${botname}`,
+"body": `${me.split('@')[0]}`,
+"previewType": "PHOTO",
+"thumbnailUrl": ``,
+"thumbnail": menu,
+"sourceUrl": `wa.me/+5218442114446`}}},
+{ quoted: m})
+break
   
   
     
