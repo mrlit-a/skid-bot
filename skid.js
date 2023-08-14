@@ -29,11 +29,10 @@
   return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)  
   
   // Importa varias funciones y objetos  
-  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, before } = require('./lib/fuctions')  
+  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, } = require('./lib/fuctions')  
   const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") // Importa los objetos 'makeWASocket' y 'proto' desde el módulo '@whiskeysockets/baileys'  
   const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')  
   const speed = require("performance-now")  
-  const { canLevelUp, xpRange } = require('./lib/level.js')
   
   const msgs = (message) => { // Función 'msgs' que toma un parámetro 'message'  
   if (message.length >= 10) { // Longitud de 'message' es mayor o igual a 10 caracteres  
