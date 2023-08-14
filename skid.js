@@ -606,7 +606,7 @@ break
   let love = member[Math.floor(Math.random() * member.length)]
   conn.sendMessage(m.chat, { text: `*te deberias casar con ${love.split('@')[0]} hacen una bonita pareja*`,
 contextInfo:{
-mentionedJid:[me, jodoh],
+mentionedJid:[me, love],
 forwardingScore: 9999999,
 isForwarded: true, 
 "externalAdReply": {
