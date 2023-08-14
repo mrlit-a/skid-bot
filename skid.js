@@ -29,10 +29,11 @@
   return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)} // Si no hay color, utilizar el color celeste brillante (por defecto)  
   
   // Importa varias funciones y objetos  
-  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime } = require('./lib/fuctions')  
+  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, before } = require('./lib/fuctions')  
   const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") // Importa los objetos 'makeWASocket' y 'proto' desde el módulo '@whiskeysockets/baileys'  
   const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')  
   const speed = require("performance-now")  
+  const { canLevelUp, xpRange } = require('./lib/level.js')
   
   const msgs = (message) => { // Función 'msgs' que toma un parámetro 'message'  
   if (message.length >= 10) { // Longitud de 'message' es mayor o igual a 10 caracteres  
@@ -868,51 +869,9 @@ escribe *me rindo* para aceptar tu derrota`
   }  
   break
   
-  case 'minar':
-      let time = global.db.data.users[m.sender].lastmiming + 600000
-      if (new Date() - global.db.data.users[m.sender].lastmiming < 600000) return m.reply(`*⏰ Espera ${msToTime(time - new Date())} Para volver a minar*`)
-      if (user.health < 80) return (`*tienes poca vida 💔*\n*bebe una pocion con ${prefix}heal*`)
-      if (user.armorDurability < 40) return m.reply(`*tu ${user.armor} esta muy desgastada*\n*repara tu armadura en la tienda con ${prefix}shop`)
-      const reward = rewards(user)
-      let text `estuviste minando toda la tarde y obtienes`.trim()
-          for (const lost in rewards.lost) 
-       if (user[lost]) { 
-         const total = rewards.lost[lost].getRandom(); 
-         user[lost] -= total * 1; 
-         if (total) text += `\n${global.rpg.emoticon(lost)} ${total}`; 
-       } 
-     text += "\n\n⛏️ recompensas"; 
-     for (const rewardItem in rewards.reward) 
-       if (rewardItem in user) { 
-         const total = rewards.reward[rewardItem].getRandom(); 
-         user[rewardItem] += total * 1; 
-         if (total) text += `\n» ${global.rpg.emoticon(rewardItem)} ${total}`; 
-       }
-       conn.sendMessage(m.chat, { text: text.trim() }, { quoted: fkontak})
-      
-      function rewards(user = {}) {
-      let rewards = {
-      reward: {
-      money: [100, 200, 0, 5],
-      exp: [100, 56, 42, 12, 60, 200],
-      gems: [10, 5, 0, 0, 0, 6],
-      rock: [10, 20, 23, 80],
-      gold: [0, 0, 0, 0, 6],
-      diamonds: [0, 0, 0, 0, 1],
-      trash: [100, 50, 24, 12]
-      },
-      lost = {
-      health = 101 - user.armor,
-      armorDurability: (15 - user.armor) * 7,
-      },
-      }
-      return rewards
-      }
-      break
-   
-   if (user.health < 80) return
-   if (user.pickaxeDurability < 20) return
-   
+
+
+
   case 'attp':  
     if (!text) return reply('ingresa algo para convertirlo a sticker :v')  
     link = `https://api.lolhuman.xyz/api/attp?apikey=${lolkeysapi}&text=${text}`  
