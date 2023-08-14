@@ -604,7 +604,7 @@ break
   let member = participants.map(u => u.id)
   let me = m.sender
   let love = member[Math.floor(Math.random() * member.length)]
-  conn.sendMessage(m.chat, { text: `*te deberias casar con ${love.split('@')[0]} hacen una bonita pareja*`,
+  conn.sendMessage(m.chat, { text: `*te deberias casar con @${love.split('@')[0]} hacen una bonita pareja*`,
 contextInfo:{
 mentionedJid:[me, love],
 forwardingScore: 9999999,
@@ -613,15 +613,16 @@ isForwarded: true,
 "showAdAttribution": true,
 "containsAutoReply": true,
 "title": ` ${botname}`,
-"body": `${me.split('@')[0]}`,
+"body": `${pushname}`,
 "previewType": "PHOTO",
 "thumbnailUrl": ``,
 "thumbnail": menu,
-"sourceUrl": `wa.me/+5218442114446`}}},
+"sourceUrl": `https://wa.me/+5218442114446`}}},
 { quoted: m})
 break
   
-  
+case 'top':
+if (!m.isGroup) return lol
     
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  

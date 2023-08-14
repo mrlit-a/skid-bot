@@ -16,14 +16,13 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    if (global.listJadibot instanceof Array) console.log()   
    else global.listJadibot = []   
   
-   const jadibot = async (conn, msg, from, command, prefix) => {  
+   const jadibot = async (conn, msg, from, command, prefix) => {   
    const { sendImage, sendMessage } = conn;   
    const { reply, sender } = m;   
-   let senderblt = m.sender
-   let setting = global.db.data.settings[global.numBot]
-   if (!global.db.data.settings[global.numBot].jadibot) return m.reply(`*[❗] Este comando fue desactivado por el dueño del bot*`)
-   if (conn.user.jid !== global.numBot) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${global.numBot.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`) 
-   const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderblt.split("@")[0]}`), logg({ level: "silent" }));   
+   let senderbot = m.sender   
+   if (global.db.data.settings[conn.user.jid].jadibot) return m.reply(`*[❗] este comando fue desabilitado por el creador*`)
+   if (conn.user.id !== global.numBot2) return m.reply(`*[❗] Este comando solo puede ser usado en un Bot principal!!*\n\n*—◉ Da click aquí para ir:*\n*◉* https://api.whatsapp.com/send/?phone=${global.numBot.split`@`[0]}&text=${prefix + command}&type=phone_number&app_absent=0`) 
+   const { state, saveCreds } = await useMultiFileAuthState(path.join(__dirname, `./jadibot/${senderbot.split("@")[0]}`), logg({ level: "silent" }));   
    try {   
    async function startconn() {   
    let { version, isLatest } = await fetchLatestBaileysVersion();   
@@ -67,13 +66,13 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
        conn.ev.on('connection.update', async (up) => { 
          // console.log(countQR); 
          if (countQR > 3) return; 
-         console.log('iniciando jadibot...'); 
+         console.log('RUNNING connection.update ........'); 
          const { lastDisconnect, connection } = up; 
          if (connection == 'connecting') return; 
          if (connection) { 
            if (connection != 'connecting') 
              console.log('Connecting to jadibot..'); 
-         }
+         } 
   
          console.log(up); 
   
@@ -110,7 +109,7 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    conn.id = conn.decodeJid(conn.user.id)   
    conn.time = Date.now()   
    global.listJadibot.push(conn)   
-   await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.id)}*_\n *NOTA: el bot se puede reiniciar si deja de recibir comandos use ${prefix + command} para volver a conectarte*`)   
+   await m.reply(`*Conectado con exito*\n\n*Usuario:*\n _*× ID : ${conn.decodeJid(conn.user.jid)}*_\n *NOTA: el bot se puede reiniciar si deja de recibir comandos use ${prefix + command} para volver a conectarte*`)   
    }   
    
   
@@ -135,6 +134,15 @@ const { default: makeWaSocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    }) 
   
    conn.ev.on('creds.update', saveCreds)   
+  
+   conn.decodeJid = (jid) => {   
+   if (!jid) return jid   
+   if (/:\d+@/gi.test(jid)) {   
+   let decode = jidDecode(jid) || {}   
+   return decode.user && decode.server && decode.user + '@' + decode.server || jid   
+   } else return jid   
+   }   
+   conn.sendText = (jid, text, quoted = '', options) => conn.sendMessage(jid, { text: text, ...options }, { quoted })   
   
    }   
    startconn()   
