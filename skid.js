@@ -874,7 +874,7 @@ escribe *me rindo* para aceptar tu derrota`
       if (user.health < 80) return (`*tienes poca vida 💔*\n*bebe una pocion con ${prefix}heal*`)
       if (user.armorDurability < 40) return m.reply(`*tu ${user.armor} esta muy desgastada*\n*repara tu armadura en la tienda con ${prefix}shop`)
       const reward = rewards(user)
-      let text `estuviste minando toda la tarde y obtienes`
+      let text `estuviste minando toda la tarde y obtienes`.trim()
           for (const lost in rewards.lost) 
        if (user[lost]) { 
          const total = rewards.lost[lost].getRandom(); 
