@@ -41,7 +41,7 @@
   return `${message}`}} // Devuelve 'message' completo  
   
   const getCmd = (id) => {
-  const stickerdb = JSON.parse(fs.readFileSync('./database/stickerdb.json'))  
+  const stickerdb = global.db.data.sticker
   let anu = null;  
   Object.keys(stickerdb).forEach(nganu => { 
   if (stickerdb[nganu].id === id) { 
