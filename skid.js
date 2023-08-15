@@ -633,7 +633,7 @@ isForwarded: true,
 { quoted: m})
 break
   
-case 'top':
+/*case 'top':
 if (!m.isGroup) return lolreply(mess.group)
 if (!text) return m.reply(`*ejemplo de uso:\n${prefix + command} gays
 let member = participants.map(u => u.id)
@@ -646,7 +646,7 @@ let top6 = member[Math.floor(Math.random() * member.length)]
 let top7 = member[Math.floor(Math.random() * member.length)]
 let top8 = member[Math.floor(Math.random() * member.length)]
 let top9 = member[Math.floor(Math.random() * member.length)]
-let top10 = member[Math.floor(Math.random() * member.length)]
+let top10 = member[Math.floor(Math.random() * member.length)]*/
     
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
