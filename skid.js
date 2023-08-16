@@ -195,7 +195,11 @@ if (global.db.data.chats[m.chat].antiArabe) {
   conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: bang, participant: delet }})  
   conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')}}  
   
+let setchat = global.db.data.chats[m.chat]
+if (!setchat.antiBadWord && !m.isGroup) {
+const toxicRegex = /puto|puta|rata|estupido|imbecil|rctmre|mrd|verga|vrga|maricon/i
 
+}
   
   if (!conn.public) {
     if (!m.key.fromMe) return
@@ -480,13 +484,14 @@ escribe *me rindo* para acptar tu derrota`
   mentionedJid:[m.sender],  
   "externalAdReply": {  
   "showAdAttribution": true,  
+  "containsAutoReply": true,
   "renderLargerThumbnail": true,  
   "title": botname,   
   "containsAutoReply": true,  
   "mediaType": 1,   
   "thumbnail": menu,  
-  "mediaUrl": `https://api.whatsapp.com/send/?phone=5218441029462&text=¿serbot&type=phone_number&app_absent=0`,  
-  "sourceUrl": `https://api.whatsapp.com/send/?phone=5218441029462&text=¿serbot&type=phone_number&app_absent=0`  
+  "mediaUrl": `https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ`,  
+  "sourceUrl": `https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ`  
   }  
   }  
   }, { quoted: fkontak }) 
@@ -515,6 +520,83 @@ escribe *me rindo* para acptar tu derrota`
  break 
   
   
+
+		case 'lewd':
+		case 'feed':
+		case 'gasm':
+		case 'anal':
+		case 'holo':
+		case 'tits':
+		case 'kuni':
+		case 'kiss':
+		case 'erok':
+		case 'smug':
+		case 'solog':
+		case 'feetg':
+		case 'lewdk':
+		case 'waifu':
+		case 'pussy':
+		case 'femdom':
+		case 'cuddle':
+		case 'eroyuri':
+		case 'cum_jpg':
+		case 'blowjob':
+		case 'holoero':
+		case 'erokemo':
+		case 'fox_girl':
+		case 'futanari':
+		case 'wallpaper':
+		if (!m.isGroup) return m.reply('_*este comando solo puede ser utilizado en grupos*_')
+		if (!global.db.data.chats[m.chat].antiNsfw) return m.reply(`*el comando ${command} esta desabilitado en este grupo*\n*usa ${prefix}disable antinsfw*`)
+	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
+			break
+
+
+case 'enable':
+let chats = global.db.data.chats[m.chat]
+let setting = global.db.data.settings[conn.user.jid]
+let subbot = conn.user.jid
+let bot = global.numBot2
+switch (enable) {
+case 'antinsfw':
+if (!m.isGroup) return lolreply(mess.group)
+if (!chats.antiNsfw) return lolreply(`*${enable} ya estaba activado*`)
+chats.antiNsfw = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+case 'jadibot'
+if (subbot !== bot) return lolreply(`*solo el bot principal puede usar el comando*`)
+setting.jadibot = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+case 'antilink':
+if (!m.isGroup) return lolreply(mess.group)
+if (!chats.antilink) return lolreply(`*${enable} ya estaba activado*`)
+chats.antilink = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+case 'antifake':
+if (!m.isGroup) return lolreply(mess.group)
+if (!chats.antiFake) return lolreply(`*${enable} ya estaba activado*`)
+chats.antiFake = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+case 'audios':
+if (!m.isGroup) return lolreply(mess.group)
+if (!chats.audios) return lolreply(`*${enable} ya estaba activado*`)
+chats.audios = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+case 'antibadword':
+if (!m.isGroup) return lolreply(mess.group)
+if (!chats.antiBadWord) return lolreply(`*${enable} ya estaba activado*`)
+chats.antiBadWord = true
+lolreply(`*el comando ${enable} fue activado correctamente*`)
+break
+default:
+}
+break
+
 case 'qc': case'text': {
     if (!args[0] && !m.quoted) {
       return lolreply(`y el texto?`)
@@ -595,7 +677,7 @@ if (!text) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝚁𝚁𝙾𝚁 𝙳𝙴 𝚄�
 let sticker = global.db.data.sticker
 let hash = m.quoted.fileSha256.toString('base64')
 if (sticker[hash] && sticker[hash].locked) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙴𝙻 𝙾𝚆𝙽𝙴𝚁 𝙿𝚄𝙴𝙳𝙴 𝚁𝙴𝙰𝙻𝙸𝚉𝙰𝚁 𝙻𝙰 𝙼𝙾𝙳𝙸𝙵𝙸𝙲𝙰𝙲𝙸𝙾𝙽*'
-sticker[hash] = { text, mentionedJid: m.mentionedJid, creator: m.sender, at: + new Date, locked: false }
+sticker[hash] = { cmd, mentionedJid: m.mentionedJid, id: m.sender, at: + new Date, locked: false }
 m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`)
 break
 
@@ -1227,9 +1309,9 @@ case 'wetglass':
                   }  
               }  
   
-          }  
+          }
   
-  }  
+  }
   
   let file = require.resolve(__filename)  
   fs.watchFile(file, () => {  
