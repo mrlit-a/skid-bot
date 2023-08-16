@@ -209,7 +209,7 @@ if (global.db.data.chats[m.chat].antiArabe) {
   const fdoc = {key : {participant : '0@s.whatsapp.net', ...(from ? { remoteJid: `status@broadcast` } : {}) },message: {documentMessage: {title: "A", jpegThumbnail: null}}}  
   
   
-  const kick = function (m.chat, orangnya) {  
+  const kick = function (from, orangnya) {  
   for (let i of orangnya) {  
   conn.groupParticipantsUpdate(m.chat, [i], "remove");  
   }}  
@@ -512,7 +512,7 @@ escribe *me rindo* para acptar tu derrota`
 
 case 'qc': case'text': {
     if (!args[0] && !m.quoted) {
-      return lolreply(`y el texto?`)
+      return conn.adReply(m.chat, `*nesecitas un texto`)
     }
     let userPfp
     if (m.quoted) {
@@ -564,7 +564,7 @@ case 'qc': case'text': {
       })
     } catch (error) {
       console.error(error)
-      lolreply('Error')
+      conn.adReply(m.chat, 'Error', menu, fkontak)
     }
     }
     break
@@ -628,20 +628,7 @@ isForwarded: true,
 { quoted: m})
 break
   
-/*case 'top':
-if (!m.isGroup) return lolreply(mess.group)
-if (!text) return m.reply(`*ejemplo de uso:\n${prefix + command} gays
-let member = participants.map(u => u.id)
-let top1 = member[Math.floor(Math.random() * member.length)]
-let top2 = member[Math.floor(Math.random() * member.length)]
-let top3 = member[Math.floor(Math.random() * member.length)]
-let top4 = member[Math.floor(Math.random() * member.length)]
-let top5 = member[Math.floor(Math.random() * member.length)]
-let top6 = member[Math.floor(Math.random() * member.length)]
-let top7 = member[Math.floor(Math.random() * member.length)]
-let top8 = member[Math.floor(Math.random() * member.length)]
-let top9 = member[Math.floor(Math.random() * member.length)]
-let top10 = member[Math.floor(Math.random() * member.length)]*/
+
     
   case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
                   try {  
@@ -744,22 +731,7 @@ let top10 = member[Math.floor(Math.random() * member.length)]*/
       poin_lose,  
       timeout,  
     };  
-    break;  
-  
-      case 'afk':
-        {
-          if (!m.isGroup) return reply(mess.group);
-          if (!text) return lolreply(`*[❗] uso incorrecto [❗]*\n${prefix + command} nesecito dormir`);
-          let user = global.db.data.users[m.sender];
-          user.afkTime = +new Date();
-          user.afkReason = args.join(' ');
-          m.reply(
-            `${m.pushName} ahora esta afk \n Razon : ${
-              args.join(' ') ? args.join(' ') : ''
-            }`
-          );
-        }
-        break
+    break
 
 case 'fake':
     var gh = body.slice(11);
