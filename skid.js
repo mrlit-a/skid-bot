@@ -552,50 +552,7 @@ escribe *me rindo* para acptar tu derrota`
 			break
 
 
-case 'enable':
-let chats = global.db.data.chats[m.chat]
-let setting = global.db.data.settings[conn.user.jid]
-let subbot = conn.user.jid
-let bot = global.numBot2
-switch (enable) {
-case 'antinsfw':
-if (!m.isGroup) return lolreply(mess.group)
-if (!chats.antiNsfw) return lolreply(`*${enable} ya estaba activado*`)
-chats.antiNsfw = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-case 'jadibot'
-if (subbot !== bot) return lolreply(`*solo el bot principal puede usar el comando*`)
-setting.jadibot = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-case 'antilink':
-if (!m.isGroup) return lolreply(mess.group)
-if (!chats.antilink) return lolreply(`*${enable} ya estaba activado*`)
-chats.antilink = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-case 'antifake':
-if (!m.isGroup) return lolreply(mess.group)
-if (!chats.antiFake) return lolreply(`*${enable} ya estaba activado*`)
-chats.antiFake = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-case 'audios':
-if (!m.isGroup) return lolreply(mess.group)
-if (!chats.audios) return lolreply(`*${enable} ya estaba activado*`)
-chats.audios = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-case 'antibadword':
-if (!m.isGroup) return lolreply(mess.group)
-if (!chats.antiBadWord) return lolreply(`*${enable} ya estaba activado*`)
-chats.antiBadWord = true
-lolreply(`*el comando ${enable} fue activado correctamente*`)
-break
-default:
-}
-break
+
 
 case 'qc': case'text': {
     if (!args[0] && !m.quoted) {
