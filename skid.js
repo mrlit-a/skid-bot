@@ -144,10 +144,6 @@
 let user = global.db.data.users[m.sender]
 let chats = global.db.data.users[m.chat]
 let setting = global.db.data.settings[conn.user.jid]  
-if (!chats.antiBadWord && !m.isGroup) {
-const toxicRegex = /puto|puta|rata|estupido|imbecil|rctmre|mrd|verga|vrga|maricon/i
-
-    }
 
   if (global.db.data.chats[m.chat].antiFake) {
   if (m.chat && m.sender.startsWith('1')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
