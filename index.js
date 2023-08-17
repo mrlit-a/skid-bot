@@ -93,39 +93,135 @@ ppgroup = await sock.profilePictureUrl(anu.id, 'image')
 } catch (err) {
 ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 }
-			console.log(json)
+			console.log(color(json, '#009FFF'))
 			const res = json[0];
 			if (res.announce == true) {
 				await sleep(2000)
-				sock.sendMessage(res.id, {
-					text: `「 Group Settings Change 」\n\nGroup has been closed by admin, Now only admins can send messages !`,
-				});
+				let text = `*「 Grupos 」*\n\n*El grupo ha sido cerrado por el administrador.*\n*¡Ahora solo los administradores pueden enviar mensajes!*`
+		conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
 			} else if (res.announce == false) {
 				await sleep(2000)
-				sock.sendMessage(res.id, {
-					text: `「 Group Settings Change 」\n\nThe group has been opened by admin, Now participants can send messages !`,
-				});
+				let text = `*「 Grupos 」*\n\n*el grupo a sido abierto por un admin*\n*los participantes pueden mandar mensajes*`
+		conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
 			} else if (res.restrict == true) {
 				await sleep(2000)
-				sock.sendMessage(res.id, {
-					text: `「 Group Settings Change 」\n\nGroup info has been restricted, Now only admin can edit group info !`,
-				});
+			let text = `*「 Grupos 」*\n\n La información del grupo ha sido restringida, ¡ahora solo el administrador puede editar la información del grupo!`
+		conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
 			} else if (res.restrict == false) {
 				await sleep(2000)
-				sock.sendMessage(res.id, {
-					text: `「 Group Settings Change 」\n\nGroup info has been opened, Now participants can edit group info !`,
-				});
+		    let text = `*「 Grupos 」*\n\n*Se ha abierto la información del grupo para todos los participantes*\n*¡Ahora los participantes pueden editar la información del grupo!*`
+	    conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
 			} else if(!res.desc == ''){
 				await sleep(2000)
-				sock.sendMessage(res.id, { 
-					text: `「 Group Settings Change 」\n\n*Group description has been changed to*\n\n${res.desc}`,
-				});
+	    let text = `*「 Grupos 」*\n\n*La descripción del grupo se ha cambiado:*\n\n*nueva descripción: ${res.desc}*`
+	    conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
       } else {
 				await sleep(2000)
-				sock.sendMessage(res.id, {
-					text: `「 Group Settings Change 」\n\n*Group name has been changed to*\n\n*${res.subject}*`,
-				});
-			} 
+				let text = `*「 Grupos 」*\n\n*El nombre del grupo ha sido cambiado:*\n\n*nuevo nombre: ${res.subject}*`
+        conn.sendMessage(res.id, {   
+        text: text,  
+        contextInfo:{  
+        forwardingScore: 9999999,  
+        isForwarded: true,   
+        mentionedJid:[m.sender],  
+        "externalAdReply": {  
+        "showAdAttribution": true,  
+        "containsAutoReply": false,
+        "renderLargerThumbnail": false,  
+        "title": botname,   
+        "mediaType": 1,   
+        "thumbnail": ppgroup,  
+        "mediaUrl": `https://wa.me/+5218442114446`,  
+        "sourceUrl": `https://wa.me/+5218442114446`  
+        }
+        }  
+        }, { quoted: null })
+				}
 			
 		})
 
