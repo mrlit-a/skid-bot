@@ -1144,22 +1144,101 @@ case 'wetglass':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
 			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
 			let inEnable = (args[0] || '').toLowerCase() // args ?
+			let actived = `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}enable ${inEnable}*`
+			let inSuccess = inSuccess
+			let inBotSuccess = `*el ${inEnable} fue activado en este bot*`
 			switch (inEnable) { // inEnable ? inEnable : commands
 			
 			case 'antilink':
-			if (inChat.antilink) return conn.sendCart(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, global.query, botname)
+			if (inChat.antilink) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, global.query, botname)
 			inChat.antilink = true
-			conn.sendCart(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
+			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'detect':
-			if (inChat.antilink) return conn.sendCart(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.antilink = true
-			conn.sendCart(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
+			if (inChat.autoDetect) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.autoDetect = true
+			conn.sendCart(m.chat, inSuccess, success)
 			break
-			
+			case 'antifakes':
+			if (inChat.antiFake) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiFake = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antiarabes':
+			if (inChat.antiArabe) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiArabe = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'welcome':
+			if (inChat.welcome) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.welcome = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antillamadas':
+			if (inChat.antiCall) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiCall = true
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
+			case 'jadibot':
+			if (inBot.jadibot) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inBot.jadibot = true
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
 			default:
+	        
+			
 			}
 			break
+			case 'disable':
+			let inChat = global.db.data.chats[m.chat] // inChat database ?
+			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
+			let inEnable = (args[0] || '').toLowerCase() // args ?
+			let actived = `*el ${inEnable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inEnable}*`
+			let inSuccess = `*el ${inEnable} fue desactivado en este grupo*`
+			let inBotSuccess = `*el ${inEnable} fue desactivado en este bot*`
+			switch (inEnable) { // inEnable ? inEnable : commands
+			
+			case 'antilink':
+			if (!inChat.antilink) return conn.sendCart(m.chat, actived, global.query, botname)
+			inChat.antilink = false
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'detect':
+			if (!inChat.autoDetect) return conn.sendCart(m.chat, actived, query)
+			inChat.autoDetect = false
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antifakes':
+			if (!inChat.antiFake) return conn.sendCart(m.chat, actived, query)
+			inChat.antiFake = false
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antiarabes':
+			if (!inChat.antiArabe) return conn.sendCart(m.chat, actived, query)
+			inChat.antiArabe = false
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'welcome':
+			if (!inChat.welcome) return conn.sendCart(m.chat, actived, query)
+			inChat.welcome = false
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antillamadas':
+			if (!inBot.antiCall) return conn.sendCart(m.chat, actived, query)
+			inBot.antiCall = false
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
+			case 'jadibot':
+			if (!inBot.jadibot) return conn.sendCart(m.chat, actived, query)
+			inBot.jadibot = false
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
+			default:
+	        
+			
+			}
+			break
+			
   
           default: 
               if (budy.startsWith('>')) {  

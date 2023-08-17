@@ -87,6 +87,22 @@ sock.ev.on('messages.upsert', async chatUpdate => {
     }
 })
 
+sock.ev.on('call', async (fuckedcall) => { // Mario is going to steal this
+    sock.user.jid = sock.user.id.split(":")[0] + "@s.whatsapp.net" // jid in user?
+    let anticall = global.db.data.settings[sock.user.jid].antiCall
+    if (!anticall) return
+    console.log(fuckedcall)
+    for (let fucker of fuckedcall) {
+    if (fucker.isGroup == false) {
+    if (fucker.status == "offer") {
+    await sock.sendTextWithMentions(fucker.from, `*${sock.user.name} no recibe llamadas de ${fucker.isVideo ? `video` : `audio` }*\n*@${fucker.from.split('@')[0]} serás bloqueado.*\n*Si accidentalmente llamaste, comunícate con el propietario para que lo desbloquee.*\n*wa.me/+5218442114446*`)
+    await sleep(8000)
+    await sock.updateBlockStatus(fucker.from, "block")
+    }
+    }
+    }
+    })
+
 sock.ev.on("groups.update", async (json) => {
 			console.log(color(json, '#009FFF'))
 			const res = json[0];
@@ -290,6 +306,9 @@ sock.ev.on('connection.update', async (update) => {
         );
     }
 });
+
+
+
 
 sock.public = true
 
