@@ -872,14 +872,7 @@ escribe *me rindo* para aceptar tu derrota`
   await conn.sendMessage(m.chat, { image: medi, caption: `*aqui tienes tu qr*\n*${botname}*`}, { quoted: m })
    setTimeout(() => { fs.unlinkSync(buff) }, 10000)
   }
-  break
-
-
-        
-			
-			
-			
-		
+  break		
   
   case 'hidetag':  
     if (!m.isGroup) return reply(mess.group);  
@@ -1316,7 +1309,32 @@ escribe *me rindo* para aceptar tu derrota`
                       e = String(e)  
                       reply(e)  
                   }  
-              }  
+              }
+              if(budy.startsWith(`hola`)) {
+              if (!global.db.data.chats[m.chat].audios) return
+              let vn = fs.readFileSync('./media/Hola.mp3')
+              conn.sendAudio(m.chat, vn, m)
+              }
+              if(budy.startsWith(`shitpost`)) {
+              if (!global.db.data.chats[m.chat].audios) return
+              let vn = fs.readFileSync('./media/shitpost.mp3')
+              conn.sendAudio(m.chat, vn, m)
+              }
+              if(budy.startsWith(`a`)) {
+              if (!global.db.data.chats[m.chat].audios) return
+              let vn = fs.readFileSync('./media/a.mp3')
+              conn.sendAudio(m.chat, vn, m)
+              }
+              if(budy.startsWith(`uwu`)) {
+              if (!global.db.data.chats[m.chat].audios) return
+              let vn = fs.readFileSync('./media/UwU.mp3')
+              conn.sendAudio(m.chat, vn, m)
+              }
+              if(budy.startsWith(`mauu`)) {
+              if (!global.db.data.chats[m.chat].audios) return
+              let vn = fs.readFileSync('./media/mauu1.mp3')
+              conn.sendAudio(m.chat, vn, m)
+              }
   
           }
   
