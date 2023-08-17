@@ -1143,6 +1143,7 @@ case 'wetglass':
 			case 'enable':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
 			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
+			let inEnable = (args[0] || '').toLowerCase() // args ?
 			switch (inEnable) { // inEnable ? inEnable : commands
 			
 			case 'antilink':
