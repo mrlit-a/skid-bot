@@ -111,7 +111,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
@@ -137,7 +137,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
@@ -163,7 +163,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
@@ -189,7 +189,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
@@ -215,7 +215,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
@@ -241,7 +241,7 @@ sock.ev.on("groups.update", async (json) => {
         "renderLargerThumbnail": false,  
         "title": botname,   
         "mediaType": 1,   
-        "thumbnail": ppgroup,  
+        "thumbnail": global.query,  
         "mediaUrl": `https://wa.me/+5218442114446`,  
         "sourceUrl": `https://wa.me/+5218442114446`  
         }
