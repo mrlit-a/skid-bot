@@ -98,7 +98,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 			if (res.announce == true) {
 				await sleep(2000)
 				let text = `*「 Grupos 」*\n\n*El grupo ha sido cerrado por el administrador.*\n*¡Ahora solo los administradores pueden enviar mensajes!*`
-		conn.sendMessage(res.id, {   
+		sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
@@ -119,7 +119,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 			} else if (res.announce == false) {
 				await sleep(2000)
 				let text = `*「 Grupos 」*\n\n*el grupo a sido abierto por un admin*\n*los participantes pueden mandar mensajes*`
-		conn.sendMessage(res.id, {   
+		sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
@@ -140,7 +140,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 			} else if (res.restrict == true) {
 				await sleep(2000)
 			let text = `*「 Grupos 」*\n\n La información del grupo ha sido restringida, ¡ahora solo el administrador puede editar la información del grupo!`
-		conn.sendMessage(res.id, {   
+		sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
@@ -161,7 +161,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 			} else if (res.restrict == false) {
 				await sleep(2000)
 		    let text = `*「 Grupos 」*\n\n*Se ha abierto la información del grupo para todos los participantes*\n*¡Ahora los participantes pueden editar la información del grupo!*`
-	    conn.sendMessage(res.id, {   
+	    sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
@@ -182,7 +182,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 			} else if(!res.desc == ''){
 				await sleep(2000)
 	    let text = `*「 Grupos 」*\n\n*La descripción del grupo se ha cambiado:*\n\n*nueva descripción: ${res.desc}*`
-	    conn.sendMessage(res.id, {   
+	    sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
@@ -203,7 +203,7 @@ ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
       } else {
 				await sleep(2000)
 				let text = `*「 Grupos 」*\n\n*El nombre del grupo ha sido cambiado:*\n\n*nuevo nombre: ${res.subject}*`
-        conn.sendMessage(res.id, {   
+        sock.sendMessage(res.id, {   
         text: text,  
         contextInfo:{  
         forwardingScore: 9999999,  
