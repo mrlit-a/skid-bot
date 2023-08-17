@@ -1147,9 +1147,14 @@ case 'wetglass':
 			switch (inEnable) { // inEnable ? inEnable : commands
 			
 			case 'antilink':
-			if (inChat.antilink) return conn.adReply(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, success, fkontak, false)
+			if (inChat.antilink) return conn.sendCart(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, global.query, botname)
 			inChat.antilink = true
-			conn.adReply(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
+			conn.sendCart(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
+			break
+			case 'detect':
+			if (inChat.antilink) return conn.sendCart(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antilink = true
+			conn.sendCart(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
 			break
 			
 			default:
