@@ -1127,7 +1127,7 @@ escribe *me rindo* para aceptar tu derrota`
 			let Chat = global.db.data.chats[m.chat] // Chat database ?
 			let Bot = global.db.data.settings[conn.user.jid] // Bot database ?
 			let inDisable = (args[0] || '').toLowerCase() // args ?
-			let actived = `*el ${inDisable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inDisable}*`
+			let disable = `*el ${inDisable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inDisable}*`
 			let inSuccessDisable = `*el ${inDisable} fue desactivado en este grupo*`
 			let inBotDisable = `*el ${inDisable} fue desactivado en este bot*`
 			switch (inDisable) { // inDisable ? inDisable : commands
