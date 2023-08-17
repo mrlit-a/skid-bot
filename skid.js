@@ -551,6 +551,9 @@ await conn.groupSettingUpdate(m.chat, 'announcement')
 break
 
 case 'del':
+    if (!m.isGroup) return reply(mess.group);  
+    if (!isBotAdmins) return reply(mess.botAdmin);  
+    if (!isGroupAdmins) return reply(mess.admin)
 let deleteshit = m.key.participant  
 let userShit = m.key.id  
 conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: userShit, participant: deleteshit }})  
