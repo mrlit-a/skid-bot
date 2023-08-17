@@ -470,40 +470,6 @@ escribe *me rindo* para acptar tu derrota`
  return d.toLocaleDateString(locale, { timeZone: 'Asia/Jakarta' })} 
   
  break 
-  
-  
-
-		case 'lewd':
-		case 'feed':
-		case 'gasm':
-		case 'anal':
-		case 'holo':
-		case 'tits':
-		case 'kuni':
-		case 'kiss':
-		case 'erok':
-		case 'smug':
-		case 'solog':
-		case 'feetg':
-		case 'lewdk':
-		case 'waifu':
-		case 'pussy':
-		case 'femdom':
-		case 'cuddle':
-		case 'eroyuri':
-		case 'cum_jpg':
-		case 'blowjob':
-		case 'holoero':
-		case 'erokemo':
-		case 'fox_girl':
-		case 'futanari':
-		case 'wallpaper':
-		if (!m.isGroup) return m.reply('_*este comando solo puede ser utilizado en grupos*_')
-		if (!global.db.data.chats[m.chat].antiNsfw) return m.reply(`*el comando ${command} esta desabilitado en este grupo*\n*usa ${prefix}disable antinsfw*`)
-	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
-			break
-
-
 
 
 case 'qc': case'text': {
@@ -602,38 +568,6 @@ break
   m.reply('*ahora el bot es de uso privado*')
   break
   
-
-    
-  case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
-                  try {  
-                  let set  
-                  if (/bass/.test(command)) set = '-af equalizer=f=54:width_type=o:width=2:g=20'  
-                  if (/blown/.test(command)) set = '-af acrusher=.1:1:64:0:log'  
-                  if (/deep/.test(command)) set = '-af atempo=4/4,asetrate=44500*2/3'  
-                  if (/earrape/.test(command)) set = '-af volume=12'  
-                  if (/fast/.test(command)) set = '-filter:a "atempo=1.63,asetrate=44100"'  
-                  if (/fat/.test(command)) set = '-filter:a "atempo=1.6,asetrate=22100"'  
-                  if (/nightcore/.test(command)) set = '-filter:a atempo=1.06,asetrate=44100*1.25'  
-                  if (/reverse/.test(command)) set = '-filter_complex "areverse"'  
-                  if (/robot/.test(command)) set = '-filter_complex "afftfilt=real=\'hypot(re,im)*sin(0)\':imag=\'hypot(re,im)*cos(0)\':win_size=512:overlap=0.75"'  
-                  if (/slow/.test(command)) set = '-filter:a "atempo=0.7,asetrate=44100"'  
-                  if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'  
-                  if (/squirrel/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'  
-                  if (/audio/.test(mime)) {  
-                  let media = await conn.downloadAndSaveMediaMessage(quoted)  
-                  let ran = getRandom('.mp3')  
-                  exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {  
-                  fs.unlinkSync(media)  
-                  if (err) return reply(err)  
-                  let buff = fs.readFileSync(ran)  
-                  conn.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })  
-                  fs.unlinkSync(ran)  
-                  })  
-                  } else reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)  
-                  } catch (e) {  
-                  m.reply(`hubo un error... ${e}`)  
-                  }  
-                  break  
   
   case 'serbot':  
   if (m.isGroup) return m.reply(mess.priv) 
@@ -928,67 +862,9 @@ escribe *me rindo* para aceptar tu derrota`
   break
 
 
-case 'wetglass':
-		case 'multicolor3d':
-		case 'watercolor':
-		case 'luxurygold':
-		case 'galaxywallpaper':
-		case 'lighttext':
-		case 'beautifulflower':
-		case 'puppycute':
-		case 'royaltext':
-		case 'heartshaped':
-		case 'birthdaycake':
-		case 'galaxystyle':
-		case 'hologram3d':
-		case 'greenneon':
-		case 'glossychrome':
-		case 'greenbush':
-		case 'metallogo':
-		case 'noeltext':
-		case 'glittergold':
-		case 'textcake':
-		case 'starsnight':
-		case 'wooden3d':
-		case 'textbyname':
-		case 'writegalacy':
-		case 'galaxybat':
-		case 'snow3d':
-		case 'birthdayday':
-		case 'goldplaybutton':
-		case 'silverplaybutton':
-		case 'freefire':
-			if (args.length == 0) return reply(`Example: ${prefixo + comando} andres vpn`)
-			andres.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${lolkeysapi}&text=${text}` } })
-			break
+        
 			
-			case 'shadow':
-		case 'cup':
-		case 'cup1':
-		case 'romance':
-		case 'smoke':
-		case 'burnpaper':
-		case 'lovemessage':
-		case 'undergrass':
-		case 'love':
-		case 'coffe':
-		case 'woodheart':
-		case 'woodenboard':
-		case 'summer3d':
-		case 'wolfmetal':
-		case 'nature3d':
-		case 'underwater':
-		case 'golderrose':
-		case 'summernature':
-		case 'letterleaves':
-		case 'glowingneon':
-		case 'fallleaves':
-		case 'flamming':
-		case 'harrypotter':
-		case 'carvedwood':
-			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
-			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/photooxy1/${command}?apikey=${lolkeysapi}&text=${text}` }}, {quoted: m })
-			break
+			
 			
 		
   
@@ -1065,130 +941,175 @@ case 'wetglass':
     await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });  
     break  
   
-  case 'update':  
-    if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
-    try {  
-      let stdout = execSync('git pull' + (m.fromMe && q ? ' ' + q : ''))  
-      await conn.sendMessage(m.chat, { text: stdout.toString() }, { quoted: msg });  
-    } catch {  
-      let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')  
-      await conn.sendMessage(m.chat, { text: updatee.toString() }, { quoted: msg });  
-    }  
-    break  
+      case 'update':  
+        if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
+        try {  
+          let stdout = execSync('git pull' + (m.fromMe && q ? ' ' + q : ''))  
+          await conn.sendMessage(m.chat, { text: stdout.toString() }, { quoted: msg });  
+        } catch {  
+          let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')  
+          await conn.sendMessage(m.chat, { text: updatee.toString() }, { quoted: msg });  
+        }  
+        break  
   
-  case 'simi': {  
-    if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚑𝚊𝚋𝚕𝚊𝚛 𝚌𝚘𝚗 𝚜𝚒𝚖𝚒` }, { quoted: msg });  
-    await conn.sendPresenceUpdate('composing', m.chat);  
-    let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);  
-    let res = anu.success;  
-    m.reply(res)
-  }  
-  break  
+      case 'simi': {  
+        if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚑𝚊𝚋𝚕𝚊𝚛 𝚌𝚘𝚗 𝚜𝚒𝚖𝚒` }, { quoted: msg });  
+        await conn.sendPresenceUpdate('composing', m.chat);  
+        let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);  
+        let res = anu.success;  
+        m.reply(res)
+      }  
+     break  
   
-  case 'ia':
-  if (!text) return m.reply(`*ingresa un texto para hablar con chatgpt`)
-  try {     
- let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
- let hasill = await tioress.json() 
- m.reply(`${hasill.result}`.trim())    
- } catch (e) {
- m.reply(`${e}`)
-}
- break
+      case 'ia':
+      if (!text) return m.reply(`*ingresa un texto para hablar con chatgpt`)
+      try {     
+     let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
+     let hasill = await tioress.json() 
+     m.reply(`${hasill.result}`.trim())    
+     } catch (e) {
+     m.reply(`${e}`)
+    }
+     break
 
-  case 'pinterest':  
-  if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
-  m.reply(mess.wait)  
-  lol = await pinterest(text) //.catch(m.reply)  
-  result = lol[Math.floor(Math.random() * lol.length)];  
-  sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)  
-  break  
+      case 'pinterest':  
+      if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
+      m.reply(mess.wait)  
+      lol = await pinterest(text) //.catch(m.reply)  
+      result = lol[Math.floor(Math.random() * lol.length)];  
+      sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)  
+      break  
   
-  case 'blackpink':
-		case 'neon':
-		case 'greenneon':
-		case 'advanceglow':
-		case 'futureneon':
-		case 'sandwriting':
-		case 'sandsummer':
-		case 'sandengraved':
-		case 'metaldark':
-		case 'neonlight':
-		case 'holographic':
-		case 'text1917':
-		case 'minion':
-		case 'deluxesilver':
-		case 'newyearcard':
-		case 'bloodfrosted':
-		case 'halloween':
-		case 'jokerlogo':
-		case 'fireworksparkle':
-		case 'natureleaves':
-		case 'bokeh':
-		case 'toxic':
-		case 'strawberry':
-		case 'box3d':
-		case 'roadwarning':
-		case 'breakwall':
-		case 'icecold':
-		case 'luxury':
-		case 'cloud':
-		case 'summersand':
-		case 'horrorblood':
-		case 'thunder':
+ 
+			
+		  
+		  
+		    case 'blackpink':
+    		case 'neon':
+	    	case 'greenneon':
+	    	case 'advanceglow':
+    		case 'futureneon':
+	    	case 'sandwriting':
+       		case 'sandsummer':
+	    	case 'sandengraved':
+    		case 'metaldark':
+    		case 'neonlight':
+    		case 'holographic':
+    		case 'text1917':
+    		case 'minion':
+	    	case 'deluxesilver':
+    		case 'newyearcard':
+	    	case 'bloodfrosted':
+		    case 'halloween':
+		    case 'jokerlogo':
+		    case 'fireworksparkle':
+		    case 'natureleaves':
+		    case 'bokeh':
+		    case 'toxic':
+		    case 'strawberry':
+		    case 'box3d':
+		    case 'roadwarning':
+		    case 'breakwall':
+		    case 'icecold':
+		    case 'luxury':
+		    case 'cloud':
+		    case 'summersand':
+		    case 'horrorblood':
+		    case 'thunder':
 			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
 			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}` } })
 			break
+			case 'wetglass':
+		    case 'multicolor3d':
+    		case 'watercolor':
+    		case 'luxurygold':
+    		case 'galaxywallpaper':
+    		case 'lighttext':
+    		case 'beautifulflower':
+    		case 'puppycute':
+    		case 'royaltext':
+    		case 'heartshaped':
+    		case 'birthdaycake':
+    		case 'galaxystyle':
+    		case 'hologram3d':
+    		case 'greenneon':
+    		case 'glossychrome':
+    		case 'greenbush':
+    		case 'metallogo':
+	    	case 'noeltext':
+    		case 'glittergold':
+    		case 'textcake':
+	    	case 'starsnight':
+	    	case 'wooden3d':
+	    	case 'textbyname':
+	    	case 'writegalacy':
+    		case 'galaxybat':
+    		case 'snow3d':
+    		case 'birthdayday':
+    		case 'goldplaybutton':
+    		case 'silverplaybutton':
+    		case 'freefire':
+			if (args.length == 0) return reply(`Ejemplo: ${prefix + command} skid bot`)
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${lolkeysapi}&text=${text}` } })
+			break
+			case 'shadow':
+	    	case 'cup':
+    		case 'cup1':
+    		case 'romance':
+    		case 'smoke':
+    		case 'burnpaper':
+    		case 'lovemessage':
+    		case 'undergrass':
+    		case 'love':
+    		case 'coffe':
+    		case 'woodheart':
+	    	case 'woodenboard':
+	    	case 'summer3d':
+	    	case 'wolfmetal':
+    		case 'nature3d':
+    		case 'underwater':
+    		case 'golderrose':
+    		case 'summernature':
+    		case 'letterleaves':
+	    	case 'glowingneon':
+	    	case 'fallleaves':
+	    	case 'flamming':
+	    	case 'harrypotter':
+	    	case 'carvedwood':
+			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
+			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/photooxy1/${command}?apikey=${lolkeysapi}&text=${text}` }}, {quoted: m })
+			break
+			case 'bass': case 'blown': case 'deep': case 'earrape': case 'fast': case 'fat': case 'nightcore': case 'reverse': case 'robot': case 'slow': case 'smooth': case 'squirrel':  
+                  try {  
+                  let set  
+                  if (/bass/.test(command)) set = '-af equalizer=f=54:width_type=o:width=2:g=20'  
+                  if (/blown/.test(command)) set = '-af acrusher=.1:1:64:0:log'  
+                  if (/deep/.test(command)) set = '-af atempo=4/4,asetrate=44500*2/3'  
+                  if (/earrape/.test(command)) set = '-af volume=12'  
+                  if (/fast/.test(command)) set = '-filter:a "atempo=1.63,asetrate=44100"'  
+                  if (/fat/.test(command)) set = '-filter:a "atempo=1.6,asetrate=22100"'  
+                  if (/nightcore/.test(command)) set = '-filter:a atempo=1.06,asetrate=44100*1.25'  
+                  if (/reverse/.test(command)) set = '-filter_complex "areverse"'  
+                  if (/robot/.test(command)) set = '-filter_complex "afftfilt=real=\'hypot(re,im)*sin(0)\':imag=\'hypot(re,im)*cos(0)\':win_size=512:overlap=0.75"'  
+                  if (/slow/.test(command)) set = '-filter:a "atempo=0.7,asetrate=44100"'  
+                  if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'  
+                  if (/squirrel/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'  
+                  if (/audio/.test(mime)) {  
+                  let media = await conn.downloadAndSaveMediaMessage(quoted)  
+                  let ran = getRandom('.mp3')  
+                  exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {  
+                  fs.unlinkSync(media)  
+                  if (err) return reply(err)  
+                  let buff = fs.readFileSync(ran)  
+                  conn.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })  
+                  fs.unlinkSync(ran)  
+                  })  
+                  } else reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)  
+                  } catch (e) {  
+                  m.reply(`hubo un error... ${e}`)  
+                  }  
+                  break  
 			
-			case 'enable':
-			let inChat = global.db.data.chats[m.chat] // inChat database ?
-			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
-			let inEnable = (args[0] || '').toLowerCase() // args ?
-			let actived = `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}enable ${inEnable}*`
-			let inSuccess = inSuccess
-			let inBotSuccess = `*el ${inEnable} fue activado en este bot*`
-			switch (inEnable) { // inEnable ? inEnable : commands
-			
-			case 'antilink':
-			if (inChat.antilink) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, global.query, botname)
-			inChat.antilink = true
-			conn.sendCart(m.chat, inSuccess, success)
-			break
-			case 'detect':
-			if (inChat.autoDetect) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.autoDetect = true
-			conn.sendCart(m.chat, inSuccess, success)
-			break
-			case 'antifakes':
-			if (inChat.antiFake) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.antiFake = true
-			conn.sendCart(m.chat, inSuccess, success)
-			break
-			case 'antiarabes':
-			if (inChat.antiArabe) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.antiArabe = true
-			conn.sendCart(m.chat, inSuccess, success)
-			break
-			case 'welcome':
-			if (inChat.welcome) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.welcome = true
-			conn.sendCart(m.chat, inSuccess, success)
-			break
-			case 'antillamadas':
-			if (inChat.antiCall) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.antiCall = true
-			conn.sendCart(m.chat, inBotSuccess, success)
-			break
-			case 'jadibot':
-			if (inBot.jadibot) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inBot.jadibot = true
-			conn.sendCart(m.chat, inBotSuccess, success)
-			break
-			default:
-	        
-			
-			}
-			break
 			case 'disable':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
 			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
@@ -1199,36 +1120,53 @@ case 'wetglass':
 			switch (inEnable) { // inEnable ? inEnable : commands
 			
 			case 'antilink':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);  
 			if (!inChat.antilink) return conn.sendCart(m.chat, actived, global.query, botname)
 			inChat.antilink = false
 			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'detect':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
 			if (!inChat.autoDetect) return conn.sendCart(m.chat, actived, query)
 			inChat.autoDetect = false
 			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'antifakes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
 			if (!inChat.antiFake) return conn.sendCart(m.chat, actived, query)
 			inChat.antiFake = false
 			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'antiarabes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
 			if (!inChat.antiArabe) return conn.sendCart(m.chat, actived, query)
 			inChat.antiArabe = false
 			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'welcome':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
 			if (!inChat.welcome) return conn.sendCart(m.chat, actived, query)
 			inChat.welcome = false
 			conn.sendCart(m.chat, inSuccess, success)
 			break
 			case 'antillamadas':
+			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
 			if (!inBot.antiCall) return conn.sendCart(m.chat, actived, query)
 			inBot.antiCall = false
 			conn.sendCart(m.chat, inBotSuccess, success)
 			break
 			case 'jadibot':
+			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
 			if (!inBot.jadibot) return conn.sendCart(m.chat, actived, query)
 			inBot.jadibot = false
 			conn.sendCart(m.chat, inBotSuccess, success)
@@ -1238,6 +1176,104 @@ case 'wetglass':
 			
 			}
 			break
+		    
+		case 'lewd':
+		case 'feed':
+		case 'gasm':
+		case 'anal':
+		case 'holo':
+		case 'tits':
+		case 'kuni':
+		case 'kiss':
+		case 'erok':
+		case 'smug':
+		case 'solog':
+		case 'feetg':
+		case 'lewdk':
+		case 'waifu':
+		case 'pussy':
+		case 'femdom':
+		case 'cuddle':
+		case 'eroyuri':
+		case 'cum_jpg':
+		case 'blowjob':
+		case 'holoero':
+		case 'erokemo':
+		case 'fox_girl':
+		case 'futanari':
+		case 'wallpaper':
+		if (!m.isGroup) return m.reply('_*este comando solo puede ser utilizado en grupos*_')
+		if (!global.db.data.chats[m.chat].antiNsfw) return m.reply(`*el comando ${command} esta desabilitado en este grupo*\n*usa ${prefix}disable antinsfw*`)
+	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
+		break
+		
+		    case 'enable':
+			let inChat = global.db.data.chats[m.chat] // inChat database ?
+			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
+			let inEnable = (args[0] || '').toLowerCase() // args ?
+			let actived = `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}enable ${inEnable}*`
+			let inSuccess = inSuccess
+			let inBotSuccess = `*el ${inEnable} fue activado en este bot*`
+			switch (inEnable) { // inEnable ? inEnable : commands
+			
+			case 'antilink':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (inChat.antilink) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, global.query, botname)
+			inChat.antilink = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'detect':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (inChat.autoDetect) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.autoDetect = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antifakes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (inChat.antiFake) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiFake = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antiarabes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (inChat.antiArabe) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiArabe = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'welcome':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (inChat.welcome) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.welcome = true
+			conn.sendCart(m.chat, inSuccess, success)
+			break
+			case 'antillamadas':
+			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
+			if (inChat.antiCall) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inChat.antiCall = true
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
+			case 'jadibot':
+			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
+			if (inBot.jadibot) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
+			inBot.jadibot = true
+			conn.sendCart(m.chat, inBotSuccess, success)
+			break
+			default:
+	        
+			
+			}
+			break
+			
 			
   
           default: 
