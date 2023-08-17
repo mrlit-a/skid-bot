@@ -86,130 +86,50 @@ sock.ev.on('messages.upsert', async chatUpdate => {
         console.log(err)
     }
 })
-//let chats = global.db.data.chats[global.from]
 
-// adaptado por skid
-/*if (global.db.data.chats[global.from].welcome) {
-sock.ev.on('group-participants.update', async (anu) => {
-console.log(anu)
-try {
-let metadata = await sock.groupMetadata(anu.id)
-let participants = anu.participants
-for (let num of participants) {
-try {
-ppuser = await sock.profilePictureUrl(num, 'image')
-} catch (err) {
-ppuser = noperfil
-}
-try {
+sock.ev.on("groups.update", async (json) => {
+			try {
 ppgroup = await sock.profilePictureUrl(anu.id, 'image')
 } catch (err) {
 ppgroup = 'https://i.ibb.co/RBx5SQC/avatar-group-large-v2.png?q=60'
 }
-//welcome\\
-memb = metadata.participants.length
-imskOnWelcome = await getBuffer(ppuser)
-skLft = await getBuffer(ppuser)
-                if (anu.action == 'add') {
-                const imskOnBuffer = await getBuffer(ppuser)
-                let skidName = num
-                const time = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-	            const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-	            const member = metadata.participants.length
-                imsktext = `┌─❖
-│「 👋 」
-└┬❖ 「  @${skidName.split("@")[0]}  」
-   │✑  𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝘁𝗼 
-   │✑  ${metadata.subject}
-   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
-   │✑ ${member}th
-   │✑  𝗝𝗼𝗶𝗻𝗲𝗱 : 
-   │✑ ${time} ${date}
-   └───────────────┈ ⳹`
-sock.sendMessage(anu.id,
- { text: imsktext,
- contextInfo:{
- mentionedJid:[num],
- "externalAdReply": {"showAdAttribution": true,
- "containsAutoReply": true,
- "title": ` ${global.botname}`,
-"body": `👻 skid 👻`,
- "previewType": "PHOTO",
-"thumbnailUrl": ``,
-"thumbnail": imskOnWelcome,
-"sourceUrl": `${wagrupo}`}}})
-                } else if (anu.action == 'remove') {
-                	const imskOnBuffer = await getBuffer(ppuser)
-                    const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-	                const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-                	let skidName = num
-                    const members = metadata.participants.length
-                    imsktext = `┌─❖
-│「 𝗚𝗼𝗼𝗱𝗯𝘆𝗲 👋 」
-└┬❖ 「 @${skidName.split("@")[0]}  」
-   │✑  𝗟𝗲𝗳𝘁 
-   │✑ ${metadata.subject}
-   │✑  𝗠𝗲𝗺𝗯𝗲𝗿 : 
-   │✑ ${members}th
-   │✑  𝗧𝗶𝗺𝗲 : 
-   │✑  ${imsktime} ${date}
-   └───────────────┈ ⳹`
-sock.sendMessage(anu.id,
- { text: imsktext,
- contextInfo:{
- mentionedJid:[num],
- "externalAdReply": {"showAdAttribution": true,
- "containsAutoReply": true,
- "title": ` ${global.botname}`,
-"body": `👻 skid 👻`,
- "previewType": "PHOTO",
-"thumbnailUrl": ``,
-"thumbnail": skLft,
-"sourceUrl": `${wagrupo}`}}})
-} else if (anu.action == 'promote') {
-const imskOnBuffer = await getBuffer(ppuser)
-const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-let skidName = num
-imsktext = `*@${skidName.split("@")[0]}, ahora es admin 🥳*`
-   sock.sendMessage(anu.id,
- { text: imsktext,
- contextInfo:{
- mentionedJid:[num],
- "externalAdReply": {"showAdAttribution": true,
- "containsAutoReply": true,
- "title": ` ${global.botname}`,
-"body": `👻 skid 👻`,
- "previewType": "PHOTO",
-"thumbnailUrl": ``,
-"thumbnail": imskOnWelcome,
-"sourceUrl": `${wagrupo}`}}})
-} else if (anu.action == 'demote') {
-const imskOnBuffer = await getBuffer(ppuser)
-const imsktime = moment.tz('Asia/Kolkata').format('HH:mm:ss')
-const date = moment.tz('Asia/Kolkata').format('DD/MM/YYYY')
-let skidName = num
-imsktext = `*@${skidName.split("@")[0]}, ya no es admin 😵‍💫*`
-sock.sendMessage(anu.id,
- { text: imsktext,
- contextInfo:{
- mentionedJid:[num],
- "externalAdReply": {"showAdAttribution": true,
- "containsAutoReply": true,
- "title": ` ${global.botname}`,
-"body": `👻 skid 👻`,
- "previewType": "PHOTO",
-"thumbnailUrl": ``,
-"thumbnail": skLft,
-"sourceUrl": `${wagrupo}`}}})
-}
-}
-} catch (err) {
-console.log(err)
-}
-})
-}
-*/
+			console.log(json)
+			const res = json[0];
+			if (res.announce == true) {
+				await sleep(2000)
+				sock.sendMessage(res.id, {
+					text: `「 Group Settings Change 」\n\nGroup has been closed by admin, Now only admins can send messages !`,
+				});
+			} else if (res.announce == false) {
+				await sleep(2000)
+				sock.sendMessage(res.id, {
+					text: `「 Group Settings Change 」\n\nThe group has been opened by admin, Now participants can send messages !`,
+				});
+			} else if (res.restrict == true) {
+				await sleep(2000)
+				sock.sendMessage(res.id, {
+					text: `「 Group Settings Change 」\n\nGroup info has been restricted, Now only admin can edit group info !`,
+				});
+			} else if (res.restrict == false) {
+				await sleep(2000)
+				sock.sendMessage(res.id, {
+					text: `「 Group Settings Change 」\n\nGroup info has been opened, Now participants can edit group info !`,
+				});
+			} else if(!res.desc == ''){
+				await sleep(2000)
+				sock.sendMessage(res.id, { 
+					text: `「 Group Settings Change 」\n\n*Group description has been changed to*\n\n${res.desc}`,
+				});
+      } else {
+				await sleep(2000)
+				sock.sendMessage(res.id, {
+					text: `「 Group Settings Change 」\n\n*Group name has been changed to*\n\n*${res.subject}*`,
+				});
+			} 
+			
+		})
+
+
 sock.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr, receivedPendingNotifications } = update;
     console.log(receivedPendingNotifications)
