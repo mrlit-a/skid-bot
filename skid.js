@@ -1147,9 +1147,9 @@ case 'wetglass':
 			switch (inEnable) { // inEnable ? inEnable : commands
 			
 			case 'antilink':
-			if (inChat.antilink) return conn.adReply(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}`)
+			if (inChat.antilink) return conn.adReply(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, success, fkontak, false)
 			inChat.antilink = true
-			conn.adReply(m.chat, `*el ${inEnable} fue activado en este grupo`)
+			conn.adReply(m.chat, `*el ${inEnable} fue activado en este grupo*`, success)
 			break
 			
 			default:
