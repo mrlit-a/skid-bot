@@ -115,7 +115,13 @@
   const who = m.quoted ? m.quoted.sender : m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   const mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : []),]),];
     
-  
+  // pp user?
+  try {
+      ppuser = await conn.profilePictureUrl(m.sender, 'image');
+    } catch (err) {
+      ppuser = noperfil
+    }
+    ppusers = await reSize(ppuser, 300, 300);
   
   // mensajes :v  
   const reply = (text) => {  
@@ -508,7 +514,7 @@ escribe *me rindo* para acptar tu derrota`
 
 case 'qc': case'text': {
     if (!args[0] && !m.quoted) {
-      return conn.adReply(m.chat, `*nesecitas un texto`)
+      return conn.adReply(m.chat, `*nesecitas un texto*`)
     }
     let userPfp
     if (m.quoted) {
@@ -601,28 +607,6 @@ break
   conn.public = false
   m.reply('*ahora el bot es de uso privado*')
   break
-  
-  
-  case 'casar':
-  let member = participants.map(u => u.id)
-  let me = m.sender
-  let love = member[Math.floor(Math.random() * member.length)]
-  conn.sendMessage(m.chat, { text: `*te deberias casar con @${love.split('@')[0]} hacen una bonita pareja*`,
-contextInfo:{
-mentionedJid:[me, love],
-forwardingScore: 9999999,
-isForwarded: true, 
-"externalAdReply": {
-"showAdAttribution": true,
-"containsAutoReply": true,
-"title": ` ${botname}`,
-"body": `${pushname}`,
-"previewType": "PHOTO",
-"thumbnailUrl": ``,
-"thumbnail": menu,
-"sourceUrl": `https://wa.me/+5218442114446`}}},
-{ quoted: m})
-break
   
 
     
@@ -1160,6 +1144,21 @@ case 'wetglass':
 		case 'thunder':
 			if (args.length == 0) return reply(`Ejemplo de uso: ${prefix + command} ${botname}`)
 			conn.sendMessage(m.chat, { image: { url: `https://api.lolhuman.xyz/api/textprome/${command}?apikey=${lolkeysapi}&text=${text}` } })
+			break
+			
+			case 'enable':
+			let inChat = global.db.data.chats[m.chat] // inChat database ?
+			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
+			switch (inEnable) { // inEnable ? inEnable : commands
+			
+			case 'antilink':
+			if (inChat.antilink) return conn.adReply(m.chat, `*el antilink ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}`)
+			inChat.antilink = true
+			conn.adReply(m.chat, `*el ${inEnable} fue activado en este grupo`)
+			break
+			
+			default:
+			}
 			break
   
           default: 

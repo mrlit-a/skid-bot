@@ -90,6 +90,8 @@ sock.ev.on('messages.upsert', async chatUpdate => {
 sock.ev.on("groups.update", async (json) => {
 			console.log(color(json, '#009FFF'))
 			const res = json[0];
+			let autoDetect = global.db.data.chats[res.id].autoDetect
+			if (!autoDetect) return
 			if (res.announce == true) {
 				await sleep(2000)
 				try {
