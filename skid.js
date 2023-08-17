@@ -1213,7 +1213,7 @@ escribe *me rindo* para aceptar tu derrota`
 	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
 		break
 		
-		    case 'enable':
+/*		    case 'enable':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
 			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
 			let inEnable = (args[0] || '').toLowerCase() // args ?
@@ -1265,7 +1265,7 @@ escribe *me rindo* para aceptar tu derrota`
 			case 'antillamadas':
 			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
 			if (inChat.antiCall) return conn.sendCart(m.chat, `*el ${inEnable} ya esta activado!!*\n*puedes desactivarlo con ${prefix}disable ${inEnable}*`, query)
-			inChat.antiCall = true
+			inBot.antiCall = true
 			conn.sendCart(m.chat, inBotSuccess, success)
 			break
 			case 'jadibot':
@@ -1278,7 +1278,7 @@ escribe *me rindo* para aceptar tu derrota`
 	        
 			
 			}
-			break
+			break*/
 			
 			
   
