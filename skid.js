@@ -1136,53 +1136,53 @@ escribe *me rindo* para aceptar tu derrota`
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);  
-			if (!Chat.antilink) return conn.sendCart(m.chat, actived, global.query, botname)
+			if (!Chat.antilink) return conn.sendCart(m.chat, disable, global.query, botname)
 			Chat.antilink = false
-			conn.sendCart(m.chat, inSuccessDisable success)
+			conn.sendCart(m.chat, inSuccessDisable, success)
 			break
 			case 'detect':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.autoDetect) return conn.sendCart(m.chat, actived, query)
+			if (!Chat.autoDetect) return conn.sendCart(m.chat, disable, query)
 			Chat.autoDetect = false
-			conn.sendCart(m.chat, inSuccessDisable success)
+			conn.sendCart(m.chat, inSuccessDisable, success)
 			break
 			case 'antifakes':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.antiFake) return conn.sendCart(m.chat, actived, query)
+			if (!Chat.antiFake) return conn.sendCart(m.chat, disable, query)
 			Chat.antiFake = false
-			conn.sendCart(m.chat, inSuccessDisable success)
+			conn.sendCart(m.chat, inSuccessDisable, success)
 			break
 			case 'antiarabes':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.antiArabe) return conn.sendCart(m.chat, actived, query)
+			if (!Chat.antiArabe) return conn.sendCart(m.chat, disable, query)
 			Chat.antiArabe = false
-			conn.sendCart(m.chat, inSuccessDisable success)
+			conn.sendCart(m.chat, inSuccessDisable, success)
 			break
 			case 'welcome':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.welcome) return conn.sendCart(m.chat, actived, query)
+			if (!Chat.welcome) return conn.sendCart(m.chat, disable, query)
 			Chat.welcome = false
-			conn.sendCart(m.chat, inSuccessDisable success)
+			conn.sendCart(m.chat, inSuccessDisable, success)
 			break
 			case 'antillamadas':
 			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
-			if (!Bot.antiCall) return conn.sendCart(m.chat, actived, query)
+			if (!Bot.antiCall) return conn.sendCart(m.chat, disable, query)
 			Bot.antiCall = false
-			conn.sendCart(m.chat, inBotDisable success)
+			conn.sendCart(m.chat, inBotDisable, success)
 			break
 			case 'jadibot':
 			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
-			if (!Bot.jadibot) return conn.sendCart(m.chat, actived, query)
+			if (!Bot.jadibot) return conn.sendCart(m.chat, disable, query)
 			Bot.jadibot = false
-			conn.sendCart(m.chat, inBotDisable success)
+			conn.sendCart(m.chat, inBotDisable, success)
 			break
 			default:
 	        
