@@ -40,6 +40,14 @@
   } else { 
   return `${message}`}} 
   
+  const addCmd = (cmd, id) =>  {
+    const stickerdb = global.db.data.sticker // gracias a aiden
+    stickerdb[id] = {
+    id: id,
+    cmd: cmd
+    }
+  }
+  
   const getCmd = (id) => {
   const stickerdb = global.db.data.sticker
   let anu = null;  
@@ -50,6 +58,7 @@
   if (anu !== null) {  
   return stickerdb[anu].cmd  
   }}
+
   const getFileBuffer = async (mediakey, MediaType) => {  
   const stream = await downloadContentFromMessage(mediakey, MediaType)  
   let buffer = Buffer.from([])  
@@ -169,9 +178,6 @@ if (global.db.data.chats[m.chat].antiArabe) {
     if (!m.key.fromMe) return
     }
 
-    
-
- 
 
   const used = process.memoryUsage()  
   const cpus = os.cpus().map(cpu => {  
