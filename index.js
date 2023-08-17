@@ -95,7 +95,7 @@ sock.ev.on('call', async (fuckedcall) => { // Mario is going to steal this
     for (let fucker of fuckedcall) {
     if (fucker.isGroup == false) {
     if (fucker.status == "offer") {
-    await sock.sendTextWithMentions(fucker.from, `*${sock.user.name} no recibe llamadas de ${fucker.isVideo ? `video` : `audio` }*\n*@${fucker.from.split('@')[0]} serás bloqueado.*\n*Si accidentalmente llamaste, comunícate con el propietario para que lo desbloquee.*\n*wa.me/+5218442114446*`)
+    await sock.sendTextWithMentions(fucker.from, `*${sock.user.name} no recibe ${fucker.isVideo ? `videollamadas` : `llamadas` }*\n*@${fucker.from.split('@')[0]} serás bloqueado.*\n*Si accidentalmente llamaste, comunícate con el propietario para que lo desbloquee.*\n*wa.me/+5218442114446*`)
     await sleep(8000)
     await sock.updateBlockStatus(fucker.from, "block")
     }

@@ -556,7 +556,7 @@ case 'del':
     if (!isGroupAdmins) return reply(mess.admin)
 let deleteshit = m.key.participant  
 let userShit = m.key.id  
-conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: false, id: userShit, participant: deleteshit }})  
+conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
 break
 case 'addcmd':
 if (!m.quoted) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁 𝙾 𝙸𝙼𝙰𝙶𝙴𝙽 𝙰𝙻 𝙲𝚄𝙰𝙻 𝙳𝙴𝚂𝙴𝙰 𝙰𝙶𝚁𝙴𝙶𝙰𝚁 𝚄𝙽 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙾 𝚃𝙴𝚇𝚃𝙾*'
@@ -1124,65 +1124,65 @@ escribe *me rindo* para aceptar tu derrota`
                   break  
 			
 			case 'disable':
-			let inChat = global.db.data.chats[m.chat] // inChat database ?
-			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
-			let inEnable = (args[0] || '').toLowerCase() // args ?
-			let actived = `*el ${inEnable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inEnable}*`
-			let inSuccess = `*el ${inEnable} fue desactivado en este grupo*`
-			let inBotSuccess = `*el ${inEnable} fue desactivado en este bot*`
-			switch (inEnable) { // inEnable ? inEnable : commands
+			let Chat = global.db.data.chats[m.chat] // Chat database ?
+			let Bot = global.db.data.settings[conn.user.jid] // Bot database ?
+			let inDisable = (args[0] || '').toLowerCase() // args ?
+			let actived = `*el ${inDisable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inDisable}*`
+			let inSuccessDisable = `*el ${inDisable} fue desactivado en este grupo*`
+			let inBotDisable = `*el ${inDisable} fue desactivado en este bot*`
+			switch (inDisable) { // inDisable ? inDisable : commands
 			
 			case 'antilink':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);  
-			if (!inChat.antilink) return conn.sendCart(m.chat, actived, global.query, botname)
-			inChat.antilink = false
-			conn.sendCart(m.chat, inSuccess, success)
+			if (!Chat.antilink) return conn.sendCart(m.chat, actived, global.query, botname)
+			Chat.antilink = false
+			conn.sendCart(m.chat, inSuccessDisable success)
 			break
 			case 'detect':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!inChat.autoDetect) return conn.sendCart(m.chat, actived, query)
-			inChat.autoDetect = false
-			conn.sendCart(m.chat, inSuccess, success)
+			if (!Chat.autoDetect) return conn.sendCart(m.chat, actived, query)
+			Chat.autoDetect = false
+			conn.sendCart(m.chat, inSuccessDisable success)
 			break
 			case 'antifakes':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!inChat.antiFake) return conn.sendCart(m.chat, actived, query)
-			inChat.antiFake = false
-			conn.sendCart(m.chat, inSuccess, success)
+			if (!Chat.antiFake) return conn.sendCart(m.chat, actived, query)
+			Chat.antiFake = false
+			conn.sendCart(m.chat, inSuccessDisable success)
 			break
 			case 'antiarabes':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!inChat.antiArabe) return conn.sendCart(m.chat, actived, query)
-			inChat.antiArabe = false
-			conn.sendCart(m.chat, inSuccess, success)
+			if (!Chat.antiArabe) return conn.sendCart(m.chat, actived, query)
+			Chat.antiArabe = false
+			conn.sendCart(m.chat, inSuccessDisable success)
 			break
 			case 'welcome':
 			if (!m.isGroup) return reply(mess.group);  
             if (!isBotAdmins) return reply(mess.botAdmin);  
             if (!isGroupAdmins) return reply(mess.admin);
-			if (!inChat.welcome) return conn.sendCart(m.chat, actived, query)
-			inChat.welcome = false
-			conn.sendCart(m.chat, inSuccess, success)
+			if (!Chat.welcome) return conn.sendCart(m.chat, actived, query)
+			Chat.welcome = false
+			conn.sendCart(m.chat, inSuccessDisable success)
 			break
 			case 'antillamadas':
 			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
-			if (!inBot.antiCall) return conn.sendCart(m.chat, actived, query)
-			inBot.antiCall = false
-			conn.sendCart(m.chat, inBotSuccess, success)
+			if (!Bot.antiCall) return conn.sendCart(m.chat, actived, query)
+			Bot.antiCall = false
+			conn.sendCart(m.chat, inBotDisable success)
 			break
 			case 'jadibot':
 			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
-			if (!inBot.jadibot) return conn.sendCart(m.chat, actived, query)
-			inBot.jadibot = false
-			conn.sendCart(m.chat, inBotSuccess, success)
+			if (!Bot.jadibot) return conn.sendCart(m.chat, actived, query)
+			Bot.jadibot = false
+			conn.sendCart(m.chat, inBotDisable success)
 			break
 			default:
 	        
@@ -1220,7 +1220,7 @@ escribe *me rindo* para aceptar tu derrota`
 	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
 		break
 		
-/*		    case 'enable':
+		    case 'enable':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
 			let inBot = global.db.data.settings[conn.user.jid] // inBot database ?
 			let inEnable = (args[0] || '').toLowerCase() // args ?
@@ -1285,7 +1285,7 @@ escribe *me rindo* para aceptar tu derrota`
 	        
 			
 			}
-			break*/
+			break
 			
 			
   
