@@ -115,13 +115,7 @@
   const who = m.quoted ? m.quoted.sender : m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   const mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : []),]),];
     
-  // pp user?
-  try {
-      ppuser = await conn.profilePictureUrl(m.sender, 'image');
-    } catch (err) {
-      ppuser = noperfil
-    }
-    ppusers = await reSize(ppuser, 300, 300);
+  
   
   // mensajes :v  
   const reply = (text) => {  
