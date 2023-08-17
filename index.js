@@ -6,7 +6,7 @@ const chalk = require('chalk')
 const moment = require('moment')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
-const { smsg } = require('./lib/fuctions')
+const { smsg, sleep } = require('./lib/fuctions')
 
 const { execSync } = require('child_process')
 const pino = require('pino')
