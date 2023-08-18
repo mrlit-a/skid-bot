@@ -433,52 +433,34 @@ escribe *me rindo* para acptar tu derrota`
   
   switch (command) {  
   
-   case 'menu': 
- conn.sendMessage(m.chat, {   
-  text: skmenu(conn, prefix, pushname, m),  
-  contextInfo:{  
-  forwardingScore: 9999999,  
-  isForwarded: true,   
-  mentionedJid:[m.sender],  
-  "externalAdReply": {  
-  "showAdAttribution": true,  
-  "containsAutoReply": true,
-  "renderLargerThumbnail": true,  
-  "title": botname,   
-  "containsAutoReply": true,  
-  "mediaType": 1,   
-  "thumbnail": menu,  
-  "mediaUrl": `https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ`,  
-  "sourceUrl": `https://chat.whatsapp.com/Ebbo3i9xxiZFErul4gyApJ`  
-  }  
-  }  
-  }, { quoted: fkontak }) 
+   case 'menu':
+   await conn.editMessage(m.chat, '*Cargando menu*', '*Menu cargado correctamente*', 3, fkontak)
+   conn.adReply(m.chat, skmenu(conn, prefix, pushname, m), global.menu, fkontak)
    break 
   
- case 'nowa': 
- let regex = /x/g 
- if (!text) throw '⚠️ Falto el número.' 
- if (!text.match(regex)) throw `*Ejemplo de uso: ${prefix + command} 521999340434x*` 
- let random = text.match(regex).length, total = Math.pow(10, random), array = [] 
- for (let i = 0; i < total; i++) { 
- let list = [...i.toString().padStart(random, '0')] 
- let result = text.replace(regex, () => list.shift()) + '@s.whatsapp.net' 
- if (await conn.onWhatsApp(result).then(v => (v[0] || {}).exists)) { 
- let info = await conn.fetchStatus(result).catch(_ => {}) 
- array.push({ exists: true, jid: result, ...info }) 
- } else { 
- array.push({ exists: false, jid: result }) 
- }} 
- let txt = 'Registrados\n\n' + array.filter(v => v.exists).map(v => `• Nro: wa.me/${v.jid.split('@')[0]}\n*• Bio:* ${v.status || 'Sin descripcion'}\n*• Fecha:* ${formatDate(v.setAt)}`).join('\n\n') + '\n\n*No registrados*\n\n' + array.filter(v => !v.exists).map(v => v.jid.split('@')[0]).join('\n') 
- m.reply(txt) 
- function formatDate(n, locale = 'id') { 
- let d = new Date(n) 
- return d.toLocaleDateString(locale, { timeZone: 'Asia/Jakarta' })} 
-  
- break 
+     case 'nowa': 
+     let regex = /x/g 
+     if (!text) m.reply('⚠️ Falto el número.')
+     if (!text.match(regex)) m.reply(`*Ejemplo de uso: ${prefix + command} 521999340434x*`)
+     let random = text.match(regex).length, total = Math.pow(10, random), array = [] 
+     for (let i = 0; i < total; i++) { 
+     let list = [...i.toString().padStart(random, '0')] 
+     let result = text.replace(regex, () => list.shift()) + '@s.whatsapp.net' 
+     if (await conn.onWhatsApp(result).then(v => (v[0] || {}).exists)) { 
+     let info = await conn.fetchStatus(result).catch(_ => {}) 
+     array.push({ exists: true, jid: result, ...info }) 
+     } else { 
+     array.push({ exists: false, jid: result }) 
+     }} 
+     let txt = 'Registrados\n\n' + array.filter(v => v.exists).map(v => `• Nro: wa.me/${v.jid.split('@')[0]}\n*• Bio:* ${v.status || 'Sin descripcion'}\n*• Fecha:* ${formatDate(v.setAt)}`).join('\n\n') + '\n\n*No registrados*\n\n' + array.filter(v => !v.exists).map(v => v.jid.split('@')[0]).join('\n') 
+     m.reply(txt) 
+     function formatDate(n, locale = 'id') { 
+     let d = new Date(n) 
+     return d.toLocaleDateString(locale, { timeZone: 'Asia/Jakarta' })} 
+    break 
 
 
-case 'qc': case'text': {
+    case 'qc': case'text': {
     if (!args[0] && !m.quoted) {
       return conn.adReply(m.chat, `*nesecitas un texto*`)
     }
@@ -537,124 +519,55 @@ case 'qc': case'text': {
     }
     break
 
-  case 'grupo':
+     case 'grupo':
     if (!m.isGroup) return reply(mess.group);  
     if (!isBotAdmins) return reply(mess.botAdmin);  
     if (!isGroupAdmins) return reply(mess.admin)
-  if (args[0] === 'abrir') {
-m.reply(`*GRUPO ABIERTO CON EXITO✅*`)
-await conn.groupSettingUpdate(m.chat, 'not_announcement')
-} else if (args[0] === 'cerrar') {
-m.reply(`*GRUPO CERRADO CON EXITO✅*`)
-await conn.groupSettingUpdate(m.chat, 'announcement')
-}
-break
-
-case 'del':
-    if (!m.isGroup) return reply(mess.group);  
-    if (!isBotAdmins) return reply(mess.botAdmin);  
-    if (!isGroupAdmins) return reply(mess.admin)
-let deleteshit = m.key.participant  
-let userShit = m.key.id  
-conn.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
-break
-case 'addcmd':
-if (!m.quoted) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁 𝙾 𝙸𝙼𝙰𝙶𝙴𝙽 𝙰𝙻 𝙲𝚄𝙰𝙻 𝙳𝙴𝚂𝙴𝙰 𝙰𝙶𝚁𝙴𝙶𝙰𝚁 𝚄𝙽 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙾 𝚃𝙴𝚇𝚃𝙾*'
-if (!m.quoted.fileSha256) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙿𝚄𝙴𝙳𝙴𝚂 𝙰𝚂𝙸𝙶𝙰𝙽𝙰𝚁 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝙾 𝚃𝙴𝚇𝚃𝙾𝚂 𝙰 𝚂𝚃𝙸𝙲𝙺𝙴𝚁𝚂 𝙴 𝙸𝙼𝙰𝙶𝙴𝙽𝙴𝚂*'
-if (!text) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝚁𝚁𝙾𝚁 𝙳𝙴 𝚄𝚂𝙾, 𝚃𝙴𝚇𝚃𝙾 𝙵𝙰𝙻𝚃𝙰𝙽𝚃𝙴*\n\n*𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <texto> <responder a sticker o imagen>*\n\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾 𝙳𝙴 𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <#menu> <responder a sticker o imagen>*`
-let sticker = global.db.data.sticker
-let hash = m.quoted.fileSha256.toString('base64')
-if (sticker[hash] && sticker[hash].locked) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙴𝙻 𝙾𝚆𝙽𝙴𝚁 𝙿𝚄𝙴𝙳𝙴 𝚁𝙴𝙰𝙻𝙸𝚉𝙰𝚁 𝙻𝙰 𝙼𝙾𝙳𝙸𝙵𝙸𝙲𝙰𝙲𝙸𝙾𝙽*'
-addCmd(text, hash)
-m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`)
-break
-
-  case 'public':
-  if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
-  conn.public = true
-  m.reply('*ahora el bot es de uso publico*')
-  break
-  
-  case 'self':
-  if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
-  conn.public = false
-  m.reply('*ahora el bot es de uso privado*')
-  break
-  
-  
-  case 'serbot':  
-  if (m.isGroup) return m.reply(mess.priv) 
-  await jadibot(conn, m, m.chat, command, prefix)  
-  break  
-  
-  case 'bots':  
- try { 
- let user = [... new Set([...global.listJadibot.filter(conn => conn.user).map(conn => conn.user)])] 
- te = "*lista de subbots*\n\n" 
- for (let i of user){ 
- y = await conn.decodeJid(i.id) 
- te += " × User : @" + y.split("@")[0] + "\n" 
- te += " × Name : " + i.name + "\n\n" 
- } 
- conn.sendMessage(from ,{text: te, mentions: [y], },{quoted: m}) 
- } catch (err) { 
- reply(`*no hay subbots activos*`) 
- } 
- break 
-  
-  
-  case 'ppt':  
-  if (!m.isGroup) return reply(mess.group);  
-    this.suit = this.suit ? this.suit : {};  
-    let poin = 10;  
-    let poin_lose = 10;  
-    let timeout = 60000;  
-  
-    if (Object.values(this.suit).find((roof) => roof.id.startsWith("ppt") && [roof.p, roof.p2].includes(m.sender))) {  
-      return reply("primero completa o espera a que termine el juego anterior");  
-    }  
-  
-    if (m.mentionedJid[0] === m.sender) {  
-      return reply("no puedes jugar contigo\nezquisofrenico de mierda");  
-    }  
-  
-    if (!m.mentionedJid[0]) {  
-      return reply("*con quien quieres jugar?*\n*vamos etiqueta a la persona*");  
-    }  
-  
-    if (Object.values(this.suit).find((roof) => roof.id.startsWith("suit") && [roof.p, roof.p2].includes(m.mentionedJid[0]))) {  
-      return reply("esa persona esta jugando con otra :(");  
-    }  
-  
-    let id = "ppt_" + new Date() * 1;  
-  let caption = `  
-      ┌〔 *PPT* 🪨📄✂️ 〕  
-      │   
-      ├  *Jugador 1:* @${m.sender.split`@`[0]}  
-      │   
-      ├  *Jugador 2:* @${m.mentionedJid[0].split`@`[0]}  
-      │   
-      └ *elige* _aceptar_ _rechazar_`;  
-  
-    this.suit[id] = {  
-      chat: await m.reply(caption),  
-      id: id,  
-      p: m.sender,  
-      p2: m.mentionedJid[0],  
-      status: "wait",  
-      waktu: setTimeout(() => {  
-        if (this.suit[id]) {  
-          conn.sendText(m.chat, `*_se agoto el tiempo_*\n*al parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder*`, m);  
-          delete this.suit[id];  
-        }  
-      }, 60000),  
-      poin,  
-      poin_lose,  
-      timeout,  
-    };  
+      if (args[0] === 'abrir') {
+    m.reply(`*GRUPO ABIERTO CON EXITO✅*`)
+    await conn.groupSettingUpdate(m.chat, 'not_announcement')
+    } else if (args[0] === 'cerrar') {
+    m.reply(`*GRUPO CERRADO CON EXITO✅*`)
+    await conn.groupSettingUpdate(m.chat, 'announcement')
+    }
     break
 
-case 'fake':
+
+
+    case 'public':
+      if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+      conn.public = true
+      m.reply('*ahora el bot es de uso publico*')
+      break
+  
+      case 'self':
+      if(!conn.user.id) return conn.fakeReply(m.chat, mess.owner, '0@s.whatsapp.net', 'no eres owner 😵‍💫')
+      conn.public = false
+      m.reply('*ahora el bot es de uso privado*')
+      break
+  
+  
+      case 'serbot':  
+      if (m.isGroup) return m.reply(mess.priv) 
+      await jadibot(conn, m, m.chat, command, prefix)  
+      break  
+  
+      case 'bots':  
+     try { 
+     let user = [... new Set([...global.listJadibot.filter(conn => conn.user).map(conn => conn.user)])] 
+     te = "*lista de subbots*\n\n" 
+     for (let i of user){ 
+     y = await conn.decodeJid(i.id) 
+     te += " × User : @" + y.split("@")[0] + "\n" 
+     te += " × Name : " + i.name + "\n\n" 
+     } 
+     conn.sendMessage(from ,{text: te, mentions: [y], },{quoted: m}) 
+     } catch (err) { 
+     reply(`*no hay subbots activos*`) 
+     } 
+     break 
+
+    case 'fake':
     var gh = body.slice(11);
     var mentioned = m.message.extendedTextMessage && m.message.extendedTextMessage.contextInfo && m.message.extendedTextMessage.contextInfo.mentionedJid ? m.message.extendedTextMessage.contextInfo.mentionedJid[0] : null;
     var replace = gh.split("|")[0];
@@ -683,89 +596,26 @@ case 'fake':
     }
     break
   
-  case 's':  
-  case 'sticker': {  
-      if (/image/.test(mime)) {  
+      case 's':  
+      case 'sticker': {  
+          if (/image/.test(mime)) {  
           reply(`Espera, estamos creando tu sticker...`)  
           media = await quoted.download()  
           let encmedia = await conn.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })  
           await fs.unlinkSync(encmedia)  
-      } else if (/video/.test(mime)) {  
+        } else if (/video/.test(mime)) {  
           if ((quoted.msg || quoted).seconds > 40) return reply('¡Máximo 40 segundos!')  
           media = await quoted.download()  
-          let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.author, author: global.packname })  
+          let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: goblal.author })  
           await new Promise((resolve) => setTimeout(resolve, 2000));   
           await fs.unlinkSync(encmedia)  
       } else {  
-          reply(`Envía una imagen/video con ${prefix + command}\n(La duración del video solo puede ser de 10 segundos)`)  
+          reply(`*Envía una imagen/video con ${prefix + command}*\n_*(La duración del video solo puede ser de 10 segundos)*_`)  
+          }  
       }  
-  }  
-  break;  
+      break
   
-case 'ttc': case 'ttt': case 'tictactoe': {
-            let TicTacToe = require("./lib/tictactoe")
-            this.game = this.game ? this.game : {}
-            if (Object.values(this.game).find(room13 => room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender))) return replygcxeon(`You Are Still In The Game`)
-            let room13 = Object.values(this.game).find(room13 => room13.state === 'WAITING' && (text ? room13.name === text : true))
-            if (room13) {
-            room13.o = m.chat
-            room13.game.playerO = m.sender
-            room13.state = 'PLAYING'
-            let arr = room13.game.render().map(v => {
-            return {
-            X: '❌',
-            O: '⭕',
-            1: '1️⃣',
-            2: '2️⃣',
-            3: '3️⃣',
-            4: '4️⃣',
-            5: '5️⃣',
-            6: '6️⃣',
-            7: '7️⃣',
-            8: '8️⃣',
-            9: '9️⃣',
-            }[v]
-            })
-            let str = `room13 ID: ${room13.id}
-
-${arr.slice(0, 3).join('')}
-${arr.slice(3, 6).join('')}
-${arr.slice(6).join('')}
-
-esperando a @${room13.game.currentTurn.split('@')[0]}
-
-escribe *me rindo* para aceptar tu derrota`
-            if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
-            await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
-            } else {
-            room13 = {
-            id: 'tictactoe-' + (+new Date),
-            x: m.chat,
-            o: '',
-            game: new TicTacToe(m.sender, 'o'),
-            state: 'WAITING'
-            }
-            if (text) room13.name = text
-            reply('esperando jugador' + (text ? ` Escriba el comando ${prefix}${command} ${text}` : ''))
-            this.game[room13.id] = room13
-            }
-            }
-            break
-  
-  case 'delttc': case 'delttt': {
-            this.game = this.game ? this.game : {}
-            try {
-            if (this.game) {
-            delete this.game
-            conn.sendText(m.chat, `Se elimino la session tictactoe 🎮`, m)
-            } else if (!this.game) {
-            reply(`no existe ninguna session tictactoe 🎮`)
-            } else throw '?'
-            } catch (e) {
-            reply(`${e}`)
-            }
-            }
-            break
+            
             
             
             case 'acortar':
@@ -776,20 +626,20 @@ escribe *me rindo* para aceptar tu derrota`
             m.reply(done)
             break
             
-            case 'ofuscar':
-              if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
-   function obfuscateCode(code) { 
-     return JavaScriptObfuscator.obfuscate(code, { 
-       compact: false, 
-       controlFlowFlattening: true, 
-       deadCodeInjection: true, 
-       simplify: true, 
-       numbersToExpressions: true, 
-     }).getObfuscatedCode(); 
-   } 
-   let obfuscatedCode = await obfuscateCode(text); 
-   conn.sendMessage(m.chat, {text: obfuscatedCode}, {quoted: m});
-   break
+         case 'ofuscar':
+       if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
+         function obfuscateCode(code) { 
+        return JavaScriptObfuscator.obfuscate(code, { 
+        compact: false, 
+          controlFlowFlattening: true, 
+        deadCodeInjection: true, 
+        simplify: true, 
+          numbersToExpressions: true, 
+        }).getObfuscatedCode(); 
+       } 
+      let obfuscatedCode = await obfuscateCode(text); 
+       conn.sendMessage(m.chat, {text: obfuscatedCode}, {quoted: m});
+       break
             
   case 'getcase':  
     if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
@@ -875,14 +725,12 @@ escribe *me rindo* para aceptar tu derrota`
   break		
   
   case 'hidetag':  
-    if (!m.isGroup) return reply(mess.group);  
+    if (!m.isGroup) return reply(mess.group)
+    if (!isGroupAdmins) return m.reply(mess.admin)
     if (isGroupAdmins || isCreator) {  
-      conn.sendMessage(  
-        m.chat,  
-        { text: q ? q : "", mentions: participants.map((a) => a.id) },  
-        { quoted: m }  
-      );  
-    }  
+      conn.sendMessage(m.chat, { text: q ? q : "", mentions: participants.map((a) => a.id) }, { quoted: m })  
+    }
+    if (m.quoted) return conn.sendMessage(m.chat, { forward: m.quoted.fakeObj, mentions: participants.map(a => a.id) }) // Mario is going to steal it
     break;  
   
   case 'tagall': {  
@@ -940,51 +788,51 @@ escribe *me rindo* para aceptar tu derrota`
    await conn.sendMessage(m.chat, { audio: { url: lolh.result.audio.link }, fileName: `error.mp3`, mimetype: 'audio/mp4' }, { quoted: msg })  
    break  
   
-  case 'play2':  
-    if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗 𝚟𝚒𝚍𝚎𝚘` }, { quoted: msg });  
-    conn.sendMessage(m.chat, { text: `𝚎𝚜𝚙𝚎𝚛𝚊...` }, { quoted: fdoc });  
-    let mediaa = await ytplayvid(textoo);  
-    await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });  
-    break  
-  
-      case 'update':  
-        if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
-        try {  
-          let stdout = execSync('git pull' + (m.fromMe && q ? ' ' + q : ''))  
-          await conn.sendMessage(m.chat, { text: stdout.toString() }, { quoted: msg });  
-        } catch {  
-          let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')  
-          await conn.sendMessage(m.chat, { text: updatee.toString() }, { quoted: msg });  
-        }  
-        break  
-  
-      case 'simi': {  
-        if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚑𝚊𝚋𝚕𝚊𝚛 𝚌𝚘𝚗 𝚜𝚒𝚖𝚒` }, { quoted: msg });  
-        await conn.sendPresenceUpdate('composing', m.chat);  
-        let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);  
-        let res = anu.success;  
-        m.reply(res)
-      }  
-     break  
-  
-      case 'ia':
-      if (!text) return m.reply(`*ingresa un texto para hablar con chatgpt`)
-      try {     
-     let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
-     let hasill = await tioress.json() 
-     m.reply(`${hasill.result}`.trim())    
-     } catch (e) {
-     m.reply(`${e}`)
-    }
-     break
-
-      case 'pinterest':  
-      if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
-      m.reply(mess.wait)  
-      lol = await pinterest(text) //.catch(m.reply)  
-      result = lol[Math.floor(Math.random() * lol.length)];  
-      sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)  
+      case 'play2':  
+        if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗 𝚟𝚒𝚍𝚎𝚘` }, { quoted: msg });  
+        conn.sendMessage(m.chat, { text: `𝚎𝚜𝚙𝚎𝚛𝚊...` }, { quoted: fdoc });  
+        let mediaa = await ytplayvid(textoo);  
+        await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });  
       break  
+  
+          case 'update':  
+            if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
+           try {  
+           let stdout = execSync('git pull' + (m.fromMe && q ? ' ' + q : ''))  
+            await conn.sendMessage(m.chat, { text: stdout.toString() }, { quoted: msg });  
+          } catch {  
+           let updatee = execSync('git remote set-url origin https://github.com/Skidy89/skid-bot && git pull')  
+            await conn.sendMessage(m.chat, { text: updatee.toString() }, { quoted: msg });  
+         }  
+           break  
+  
+         case 'simi': {  
+          if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚑𝚊𝚋𝚕𝚊𝚛 𝚌𝚘𝚗 𝚜𝚒𝚖𝚒` }, { quoted: msg });  
+          await conn.sendPresenceUpdate('composing', m.chat);  
+            let anu = await fetchJson(`https://api.simsimi.net/v2/?text=${text}&lc=es&cf=false`);  
+            let res = anu.success;  
+            m.reply(res)
+        }  
+         break  
+  
+          case 'ia':
+          if (!text) return m.reply(`*ingresa un texto para hablar con chatgpt`)
+          try {     
+         let tioress = await fetch(`https://api.lolhuman.xyz/api/openai-turbo?apikey=${lolkeysapi}&text=${text}`) 
+         let hasill = await tioress.json() 
+         m.reply(`${hasill.result}`.trim())    
+         } catch (e) {
+        m.reply(`${e}`)
+        }
+         break
+
+          case 'pinterest':  
+          if (!text) return reply('𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚞𝚗 𝚝𝚎𝚡𝚝𝚘 𝚙𝚊𝚛𝚊 𝚋𝚞𝚜𝚌𝚊𝚛 𝚎𝚗 𝚙𝚒𝚗𝚝𝚎𝚛𝚎𝚜𝚝')  
+          m.reply(mess.wait)  
+          lol = await pinterest(text) //.catch(m.reply)  
+          result = lol[Math.floor(Math.random() * lol.length)];  
+          sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)  
+          break  
   
  
 			
@@ -1116,102 +964,37 @@ escribe *me rindo* para aceptar tu derrota`
                   }  
                   break  
 			
-			case 'disable':
-			let Chat = global.db.data.chats[m.chat] // Chat database ?
-			let Bot = global.db.data.settings[conn.user.jid] // Bot database ?
-			let inDisable = (args[0] || '').toLowerCase() // args ?
-			let disable = `*el ${inDisable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inDisable}*`
-			let inSuccessDisable = `*el ${inDisable} fue desactivado en este grupo*`
-			let inBotDisable = `*el ${inDisable} fue desactivado en este bot*`
-			switch (inDisable) { // inDisable ? inDisable : commands
-			
-			case 'antilink':
-			if (!m.isGroup) return reply(mess.group);  
-            if (!isBotAdmins) return reply(mess.botAdmin);  
-            if (!isGroupAdmins) return reply(mess.admin);  
-			if (!Chat.antilink) return conn.sendCart(m.chat, disable, global.query, botname)
-			Chat.antilink = false
-			conn.sendCart(m.chat, inSuccessDisable, success)
-			break
-			case 'detect':
-			if (!m.isGroup) return reply(mess.group);  
-            if (!isBotAdmins) return reply(mess.botAdmin);  
-            if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.autoDetect) return conn.sendCart(m.chat, disable, query)
-			Chat.autoDetect = false
-			conn.sendCart(m.chat, inSuccessDisable, success)
-			break
-			case 'antifakes':
-			if (!m.isGroup) return reply(mess.group);  
-            if (!isBotAdmins) return reply(mess.botAdmin);  
-            if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.antiFake) return conn.sendCart(m.chat, disable, query)
-			Chat.antiFake = false
-			conn.sendCart(m.chat, inSuccessDisable, success)
-			break
-			case 'antiarabes':
-			if (!m.isGroup) return reply(mess.group);  
-            if (!isBotAdmins) return reply(mess.botAdmin);  
-            if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.antiArabe) return conn.sendCart(m.chat, disable, query)
-			Chat.antiArabe = false
-			conn.sendCart(m.chat, inSuccessDisable, success)
-			break
-			case 'welcome':
-			if (!m.isGroup) return reply(mess.group);  
-            if (!isBotAdmins) return reply(mess.botAdmin);  
-            if (!isGroupAdmins) return reply(mess.admin);
-			if (!Chat.welcome) return conn.sendCart(m.chat, disable, query)
-			Chat.welcome = false
-			conn.sendCart(m.chat, inSuccessDisable, success)
-			break
-			case 'antillamadas':
-			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
-			if (!Bot.antiCall) return conn.sendCart(m.chat, disable, query)
-			Bot.antiCall = false
-			conn.sendCart(m.chat, inBotDisable, success)
-			break
-			case 'jadibot':
-			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
-			if (!Bot.jadibot) return conn.sendCart(m.chat, disable, query)
-			Bot.jadibot = false
-			conn.sendCart(m.chat, inBotDisable, success)
-			break
-			default:
-	        
-			
-			}
-			break
+
 		    
-		case 'lewd':
-		case 'feed':
-		case 'gasm':
-		case 'anal':
-		case 'holo':
-		case 'tits':
-		case 'kuni':
-		case 'kiss':
-		case 'erok':
-		case 'smug':
-		case 'solog':
-		case 'feetg':
-		case 'lewdk':
-		case 'waifu':
-		case 'pussy':
-		case 'femdom':
-		case 'cuddle':
-		case 'eroyuri':
-		case 'cum_jpg':
-		case 'blowjob':
-		case 'holoero':
-		case 'erokemo':
-		case 'fox_girl':
-		case 'futanari':
-		case 'wallpaper':
-		if (!m.isGroup) return m.reply('_*este comando solo puede ser utilizado en grupos*_')
-		if (!global.db.data.chats[m.chat].antiNsfw) return m.reply(`*el comando ${command} esta desabilitado en este grupo*\n*usa ${prefix}disable antinsfw*`)
-	    sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
-		break
+	    	case 'lewd':
+	    	case 'feed':
+	    	case 'gasm':
+	    	case 'anal':
+	    	case 'holo':
+	    	case 'tits':
+	    	case 'kuni':
+	    	case 'kiss':
+    		case 'erok':
+	    	case 'smug':
+	    	case 'solog':
+	    	case 'feetg':
+	    	case 'lewdk':
+	    	case 'waifu':
+	    	case 'pussy':
+	    	case 'femdom':
+	    	case 'cuddle':
+	    	case 'eroyuri':
+	    	case 'cum_jpg':
+	    	case 'blowjob':
+		    case 'holoero':
+		    case 'erokemo':
+		    case 'fox_girl':
+		    case 'futanari':
+		    case 'wallpaper':
+		    if (!m.isGroup) return m.reply('_*este comando solo puede ser utilizado en grupos*_')
+		    if (!global.db.data.chats[m.chat].antiNsfw) return m.reply(`*el comando ${command} esta desabilitado en este grupo*\n*usa ${prefix}disable antinsfw*`)
+	        sendImageAsUrl(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${lolkeysapi}`, `*🔥 ${command} 🔥*`)
+		    break
 		
 		    case 'enable':
 			let inChat = global.db.data.chats[m.chat] // inChat database ?
@@ -1280,6 +1063,198 @@ escribe *me rindo* para aceptar tu derrota`
 			}
 			break
 			
+			case 'disable':
+			let Chat = global.db.data.chats[m.chat] // Chat database ?
+			let Bot = global.db.data.settings[conn.user.jid] // Bot database ?
+			let inDisable = (args[0] || '').toLowerCase() // args ?
+			let disable = `*el ${inDisable} ya esta desactivado!!*\n*puedes activarlo con ${prefix}enable ${inDisable}*`
+			let inSuccessDisable = `*el ${inDisable} fue desactivado en este grupo*`
+			let inBotDisable = `*el ${inDisable} fue desactivado en este bot*`
+			switch (inDisable) { // inDisable ? inDisable : commands
+			
+			case 'antilink':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);  
+			if (!Chat.antilink) return conn.sendCart(m.chat, disable, global.query, botname)
+			Chat.antilink = false
+			conn.sendCart(m.chat, inSuccessDisable, success)
+			break
+			case 'detect':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (!Chat.autoDetect) return conn.sendCart(m.chat, disable, query)
+			Chat.autoDetect = false
+			conn.sendCart(m.chat, inSuccessDisable, success)
+			break
+			case 'antifakes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (!Chat.antiFake) return conn.sendCart(m.chat, disable, query)
+			Chat.antiFake = false
+			conn.sendCart(m.chat, inSuccessDisable, success)
+			break
+			case 'antiarabes':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (!Chat.antiArabe) return conn.sendCart(m.chat, disable, query)
+			Chat.antiArabe = false
+			conn.sendCart(m.chat, inSuccessDisable, success)
+			break
+			case 'welcome':
+			if (!m.isGroup) return reply(mess.group);  
+            if (!isBotAdmins) return reply(mess.botAdmin);  
+            if (!isGroupAdmins) return reply(mess.admin);
+			if (!Chat.welcome) return conn.sendCart(m.chat, disable, query)
+			Chat.welcome = false
+			conn.sendCart(m.chat, inSuccessDisable, success)
+			break
+			case 'antillamadas':
+			if (!conn.user.jid) return conn.sendCart(m.chat, `*solo un bot/subbot puede usar este comando*`, query)
+			if (!Bot.antiCall) return conn.sendCart(m.chat, disable, query)
+			Bot.antiCall = false
+			conn.sendCart(m.chat, inBotDisable, success)
+			break
+			case 'jadibot':
+			if (!isCreator) return conn.sendCart(m.chat, mess.owner, success)
+			if (!Bot.jadibot) return conn.sendCart(m.chat, disable, query)
+			Bot.jadibot = false
+			conn.sendCart(m.chat, inBotDisable, success)
+			break
+			default:
+	        
+			
+			}
+			break
+			
+    case 'addcmd':
+    if (!m.quoted) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁 𝙾 𝙸𝙼𝙰𝙶𝙴𝙽 𝙰𝙻 𝙲𝚄𝙰𝙻 𝙳𝙴𝚂𝙴𝙰 𝙰𝙶𝚁𝙴𝙶𝙰𝚁 𝚄𝙽 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙾 𝚃𝙴𝚇𝚃𝙾*'
+    if (!m.quoted.fileSha256) throw '*[❗𝐈𝐍𝐅𝐎❗] 𝚂𝙾𝙻𝙾 𝙿𝚄𝙴𝙳𝙴𝚂 𝙰𝚂𝙸𝙶𝙰𝙽𝙰𝚁 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝙾 𝚃𝙴𝚇𝚃𝙾𝚂 𝙰 𝚂𝚃𝙸𝙲𝙺𝙴𝚁𝚂 𝙴 𝙸𝙼𝙰𝙶𝙴𝙽𝙴𝚂*'
+    if (!text) throw `*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝚁𝚁𝙾𝚁 𝙳𝙴 𝚄𝚂𝙾, 𝚃𝙴𝚇𝚃𝙾 𝙵𝙰𝙻𝚃𝙰𝙽𝚃𝙴*\n\n*𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <texto> <responder a sticker o imagen>*\n\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾 𝙳𝙴 𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <#menu> <responder a sticker o imagen>*`
+    let sticker = global.db.data.sticker
+    let hash = m.quoted.fileSha256.toString('base64')
+    addCmd(text, hash)
+    m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`)
+    break
+			
+	   case 'ppt':  
+      if (!m.isGroup) return reply(mess.group);  
+        this.suit = this.suit ? this.suit : {};  
+        let poin = 10;  
+        let poin_lose = 10;  
+        let timeout = 60000;  
+  
+        if (Object.values(this.suit).find((roof) => roof.id.startsWith("ppt") && [roof.p, roof.p2].includes(m.sender))) {  
+          return reply("primero completa o espera a que termine el juego anterior");  
+        }  
+  
+        if (m.mentionedJid[0] === m.sender) {  
+          return reply("no puedes jugar contigo\nezquisofrenico de mierda");  
+        }  
+  
+      if (!m.mentionedJid[0]) {  
+          return reply("*con quien quieres jugar?*\n*vamos etiqueta a la persona*");  
+        }  
+  
+        if (Object.values(this.suit).find((roof) => roof.id.startsWith("suit") && [roof.p, roof.p2].includes(m.mentionedJid[0]))) {  
+        return reply("esa persona esta jugando con otra :(");  
+        }  
+  
+        let id = "ppt_" + new Date() * 1;  
+      let caption = `  
+      ┌〔 *PPT* 🪨📄✂️ 〕  
+      │   
+      ├  *Jugador 1:* @${m.sender.split`@`[0]}  
+      │   
+      ├  *Jugador 2:* @${m.mentionedJid[0].split`@`[0]}  
+      │   
+      └ *elige* _aceptar_ _rechazar_`;  
+  
+        this.suit[id] = {  
+          chat: await m.reply(caption),  
+          id: id,  
+          p: m.sender,  
+          p2: m.mentionedJid[0],  
+          status: "wait",  
+          waktu: setTimeout(() => {  
+          if (this.suit[id]) {  
+              conn.sendText(m.chat, `*_se agoto el tiempo_*\n*al parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder*`, m);  
+             delete this.suit[id];  
+           }  
+          }, 60000),  
+          poin,  
+       poin_lose,  
+          timeout,  
+        };  
+        break
+        
+        case 'ttc': case 'ttt': case 'tictactoe': {
+            let TicTacToe = require("./lib/tictactoe")
+            this.game = this.game ? this.game : {}
+            if (Object.values(this.game).find(room13 => room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender))) return replygcxeon(`You Are Still In The Game`)
+            let room13 = Object.values(this.game).find(room13 => room13.state === 'WAITING' && (text ? room13.name === text : true))
+            if (room13) {
+            room13.o = m.chat
+            room13.game.playerO = m.sender
+            room13.state = 'PLAYING'
+            let arr = room13.game.render().map(v => {
+            return {
+            X: '❌',
+            O: '⭕',
+            1: '1️⃣',
+            2: '2️⃣',
+            3: '3️⃣',
+            4: '4️⃣',
+            5: '5️⃣',
+            6: '6️⃣',
+            7: '7️⃣',
+            8: '8️⃣',
+            9: '9️⃣',
+            }[v]
+            })
+            let str = `room13 ID: ${room13.id}
+
+${arr.slice(0, 3).join('')}
+${arr.slice(3, 6).join('')}
+${arr.slice(6).join('')}
+
+esperando a @${room13.game.currentTurn.split('@')[0]}
+
+escribe *me rindo* para aceptar tu derrota`
+            if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
+            await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
+            } else {
+            room13 = {
+            id: 'tictactoe-' + (+new Date),
+            x: m.chat,
+            o: '',
+            game: new TicTacToe(m.sender, 'o'),
+            state: 'WAITING'
+            }
+            if (text) room13.name = text
+            reply('esperando jugador' + (text ? ` Escriba el comando ${prefix}${command} ${text}` : ''))
+            this.game[room13.id] = room13
+            }
+            }
+            break
+            
+            case 'delttc': case 'delttt': {
+            this.game = this.game ? this.game : {}
+            try {
+            if (this.game) {
+            delete this.game
+            conn.sendText(m.chat, `Se elimino la session tictactoe 🎮`, m)
+            } else if (!this.game) {
+            reply(`no existe ninguna session tictactoe 🎮`)
+            } else throw '?'
+            } catch (e) {
+            reply(`${e}`)
+            }
+            }
+            break
 			
   
           default: 
