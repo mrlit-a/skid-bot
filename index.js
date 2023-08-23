@@ -55,8 +55,50 @@ const sock = makeWASocket({
     printQRInTerminal: true,
     auth: state,
     logger: pino({ level: 'silent' }),
-    browser: [`skid bot`,'Safari','3.0']
+    browser: ['Skid bot','Safari','1.0.0'],
 })
+
+sock.ev.on('group-participants.update', async (anu) => {
+let isWelcome = global.db.data.chats[anu.id].welcome
+if (!isWelcome) return
+console.log(anu)
+try {
+let metadata = await sock.groupMetadata(anu.id)
+let participants = anu.participants
+for (let num of participants) {
+
+try {
+ppuser = await sock.profilePictureUrl(num, 'image')
+} catch {
+ppuser = noperfil
+}
+
+try {
+ppgroup = await sock.profilePictureUrl(anu.id, 'image')
+} catch {
+ppgroup = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+}
+
+if (anu.action == 'add') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `
+ ▬▭▬▭▬▭▬▭▬▬▭▬▭▬
+*@${num.split("@")[0]}* Bienvenido al grupo *${metadata.subject}*
+▬▭▬▭▬▭▬▭▬▬▭▬▭▬
+`})
+} else if (anu.action == 'remove') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `
+▬▭▬▭▬▭▬▭▬▬▭▬▭▬
+*👋 Adios @${num.split("@")[0]}*
+▬▭▬▭▬▭▬▭▬▬▭▬▭▬`})
+} else if (anu.action == 'promote') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `@${num.split('@')[0]} ahora es admin de ${metadata.subject}`  })
+} else if (anu.action == 'demote') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `@${num.split('@')[0]} Ya no es admin de ${metadata.subject}`})
+  }
+}
+} catch (err) {
+console.log(err)
+}
 
 
 sock.ev.on('messages.upsert', async chatUpdate => {
@@ -277,7 +319,7 @@ sock.ev.on('connection.update', async (update) => {
         console.log(
             color('[SYS]', '#009FFF'),
             color(moment().format('DD/MM/YY HH:mm:ss'), '#A1FFCE'),
-            color(`\n╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊🧡 INICIANDO AGUARDE UN MOMENTO...\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯`, '#f12711')
+            color(`\n╭┈ ┈ ┈ ┈ ┈ • ${vs} • ┈ ┈ ┈ ┈ ┈╮\n┊⚠️ INICIANDO AGUARDE UN MOMENTO...\n╰┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈ ┈╯`, '#f12711')
         );
     } else if (qr !== undefined) {
         console.log(
