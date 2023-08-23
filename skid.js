@@ -578,7 +578,6 @@ escribe *me rindo* para acptar tu derrota`
      break 
     case "call":
     if (!isCreator) return m.reply(mess.owner)
-    await loading()
     if (!args[0]) return reply(`*${prefix+command} +52xxx*\n*Ejemplo ${prefix+command} +584125778026*`)
     let nosend = "+" + text.split("|")[0].replace(/[^0-9]/g, '')
     if (args[0].startsWith(`+528442114446`)) return reply('¡No puedo llamar a este número!')
