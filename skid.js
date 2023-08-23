@@ -162,7 +162,7 @@ let setting = global.db.data.settings[conn.user.jid]
       if (m.chat && m.sender.startsWith('212')) return conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
         }
 
-    if (chats.isBanned && isCmd && !isGroupAdmins) {
+    if (global.db.data.chats[m.chat].isBanned && isCmd && !isGroupAdmins) {
     return
     }
     
