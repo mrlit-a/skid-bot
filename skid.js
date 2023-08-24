@@ -1355,7 +1355,7 @@ ${botname}`
     } catch {
     pp = "https://tse2.mm.bing.net/th?id=OIP.n1C1oxOvYLLyDIavrBFoNQHaHa&pid=Api&P=0&w=153&h=153"
     }
-    conn.sendFile(from, pp, "", m, { caption: textt, mentions: await conn.parseMention(textt) })
+    conn.sendMessage(m.chat, { image: pp, caption: textt }, { quoted: m })
     })
     break
             
