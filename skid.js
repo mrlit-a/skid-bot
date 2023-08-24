@@ -1327,7 +1327,7 @@ escribe *me rindo* para aceptar tu derrota`
             break
             case 'inspeccionar': case 'vergrupo':
     let linkRegex = args.join(" ")
-    let teks = ``
+    let textt = ``
     let coded = linkRegex.split("https://chat.whatsapp.com/")[1]
     if (!coded) return m.reply("Link Invalid")
     conn.query({
@@ -1339,7 +1339,7 @@ escribe *me rindo* para aceptar tu derrota`
     },
     content: [{ tag: "invite", attrs: { code: coded } }]
     }).then(async(res) => { 
-    teks = `「 inspector de grupos」
+    textt = `「 inspector de grupos」
 ▸ Nombre del grupo: ${res.content[0].attrs.subject ? res.content[0].attrs.subject : "undefined"}
 
 ▸ Descripción: ${res.content[0].attrs.s_t ? moment(res.content[0].attrs.s_t *1000).tz("Asia/Jakarta").format("DD-MM-YYYY, HH:mm:ss") : "undefined"}
@@ -1355,7 +1355,7 @@ ${botname}`
     } catch {
     pp = "https://tse2.mm.bing.net/th?id=OIP.n1C1oxOvYLLyDIavrBFoNQHaHa&pid=Api&P=0&w=153&h=153"
     }
-    conn.sendFile(from, pp, "", m, { caption: teks, mentions: await conn.parseMention(teks) })
+    conn.sendFile(from, pp, "", m, { caption: textt, mentions: await conn.parseMention(textt) })
     })
     break
             
