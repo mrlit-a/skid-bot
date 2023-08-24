@@ -146,7 +146,22 @@
   const isQuotedDocument = type === 'extendedTextMessage' && content.includes('documentMessage')  
   const isQuotedMsg = type === 'extendedTextMessage' && content.includes('Message') // Mensaje citado de cualquier tipo  
   const isViewOnce = (type === 'viewOnceMessage') // Verifica si el tipo de mensaje es (mensaje de vista única)  
-  
+    async function loading () {
+    var hawemod = [
+    "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
+    "《 ████▒▒▒▒▒▒▒▒》30%",
+    "《 ███████▒▒▒▒▒》50%",
+    "《 ██████████▒▒》80%",
+    "《 ████████████》100%",
+    "~_*CARGA COMPLETA*_~"
+    ]
+    let { key } = await conn.sendMessage(from, {text: '_*cargando*_'}) // loading message
+
+    for (let i = 0; i < hawemod.length; i++) {
+    /*await delay(10)*/
+    await conn.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
+    }
+    }
   
 
 // database  
@@ -232,22 +247,7 @@ let setting = global.db.data.settings[conn.user.jid]
   //chalk.bold.red('\n️ Tag: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),  
   chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))  
   )}    
-  async function loading () {
-    var hawemod = [
-    "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
-    "《 ████▒▒▒▒▒▒▒▒》30%",
-    "《 ███████▒▒▒▒▒》50%",
-    "《 ██████████▒▒》80%",
-    "《 ████████████》100%",
-    "~_*CARGA COMPLETA*_~"
-    ]
-    let { key } = await conn.sendMessage(from, {text: '_*cargando*_'}) // loading message
 
-    for (let i = 0; i < hawemod.length; i++) {
-    /*await delay(10)*/
-    await conn.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
-    }
-    }
   
   // ttt game ( adaptado }
   	    this.game = this.game ? this.game : {}
@@ -763,10 +763,10 @@ escribe *me rindo* para acptar tu derrota`
   case 'hidetag':  
     if (!m.isGroup) return reply(mess.group)
     if (!isGroupAdmins) return m.reply(mess.admin)
-    if (isGroupAdmins || isCreator) {  
+    if (isGroupAdmins || isCreator || !m.quoted ) {  
       conn.sendMessage(m.chat, { text: q ? q : "", mentions: participants.map((a) => a.id) }, { quoted: m })  
     }
-    if (m.quoted) return conn.sendMessage(m.chat, { forward: m.quoted.fakeObj, mentions: participants.map(a => a.id) }) // Mario is going to steal it
+    if (m.quoted) return conn.sendMessage(m.chat, { forward: m.quoted.fakeObj, mentions: participants.map(a => a.id) }, { quoted: m }) // Mario is going to steal it
     break;  
   
   case 'tagall': {  
