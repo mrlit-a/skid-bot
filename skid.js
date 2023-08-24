@@ -677,7 +677,7 @@ escribe *me rindo* para acptar tu derrota`
   
             
       case 'tiktokvideo':
-    if (!text) return m.reply( `Example : ${prefix + command} link`)
+    if (!text) return m.reply( `*Ejemplo: ${prefix + command} link`)
     if (!q.includes('tiktok')) return m.reply(`*link invalido!*`)
     await loading ()
     require('./lib/tiktok').Tiktok(q).then( data => {
@@ -694,7 +694,38 @@ escribe *me rindo* para acptar tu derrota`
     })    
     break
             
+    case 'inspeccionar': case 'vergrupo':
+    let linkRegex = args.join(" ")
+    let coded = linkRegex.split("https://chat.whatsapp.com/")[1]
+    if (!coded) return m.reply("Link Invalid")
+    conn.query({
+    tag: "iq",
+    attrs: {
+    type: "get",
+    xmlns: "w:g2",
+    to: "@g.us"
+    },
+    content: [{ tag: "invite", attrs: { code: coded } }]
+    }).then(async(res) => { 
+    teks = `「 inspector de grupos」
+▸ Nombre del grupo: ${res.content[0].attrs.subject ? res.content[0].attrs.subject : "undefined"}
 
+▸ Descripción: ${res.content[0].attrs.s_t ? moment(res.content[0].attrs.s_t *1000).tz("Asia/Jakarta").format("DD-MM-YYYY, HH:mm:ss") : "undefined"}
+▸ Creador del grupo: ${res.content[0].attrs.creator ? "@" + res.content[0].attrs.creator.split("@")[0] : "undefined"}
+▸ Grupo creado: ${res.content[0].attrs.creation ? moment(res.content[0].attrs.creation * 1000).tz("Asia/Jakarta").format("DD-MM-YYYY, HH:mm:ss") : "undefined"}
+▸ Miembros: ${res.content[0].attrs.size ? res.content[0].attrs.size : "undefined"} Miembros
+
+▸ ID: ${res.content[0].attrs.id ? res.content[0].attrs.id : "undefined"}
+
+${botname}`
+    try {
+    pp = await conn.profilePictureUrl(res.content[0].attrs.id + "@g.us", "image")
+    } catch {
+    pp = "https://tse2.mm.bing.net/th?id=OIP.n1C1oxOvYLLyDIavrBFoNQHaHa&pid=Api&P=0&w=153&h=153"
+    }
+    conn.sendFile(from, pp, "", m, { caption: teks, mentions: await conn.parseMention(teks) })
+    })
+    break
             
          case 'ofuscar':
        if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
