@@ -103,8 +103,58 @@ sock.ev.on('call', async (fuckedcall) => { // Mario is going to steal this
     }
     })
 
+sock.ev.on('group-participants.update', async (anu) => {
+let isWelcome = global.db.data.chats[anu.id].welcome
+if(!isWelcome) return
+console.log(anu)
+try {
+let metadata = await sock.groupMetadata(anu.id)
+let participants = anu.participants
+for (let num of participants) {
+// Get Profile Picture User
+try {
+ppuser = await sock.profilePictureUrl(num, 'image')
+} catch {
+ppuser = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+}
+
+// Get Profile Picture Group
+try {
+ppgroup = await sock.profilePictureUrl(anu.id, 'image')
+} catch {
+ppgroup = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+}
+
+if (anu.action == 'add') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `
+*「 Grupos 」*
+
+*Hola @${num.split("@")[0]} bienvenido a ${metadata.subject}*
+
+*「 Reglas y desc 」*
+
+${metadata.desc}
+`})
+} else if (anu.action == 'remove') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `
+*「 Grupos 」*
+
+*se nos fue @${num.split("@")[0]}*
+*adios 👋*
+`})
+} else if (anu.action == 'promote') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `*「 Grupos 」*\n\n*@${num.split('@')[0]} 𝙴𝙽𝚃𝚁𝙰 𝙰𝙻 𝙶𝚁𝚄𝙿𝙾 𝙳𝙴 𝙰𝙳𝙼𝙸𝙽𝚂 𝙳𝙴 ${metadata.subject} 🎉🎉*`})
+} else if (anu.action == 'demote') {
+sock.sendMessage(anu.id, { image: { url: ppuser }, mentions: [num], caption: `*「 Grupos 」*\n\n*@${num.split('@')[0]} 𝙰𝙱𝙰𝙽𝙳𝙾𝙽𝙰 𝙴𝙻 𝙶𝚁𝚄𝙿𝙾 𝙳𝙴 𝙰𝙳𝙼𝙸𝙽𝚂 𝙳𝙴 ${metadata.subject} 😑*`})
+  }
+}
+} catch (err) {
+console.log(err)
+}
+})
+
 sock.ev.on("groups.update", async (json) => {
-			console.log(color(json, '#009FFF'))
+			console.log(json)
 			const res = json[0];
 			let autoDetect = global.db.data.chats[res.id].autoDetect
 			if (!autoDetect) return
