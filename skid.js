@@ -676,7 +676,23 @@ escribe *me rindo* para acptar tu derrota`
       break
   
             
-            
+      case 'tiktokvideo':
+    if (!text) return m.reply( `Example : ${prefix + command} link`)
+    if (!q.includes('tiktok')) return m.reply(`*link invalido!*`)
+    await loading ()
+    require('./lib/tiktok').Tiktok(q).then( data => {
+    conn.sendMessage(m.chat, { video: { url: data.nowm }}, { quoted: m })
+    })    
+    break
+    
+    case 'tiktokmp3':
+    case 'tiktokaudio':
+    if (!text) return m.reply( `*Ejemplo: ${prefix + command} link*`)
+    if (!q.includes('tiktok')) return m.reply(`*link invalido!*`)
+    require('./lib/tiktok').Tiktok(q).then( data => {
+    conn.sendMessage(m.chat, { audio: { url: data.audio }, mimetype: 'audio/mp4' }, { quoted: m })
+    })    
+    break
             
 
             
