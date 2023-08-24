@@ -7,6 +7,7 @@ const moment = require('moment')
 const fs = require('fs')
 const yargs = require('yargs/yargs')
 const { smsg, sleep } = require('./lib/fuctions')
+const _ = require('lodash')
 
 const { execSync } = require('child_process')
 const pino = require('pino')
