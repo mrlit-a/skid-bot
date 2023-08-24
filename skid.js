@@ -239,13 +239,13 @@ let setting = global.db.data.settings[conn.user.jid]
     "《 ███████▒▒▒▒▒》50%",
     "《 ██████████▒▒》80%",
     "《 ████████████》100%",
-    "~_*©辛Clay LLc*_~\n𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙳..."
+    "~_*CARGA COMPLETA*_~"
     ]
-    let { key } = await haikal.sendMessage(from, {text: 'ʟᴏᴀᴅɪɴɢ...'}) // loading message
+    let { key } = await conn.sendMessage(from, {text: '_*cargando*_'}) // loading message
 
     for (let i = 0; i < hawemod.length; i++) {
     /*await delay(10)*/
-    await haikal.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
+    await conn.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
     }
     }
   
