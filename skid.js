@@ -122,8 +122,6 @@
   const isPremium = m.isGroup ? premium.includes(userSender) : false   
   let quizmath = global.db.data.game.math = [] 
   const who = m.quoted ? m.quoted.sender : m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
-  const mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : []),]),];
-    
   
   
   // mensajes :v  
@@ -248,7 +246,28 @@ let setting = global.db.data.settings[conn.user.jid]
   chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))  
   )}    
 
-  
+  let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
+for (let jid of mentionUser) {
+let user = global.db.data.users[jid]
+if (!user) continue
+let afkTime = user.afkTime
+if (!afkTime || afkTime < 0) continue
+let reason = user.afkReason || ''
+m.reply(`¡No lo etiquetes!
+*el esta afk ${reason ? 'por la razon: ' + reason : 'sin razon'}*
+Durante ${clockString(new Date - afkTime)}
+`.trim())
+}
+if (global.db.data.users[m.sender].afkTime > -1) {
+let user = global.db.data.users[m.sender]
+m.reply(`
+dejo de estar afk ${user.afkReason ? 'por: ' + user.afkReason : ''}
+durante ${clockString(new Date - user.afkTime)}
+`.trim())
+user.afkTime = -1
+user.afkReason = ''
+}
+
   // ttt game ( adaptado }
   	    this.game = this.game ? this.game : {}
 	    let room13 = Object.values(this.game).find(room13 => room13.id && room13.game && room13.state && room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender) && room13.state == 'PLAYING')
@@ -459,20 +478,19 @@ escribe *me rindo* para acptar tu derrota`
             m.reply(done)
             break
    case 'menu':
-   await 
-   conn.adReply(m.chat, skmenu(conn, prefix, pushname, m), global.menu, fkontak)
+   await loading()
+   conn.adReply(m.chat, skmenu(conn, prefix, pushname, m), global.menu, fkontak, true)
    break 
    
-   case 'emojimix2': 
-    await loading()
-    if (!text) m.reply(`Ejemplo: ${prefix + command} 😅`)
-    let anu = await fetch(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
-    for (let res of anu.results) {
-    let encmedia = await conn.sendImageAsSticker(from, res.url, m, { packname: global.packname, author: global.author })
-    await fs.unlinkSync(encmedia)
-    }
+   case 'afk':
+   let user = global.db.data.users[m.sender]
+    user.afkTime = + new Date
+    user.afkReason = text
+    m.reply(`${pushname}... estara afk por ${text ? ': ' + text : ''}`)
+   break
+   
+   
     
-    break
   
      case 'nowa': 
      let regex = /x/g 
