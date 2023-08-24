@@ -31,7 +31,7 @@
 
   const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, } = require('./lib/fuctions')  
   const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") 
-  const { ytmp4, ytmp3, ytplay, ytplayvid } = require('./lib/youtube')  
+  
   const speed = require("performance-now")  
   
   const msgs = (message) => { 
@@ -58,7 +58,37 @@
   if (anu !== null) {  
   return stickerdb[anu].cmd  
   }}
+ const downloadMp3 = async (Link) => {
+    try {
+    await ytdl.getInfo(Link)
+    let mp3File = getRandom('.mp3')
+    console.log(color('Download Audio With ytdl-core'))
+    ytdl(Link, { filter: 'audioonly' })
+    .pipe(fs.createWriteStream(mp3File))
+    .on('finish', async () => {
+    await conn.sendMessage(from, { audio: fs.readFileSync(mp3File), mimetype: 'audio/mp4' }, { quoted: m })
+    fs.unlinkSync(mp3File)
+    })
+    } catch (err) {
+    m.reply(`${err}`)
+    }
+    }
 
+    const downloadMp4 = async (Link) => {
+    try {
+    await ytdl.getInfo(Link)
+    let mp4File = getRandom('.mp4')
+    console.log(color('Download Video With ytdl-core'))
+    let nana = ytdl(Link)
+    .pipe(fs.createWriteStream(mp4File))
+    .on('finish', async () => {
+    await conn.sendMessage(from, { video: fs.readFileSync(mp4File), gifPlayback: false }, { quoted: m })
+    fs.unlinkSync(`./temp/${mp4File}`)
+    })
+    } catch (err) {
+    m.reply(`${err}`)
+    }
+    }
   const getFileBuffer = async (mediakey, MediaType) => {  
   const stream = await downloadContentFromMessage(mediakey, MediaType)  
   let buffer = Buffer.from([])  
@@ -850,20 +880,21 @@ escribe *me rindo* para acptar tu derrota`
     break  
   
 
-  case 'play':   
-    if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗𝚊 𝚌𝚊𝚗𝚌𝚒𝚘𝚗` }, { quoted: msg })  
-   let lolhuman = await fetch(`https://api.lolhuman.xyz/api/ytplay?apikey=${lolkeysapi}&query=${text}`)      
-   let lolh = await lolhuman.json()   
-   let n = lolh.result.text || 'error'   
-   await conn.sendMessage(m.chat, { audio: { url: lolh.result.audio.link }, fileName: `error.mp3`, mimetype: 'audio/mp4' }, { quoted: msg })  
-   break  
+    case 'ytmp3': case 'youtubemp3': 
+    if (!isCreator) return m.reply('*khusus Premium*')
+    if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
+    downloadMp3(text)
+    break
   
-      case 'play2':  
-        if (!text) return conn.sendMessage(m.chat, { text: `𝚒𝚗𝚐𝚛𝚎𝚜𝚊 𝚎𝚕 𝚗𝚘𝚖𝚋𝚛𝚎 𝚍𝚎 𝚊𝚕𝚐𝚞𝚗 𝚟𝚒𝚍𝚎𝚘` }, { quoted: msg });  
-        conn.sendMessage(m.chat, { text: `𝚎𝚜𝚙𝚎𝚛𝚊...` }, { quoted: fdoc });  
-        let mediaa = await ytplayvid(textoo);  
-        await conn.sendMessage(m.chat, { video: { url: mediaa.result }, fileName: `error.mp4`, thumbnail: mediaa.thumb, mimetype: 'video/mp4' }, { quoted: msg });  
-      break  
+    case 'ytmp4': case 'youtubemp4': 
+    if (!isCreator) return m.reply('*khusus Premium*')
+    if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`
+    let { ytv } = require('./lib/y2mate')
+    let quality = args[1] ? args[1] : '360p'
+    let media = await ytv(text, quality)
+    if (media.filesize >= 100000) return m.reply('el archivo es demasiado pesado '+util.format(media))
+    conn.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `Titulo: ${media.title}\nTamaño: ${media.filesizeF}\nurl: ${isUrl(text)}\n\ncalidad: ${args[1] || '360p'}` }, { quoted: m })
+    break
   
           case 'update':  
             if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
