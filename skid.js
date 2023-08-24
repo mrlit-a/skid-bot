@@ -232,7 +232,22 @@ let setting = global.db.data.settings[conn.user.jid]
   //chalk.bold.red('\n️ Tag: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),  
   chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))  
   )}    
-  
+  async function loading () {
+    var hawemod = [
+    "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
+    "《 ████▒▒▒▒▒▒▒▒》30%",
+    "《 ███████▒▒▒▒▒》50%",
+    "《 ██████████▒▒》80%",
+    "《 ████████████》100%",
+    "~_*©辛Clay LLc*_~\n𝙻𝙾𝙰𝙳𝙸𝙽𝙶 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙴𝙳..."
+    ]
+    let { key } = await haikal.sendMessage(from, {text: 'ʟᴏᴀᴅɪɴɢ...'}) // loading message
+
+    for (let i = 0; i < hawemod.length; i++) {
+    /*await delay(10)*/
+    await haikal.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
+    }
+    }
   
   // ttt game ( adaptado }
   	    this.game = this.game ? this.game : {}
@@ -444,9 +459,20 @@ escribe *me rindo* para acptar tu derrota`
             m.reply(done)
             break
    case 'menu':
-   await conn.editMessage(m.chat, '*Cargando menu*', '*Menu cargado correctamente*', 3, fkontak)
+   await 
    conn.adReply(m.chat, skmenu(conn, prefix, pushname, m), global.menu, fkontak)
    break 
+   
+   case 'emojimix2': 
+    await loading()
+    if (!text) throw `Ejemplo: ${prefix + command} 😅`
+    let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
+    for (let res of anu.results) {
+    let encmedia = await conn.sendImageAsSticker(from, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
+    await fs.unlinkSync(encmedia)
+    }
+    
+    break
   
      case 'nowa': 
      let regex = /x/g 
