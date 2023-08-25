@@ -547,7 +547,7 @@ user.afkReason = ''
     case 'profile':
     if (!who) return m.reply(`etiqueta a la persona`)
     try {
-    pp = conn.profilePictureUrl(`${who.split('@')[0]}@c.us` 'image')
+    pp = conn.profilePictureUrl(`${who.split('@')[0]}@c.us`, 'image')
     } catch {
     pp = noperfil
     }
