@@ -51,7 +51,12 @@ others: {},
 sticker: {},
 ...(global.db.data || {})}
   global.db.chain = _.chain(global.db.data)}
-loadDatabase()
+loadDatabase() //mario baboso me lo robas y te rompo tu madre
+
+if (global.db) setInterval(async () => {
+    if (global.db.data) await global.db.write()
+  }, 30 * 1000)
+
 
 //_________________
 
