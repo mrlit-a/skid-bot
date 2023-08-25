@@ -150,7 +150,6 @@
   const isGroupAdmins = m.isGroup ? groupAdmins.includes(userSender) : false 
   const isBaneed = m.isGroup ? blockList.includes(userSender) : false 
   const isPremium = m.isGroup ? premium.includes(userSender) : false   
-  let quizmath = global.db.data.game.math = [] 
   const who = m.quoted ? m.quoted.sender : m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender;
   
   
@@ -298,206 +297,23 @@ user.afkTime = -1
 user.afkReason = ''
 }
 
-  // ttt game ( adaptado }
-  	    this.game = this.game ? this.game : {}
-	    let room13 = Object.values(this.game).find(room13 => room13.id && room13.game && room13.state && room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender) && room13.state == 'PLAYING')
-	    if (room13) {
-	    let ok
-	    let isWin = !1
-	    let isTie = !1
-	    let isSurrender = !1
-	    //reply(`[DEBUG]\n${parseInt(m.text)}`)
-	    if (!/^([1-9]|(me)?give up|surr?ender|off|skip|me rindo)$/i.test(m.text)) return
-	    isSurrender = !/^[1-9]$/.test(m.text)
-	    if (m.sender !== room13.game.currentTurn) { 
-	    if (!isSurrender) return !0
-	    }
-	    if (!isSurrender && 1 > (ok = room13.game.turn(m.sender === room13.game.playerO, parseInt(m.text) - 1))) {
-	    reply({
-	    '-3': 'Juego terminado',
-	    '-2': 'Invalido',
-	    '-1': 'posicion invalida',
-	    0: 'posicion invalida',
-	    }[ok])
-	    return !0
-	    }
-	    if (m.sender === room13.game.winner) isWin = true
-	    else if (room13.game.board === 511) isTie = true
-	    let arr = room13.game.render().map(v => {
-	    return {
-	    X: '❌',
-	    O: '⭕',
-	    1: '1️⃣',
-	    2: '2️⃣',
-	    3: '3️⃣',
-	    4: '4️⃣',
-	    5: '5️⃣',
-	    6: '6️⃣',
-	    7: '7️⃣',
-	    8: '8️⃣',
-	    9: '9️⃣',
-	    }[v]
-	    })
-	    if (isSurrender) {
-	    room13.game._currentTurn = m.sender === room13.game.playerX
-	    isWin = true
-	    }
-	    let winner = isSurrender ? room13.game.currentTurn : room13.game.winner
-	    let str = `room13 ID: ${room13.id}
-
-${arr.slice(0, 3).join('')}
-${arr.slice(3, 6).join('')}
-${arr.slice(6).join('')}
-
-${isWin ? `@${winner.split('@')[0]} gano!!` : isTie ? `Game over` : `Turno de ${['❌', '⭕'][1 * room13.game._currentTurn]} (@${room13.game.currentTurn.split('@')[0]})`}
-❌: @${room13.game.playerX.split('@')[0]}
-⭕: @${room13.game.playerO.split('@')[0]}
-
-escribe *me rindo* para acptar tu derrota`
-	    if ((room13.game._currentTurn ^ isSurrender ? room13.x : room13.o) !== m.chat)
-	    room13[room13.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
-	    if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
-	    await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
-	    if (isTie || isWin) {
-	    delete this.game[room13.id]
-	    }
-	    }
-          //Suit PvP 
-     this.suit = this.suit ? this.suit : {}; 
-     let roof = Object.values(this.suit).find( 
-       (roof) => roof.id && roof.status && [roof.p, roof.p2].includes(m.sender) 
-     ); 
-     if (roof) { 
-       let win = ""; 
-       let tie = false; 
+  let mathGame = global.db.data.game.math = [] 
+  let ppt = global.db.data.game.ppt []
+  let ttt = global.db.data.game.ppt = []
   
-       if ( 
-         m.sender == roof.p2 && 
-         body == "aceptar" && 
-         m.isGroup && 
-         roof.status == "wait" 
-       ) { 
-         if (/^(tolak|negar|nanti|n|ga(k.)?bisa|no|Rechazar)/i.test(m.text)) { 
-           conn.sendTextWithMentions( 
-             m.chat, 
-             `@${roof.p2.split`@`[0]} rechazo el juego\nppt cancelado`, 
-             m 
-           ); 
-           delete this.suit[roof.id]; 
-           return !0; 
-         } 
-         roof.status = "play"; 
-         roof.asal = m.chat; 
-         clearTimeout(roof.waktu); 
-         //delete roof[roof.id].waktu 
-         conn.sendText( 
-           m.chat, 
-           ` 
- ┌〔 *PPT*  〕 
- │ 
- ├  *Jugador 1:* @${roof.p.split`@`[0]}  
- │ 
- ├  *jugador 2:* @${roof.p2.split`@`[0]} 
- │ 
- └ por favor revisa tu privado`, 
-           m, 
-           { mentions: [roof.p, roof.p2] } 
-         ); 
-         if (!roof.pilih) 
-           conn.sendText( 
-             roof.p, 
-             `Por favor escribe: \n\nPiedra 🗿\nPapel 📄\nTijera ✂️` 
-           ); 
-         if (!roof.pilih2) 
-           conn.sendText( 
-             roof.p2, 
-             `Por favor escribe: \n\nPiedra 🗿\nPapel 📄\nTijera ✂️`, 
-             m 
-           ); 
-         roof.waktu_milih = setTimeout(() => { 
-           if (!roof.pilih && !roof.pilih2) 
-             conn.sendText( 
-               m.chat, 
-               `Ambos jugadores no tenian intencion de jugar,\nPPT cancelado` 
-             ); 
-           else if (!roof.pilih || !roof.pilih2) { 
-             win = !roof.pilih ? roof.p2 : roof.p; 
-             conn.sendTextWithMentions( 
-               m.chat, 
-               `@${ 
-                 (roof.pilih ? roof.p2 : roof.p).split`@`[0] 
-               } no escogio,, game over`, 
-               m 
-             ); 
-           } 
-           delete this.suit[roof.id]; 
-           return !0; 
-         }, roof.timeout); 
-       } 
-       let jwb = m.sender == roof.p; 
-       let jwb2 = m.sender == roof.p2; 
-       let g = /tijera/i; 
-       let b = /piedra/i; 
-       let k = /papel/i; 
-       let reg = /^(tesoura|pedra|papel)/i; 
-       if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) { 
-         roof.pilih = reg.exec(m.text.toLowerCase())[0]; 
-         roof.text = m.text; 
-         responder( 
-           `eligiste ${m.text} ${ 
-             !roof.pilih2 ? `\n\nEsperando a tu oponente...` : "" 
-           }` 
-         ); 
-         if (!roof.pilih2) 
-           conn.sendText( 
-             roof.p2, 
-             "_su oponente eligio_\nte toca eligir", 
-             0 
-           ); 
-       } 
-       if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) { 
-         roof.pilih2 = reg.exec(m.text.toLowerCase())[0]; 
-         roof.text2 = m.text; 
-         responder( 
-           `escogiste ${m.text} ${ 
-             !roof.pilih ? `\n\nEsperando al oponente...` : "" 
-           }` 
-         ); 
-         if (!roof.pilih) 
-           conn.sendText( 
-             roof.p, 
-             "_Su oponente eligió_\nte toca eligir", 
-             0 
-           ); 
-       } 
-       let stage = roof.pilih; 
-       let stage2 = roof.pilih2; 
-       if (roof.pilih && roof.pilih2) { 
-         clearTimeout(roof.waktu_milih); 
-         if (b.test(stage) && g.test(stage2)) win = roof.p; 
-         else if (b.test(stage) && k.test(stage2)) win = roof.p2; 
-         else if (g.test(stage) && k.test(stage2)) win = roof.p; 
-         else if (g.test(stage) && b.test(stage2)) win = roof.p2; 
-         else if (k.test(stage) && b.test(stage2)) win = roof.p; 
-         else if (k.test(stage) && g.test(stage2)) win = roof.p2; 
-         else if (stage == stage2) tie = true; 
-         conn.sendText( 
-           roof.asal, 
-           `_*Resultado:*_${tie ? "\n" : ""} 
   
- @${roof.p.split`@`[0]} jogou ${roof.text}! ${ 
-             tie ? "" : roof.p == win ? ` Victoria\n` : `\n` 
-           } 
- @${roof.p2.split`@`[0]} jogou ${roof.text2}! ${ 
-             tie ? "" : roof.p2 == win ? ` Victoria\n` : `\n` 
-           } 
- `.trim(), 
-           m, 
-           { mentions: [roof.p, roof.p2] } 
-         ); 
-         delete this.suit[roof.id]; 
-       } 
-     } 
+  if (math.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+  test = true
+  mathInGame = mathGame[m.sender.split('@')[0]]
+  if (budy.toLowerCase() == mathInGame) {
+    let exp = Math.floor(Math.random() * 1000)
+  await sendAdReply(m.chat, `*「 Juegos 」*\n*respuesta correcta 🎉*\n*Ganaste ${exp} de experiencia 🥳*`, sucess, m, false)
+  global.db.data.chats[m.sender.split('@')[0]] += exp
+  delete mathGame[m.sender.split('@')[0]]
+  } else { 
+  m.reply(`Respuesta incorrecta`)}
+  }
+
   
   switch (command) {  
               case 'acortar':
@@ -881,13 +697,11 @@ escribe *me rindo* para acptar tu derrota`
   
 
     case 'ytmp3': case 'youtubemp3': 
-    if (!isCreator) return m.reply('*khusus Premium*')
     if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
     downloadMp3(text)
     break
   
     case 'ytmp4': case 'youtubemp4': 
-    if (!isCreator) return m.reply('*khusus Premium*')
     if (!text) throw `Example : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`
     let { ytv } = require('./lib/y2mate')
     let quality = args[1] ? args[1] : '360p'
@@ -1241,121 +1055,7 @@ escribe *me rindo* para acptar tu derrota`
     m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`)
     break
 			
-	   case 'ppt':  
-      if (!m.isGroup) return reply(mess.group);  
-        this.suit = this.suit ? this.suit : {};  
-        let poin = 10;  
-        let poin_lose = 10;  
-        let timeout = 60000;  
-  
-        if (Object.values(this.suit).find((roof) => roof.id.startsWith("ppt") && [roof.p, roof.p2].includes(m.sender))) {  
-          return reply("primero completa o espera a que termine el juego anterior");  
-        }  
-  
-        if (m.mentionedJid[0] === m.sender) {  
-          return reply("no puedes jugar contigo\nezquisofrenico de mierda");  
-        }  
-  
-      if (!m.mentionedJid[0]) {  
-          return reply("*con quien quieres jugar?*\n*vamos etiqueta a la persona*");  
-        }  
-  
-        if (Object.values(this.suit).find((roof) => roof.id.startsWith("suit") && [roof.p, roof.p2].includes(m.mentionedJid[0]))) {  
-        return reply("esa persona esta jugando con otra :(");  
-        }  
-  
-        let id = "ppt_" + new Date() * 1;  
-      let caption = `  
-      ┌〔 *PPT* 🪨📄✂️ 〕  
-      │   
-      ├  *Jugador 1:* @${m.sender.split`@`[0]}  
-      │   
-      ├  *Jugador 2:* @${m.mentionedJid[0].split`@`[0]}  
-      │   
-      └ *elige* _aceptar_ _rechazar_`;  
-  
-        this.suit[id] = {  
-          chat: await m.reply(caption),  
-          id: id,  
-          p: m.sender,  
-          p2: m.mentionedJid[0],  
-          status: "wait",  
-          waktu: setTimeout(() => {  
-          if (this.suit[id]) {  
-              conn.sendText(m.chat, `*_se agoto el tiempo_*\n*al parecer @${roof.p2.split`@`[0]} ni siquiera se digno a responder*`, m);  
-             delete this.suit[id];  
-           }  
-          }, 60000),  
-          poin,  
-       poin_lose,  
-          timeout,  
-        };  
-        break
-        
-        case 'ttc': case 'ttt': case 'tictactoe': {
-            let TicTacToe = require("./lib/tictactoe")
-            this.game = this.game ? this.game : {}
-            if (Object.values(this.game).find(room13 => room13.id.startsWith('tictactoe') && [room13.game.playerX, room13.game.playerO].includes(m.sender))) return replygcxeon(`You Are Still In The Game`)
-            let room13 = Object.values(this.game).find(room13 => room13.state === 'WAITING' && (text ? room13.name === text : true))
-            if (room13) {
-            room13.o = m.chat
-            room13.game.playerO = m.sender
-            room13.state = 'PLAYING'
-            let arr = room13.game.render().map(v => {
-            return {
-            X: '❌',
-            O: '⭕',
-            1: '1️⃣',
-            2: '2️⃣',
-            3: '3️⃣',
-            4: '4️⃣',
-            5: '5️⃣',
-            6: '6️⃣',
-            7: '7️⃣',
-            8: '8️⃣',
-            9: '9️⃣',
-            }[v]
-            })
-            let str = `room13 ID: ${room13.id}
 
-${arr.slice(0, 3).join('')}
-${arr.slice(3, 6).join('')}
-${arr.slice(6).join('')}
-
-esperando a @${room13.game.currentTurn.split('@')[0]}
-
-escribe *me rindo* para aceptar tu derrota`
-            if (room13.x !== room13.o) await conn.sendText(room13.x, str, m, { mentions: parseMention(str) } )
-            await conn.sendText(room13.o, str, m, { mentions: parseMention(str) } )
-            } else {
-            room13 = {
-            id: 'tictactoe-' + (+new Date),
-            x: m.chat,
-            o: '',
-            game: new TicTacToe(m.sender, 'o'),
-            state: 'WAITING'
-            }
-            if (text) room13.name = text
-            reply('esperando jugador' + (text ? ` Escriba el comando ${prefix}${command} ${text}` : ''))
-            this.game[room13.id] = room13
-            }
-            }
-            break
-            
-            case 'delttc': case 'delttt': {
-            this.game = this.game ? this.game : {}
-            try {
-            if (this.game) {
-            delete this.game
-            conn.sendText(m.chat, `Se elimino la session tictactoe 🎮`, m)
-            } else if (!this.game) {
-            reply(`no existe ninguna session tictactoe 🎮`)
-            } else throw '?'
-            } catch (e) {
-            reply(`${e}`)
-            }
-            }
-            break
             case 'inspeccionar': case 'vergrupo':
     let linkRegex = args.join(" ")
     let textt = ``
@@ -1391,7 +1091,35 @@ ${botname}`
     break
             
 			
-  
+// games nigga 
+case 'math': 
+ if (kuismath.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
+ let { genMath, modes } = require('./src/math')
+ if (!text) m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${prefix}math medium`)
+ let result = await genMath(text.toLowerCase())
+ conn.sendText(from, `* *?\n\nWaktu: ${(result.waktu / 1000).toFixed(2)} detik`, m).then(() => {
+ kuismath[m.sender.split('@')[0]] = result.jawaban
+ })
+ await sleep(result.waktu)
+ if (kuismath.hasOwnProperty(m.sender.split('@')[0])) {
+ console.log("Jawaban: " + result.jawaban)
+ 
+}
+break
+
+    case 'math':
+    if (mathGame.hasOwnProperty(m.sender.split('@')[0]) return m.reply(`hay un juego ahora mismo\n espera a que ese juego termine`)
+    let { genMath, modes } = require('./lib/math')
+    if (!text} return m.reply(`*elige uno de estos modos*\n*${Object.keys(modes.join(' | ')}\n*Ejemplo de uso*\n*${prefix + command} medium*`)
+    let result = await genMath(text.toLowerCase())
+    conn.sendText(m.chat, `*¿Cuál es el resultado de ${result.question.toLowerCase()}?\n*Tiempo: ${(result.time / 1000).toFixed(2)}`)
+    await sleep(result.time)
+    if (mathGame.hasOwnProperty(m.sender.split('@')[0])) {
+    m.reply("*tu tiempo se acabo*\n*la respuesta era*" + mathGame[m.sender.split('@')[0]])
+     delete mathGame[m.sender.split('@')[0]]
+    }
+    break
+    
           default: 
               if (budy.startsWith('>')) {  
                   if (!isCreator) return  
@@ -1422,27 +1150,27 @@ ${botname}`
               }
               if(budy.startsWith(`hola`)) {
               if (!global.db.data.chats[m.chat].audios) return
-              let vn = fs.readFileSync('./media/Hola.mp3')
+              let vn = fs.readFileSync('./audios/Hola.mp3')
               conn.sendAudio(m.chat, vn, m)
               }
               if(budy.startsWith(`shitpost`)) {
               if (!global.db.data.chats[m.chat].audios) return
-              let vn = fs.readFileSync('./media/shitpost.mp3')
+              let vn = fs.readFileSync('./audios/shitpost.mp3')
               conn.sendAudio(m.chat, vn, m)
               }
               if(budy.startsWith(`a`)) {
               if (!global.db.data.chats[m.chat].audios) return
-              let vn = fs.readFileSync('./media/a.mp3')
+              let vn = fs.readFileSync('./audios/a.mp3')
               conn.sendAudio(m.chat, vn, m)
               }
               if(budy.startsWith(`uwu`)) {
               if (!global.db.data.chats[m.chat].audios) return
-              let vn = fs.readFileSync('./media/UwU.mp3')
+              let vn = fs.readFileSync('./audios/UwU.mp3')
               conn.sendAudio(m.chat, vn, m)
               }
               if(budy.startsWith(`mauu`)) {
               if (!global.db.data.chats[m.chat].audios) return
-              let vn = fs.readFileSync('./media/mauu1.mp3')
+              let vn = fs.readFileSync('./audios/mauu1.mp3')
               conn.sendAudio(m.chat, vn, m)
               }
   
