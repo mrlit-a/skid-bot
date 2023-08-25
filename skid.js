@@ -1096,7 +1096,7 @@ ${botname}`
     case 'math':
     if (mathGame.hasOwnProperty(m.sender.split('@')[0])) return m.reply(`hay un juego ahora mismo\n espera a que ese juego termine`)
     let { genMath, modes } = require('./lib/math')
-    if (!text} return m.reply(`*elige uno de estos modos*\n*${Object.keys(modes.join(' | ')}\n*Ejemplo de uso*\n*${prefix + command} medium*`)
+    if (!text) return m.reply(`*elige uno de estos modos*\n*${Object.keys(modes.join(' | ')}\n*Ejemplo de uso*\n*${prefix + command} medium*`)
     let result = await genMath(text.toLowerCase())
     conn.sendText(m.chat, `*¿Cuál es el resultado de ${result.question.toLowerCase()}?\n*Tiempo: ${(result.time / 1000).toFixed(2)}`)
     await sleep(result.time)
