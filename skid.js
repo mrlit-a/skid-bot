@@ -714,8 +714,8 @@ user.afkReason = ''
 
     
     case 'addcmd':
-    if (!isCreator) return conn.AdReply(m.chat, mess.owner, query, m, false)
-    if (!m.quoted) return conn.AdReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
+    if (!isCreator) return conn.adReply(m.chat, mess.owner, query, m, false)
+    if (!m.quoted) return conn.adReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
     if (!m.quoted.fileSha256) return conn.AdReply(m.chat, `*Solo puedes asignar comandos a stickers/imagenes*`, query, m, false)
     if (!text) return conn.AdReply(m.chat, `*Necesitas un texto para añadirlo al sticker!!*`, query, m, false)
     let hash = m.quoted.fileSha256.toString('base64')
@@ -725,10 +725,10 @@ user.afkReason = ''
     break
     
     case 'delcmd': 
-    if (!isCreator) return conn.AdReply(m.chat, mess.owner, query, m, false)
-    if (!m.quoted) return conn.AdReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
+    if (!isCreator) return conn.adReply(m.chat, mess.owner, query, m, false)
+    if (!m.quoted) return conn.adReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
     let hash = m.quoted.fileSha256.toString('base64')
-    if (!hash) return conn.AdReply(m.chat, `*Este sticker no tiene un comando asignado!!*`, query, m, false)
+    if (!hash) return conn.adReply(m.chat, `*Este sticker no tiene un comando asignado!!*`, query, m, false)
     if (global.db.data.sticker[hash] && global.db.data.sticker[hash].locked) return m.reply(`*no tienes permiso de modificar este comando*`)
     delete global.db.data.sticker[hash]
     m.reply(`*hecho*`)
