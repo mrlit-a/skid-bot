@@ -549,7 +549,7 @@ user.afkReason = ''
     if (!/video/.test(mime) && !/audio/.test(mime)) return conn.sendCart(m.chat, `*Responde a un video para convertitlo a mp3*`, global.query, fkontak)
     if (!m.quoted) return conn.sendCart(m.chat, `*responde a un video para convertirlo a mp3 con ${prefix + command}*`, global.query, fkontak)
     let { toAudio } = require('./lib/converter')
-    let medias = await conn.downloadMediaMessage(m.quoted)
+    let medias = await downloadMediaMessage(m.quoted)
     let audio = await toAudio(medias, 'mp4')
     conn.sendAudio(m.chat, audio, m)
     break
