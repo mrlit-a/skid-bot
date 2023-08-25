@@ -544,18 +544,16 @@ user.afkReason = ''
     })    
     break
             
-    case 'profile':
-    if (!who) return m.reply(`etiqueta a la persona`)
-    try {
-    pp = conn.profilePictureUrl(`${who.split('@')[0]}@c.us`, 'image')
-    } catch {
-    pp = noperfil
-    }
-    let nameWho = conn.getName(who)
-    let userWho = global.db.data.users[who]
-    sendImage(pp, `*「 Grupos 」*\n*Nombre: ${nameWho}*\n*Numero: +${who.split('@')[0]}*\n*Exp: ${userWho.exp}`)
+
+    case 'tomp3': case 'mp3':
+    if (!/video/.test(mime) && !/audio/.test(mime)) return conn.sendCart(m.chat, `*Responde a un video para convertitlo a mp3*`, global.query, fkontak)
+    if (!m.quoted) return conn.sendCart(m.chat, `*responde a un video para convertirlo a mp3 con ${prefix + command}*`, global.query, fkontak)
+    let { toAudio } = require('./lib/converter')
+    let media = await conn.downloadMediaMessage(m.quoted)
+    let audio = await toAudio(media, 'mp4')
+    conn.sendAudio(m.chat, audio, m)
     break
-            
+    
          case 'ofuscar':
        if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
          function obfuscateCode(code) { 
