@@ -302,7 +302,7 @@ user.afkReason = ''
   let ttt = global.db.data.game.ppt = []
   
   
-  if (math.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
+  if (mathGame.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
   test = true
   mathInGame = mathGame[m.sender.split('@')[0]]
   if (budy.toLowerCase() == mathInGame) {
