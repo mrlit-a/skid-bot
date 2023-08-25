@@ -526,6 +526,7 @@ user.afkReason = ''
   
             
       case 'tiktokvideo':
+      case 'tiktok':
     if (!text) return m.reply( `*Ejemplo: ${prefix + command} link`)
     if (!q.includes('tiktok')) return m.reply(`*link invalido!*`)
     await loading ()
@@ -543,7 +544,17 @@ user.afkReason = ''
     })    
     break
             
-    
+    case 'profile':
+    if (!who) return m.reply(`etiqueta a la persona`)
+    try {
+    pp = conn.profilePictureUrl(who, 'image')
+    } catch {
+    pp = noperfil
+    }
+    let nameWho = conn.getName(who)
+    let userWho = global.db.data.users[who]
+    conn.sendMessage(m.chat { image: pp, caption: `*「 Grupos 」*\n*Nombre: ${nameWho}*\n*Numero: +${who.split('@')[0]}*\n*Exp: ${userWho.exp}`}, { quoted: fkontak })
+    break
             
          case 'ofuscar':
        if (!text) return m.reply("*Ingresa el codigo que vas a ofuscar.*"); 
