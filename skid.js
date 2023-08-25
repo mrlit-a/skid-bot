@@ -272,9 +272,9 @@ let setting = global.db.data.settings[conn.user.jid]
   //chalk.bold.red('\n️ Tag: ') + chalk.redBright(`[${isBaneed ? 'Banned' : ''}]`),  
   chalk.bold.white('\n💬 MENSAJE: ') + chalk.whiteBright(`${msgs(m.text)}\n`))  
   )}    
-  if (getCmd) {
+/*  if (getCmd) {
   console.log(gradient.cyan(cmd))
-  }
+  } */
 
   let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
 for (let jid of mentionUser) {
