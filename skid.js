@@ -1056,7 +1056,6 @@ user.afkReason = ''
     case 'delcmd': 
     if (!isCreator) return conn.adReply(m.chat, mess.owner, query, m, false)
     if (!m.quoted) return conn.adReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
-    let hash = m.quoted.fileSha256.toString('base64')
     if (!hash) return conn.adReply(m.chat, `*Este sticker no tiene un comando asignado!!*`, query, m, false)
     delete global.db.data.sticker[hash]
     m.reply(`*hecho*`)
