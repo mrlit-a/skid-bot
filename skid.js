@@ -303,17 +303,19 @@ user.afkReason = ''
   let ttt = global.db.data.game.ppt = []
   
   
-  if (mathGame.hasOwnProperty(m.sender.split('@')[0]) && isCmd) {
-  test = true
-  mathInGame = mathGame[m.sender.split('@')[0]]
-  if (budy.toLowerCase() == mathInGame) {
-    let exp = Math.floor(Math.random() * 1000)
-  await sendAdReply(m.chat, `*「 Juegos 」*\n*respuesta correcta 🎉*\n*Ganaste ${exp} de experiencia 🥳*`, sucess, m, false)
-  global.db.data.chats[m.sender.split('@')[0]] += exp
-  delete mathGame[m.sender.split('@')[0]]
-  } else { 
-  m.reply(`Respuesta incorrecta`)}
-  }
+    if (global.db.data.chats[m.chat].autoSticker) {  
+          if (/image/.test(mime)) {  
+          reply(`Espera, estamos creando tu sticker...\n*Auto Sticker Activado*`)  
+          media = await quoted.download()  
+          let encmedia = await conn.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })  
+          await fs.unlinkSync(encmedia)  
+        } else if (/video/.test(mime)) {  
+          if ((quoted.msg || quoted).seconds > 40) return reply('¡Máximo 40 segundos!')  
+          media = await quoted.download()  
+          let encmedia = await conn.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: goblal.author })  
+          await new Promise((resolve) => setTimeout(resolve, 2000));   
+          await fs.unlinkSync(encmedia)  
+      }}
 
   
   switch (command) {  
@@ -1104,18 +1106,7 @@ ${botname}`
 			
 // games nigga 
 
-    case 'math':
-    if (mathGame.hasOwnProperty(m.sender.split('@')[0])) return m.reply(`hay un juego ahora mismo\n espera a que ese juego termine`)
-    let { genMath, modes } = require('./lib/math')
-    if (!text) return m.reply(`*elige uno de estos modos*\n*${Object.keys(modes.join(' | '))}\n*Ejemplo de uso*\n*${prefix + command} medium*`)
-    let result = await genMath(text.toLowerCase())
-    conn.sendText(m.chat, `*¿Cuál es el resultado de ${result.question.toLowerCase()}?\n*Tiempo: ${(result.time / 1000).toFixed(2)}`)
-    await sleep(result.time)
-    if (mathGame.hasOwnProperty(m.sender.split('@')[0])) {
-    m.reply("*tu tiempo se acabo*\n*la respuesta era*" + mathGame[m.sender.split('@')[0]])
-     delete mathGame[m.sender.split('@')[0]]
-    }
-    break
+
     
           default: 
               if (budy.startsWith('>')) {  
