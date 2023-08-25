@@ -553,7 +553,7 @@ user.afkReason = ''
     }
     let nameWho = conn.getName(who)
     let userWho = global.db.data.users[who]
-    conn.sendMessage(m.chat { image: pp, caption: `*「 Grupos 」*\n*Nombre: ${nameWho}*\n*Numero: +${who.split('@')[0]}*\n*Exp: ${userWho.exp}`}, { quoted: fkontak })
+    sendImage(pp, `*「 Grupos 」*\n*Nombre: ${nameWho}*\n*Numero: +${who.split('@')[0]}*\n*Exp: ${userWho.exp}`)
     break
             
          case 'ofuscar':
