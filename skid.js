@@ -298,7 +298,7 @@ user.afkReason = ''
 }
 
   let mathGame = global.db.data.game.math = [] 
-  let ppt = global.db.data.game.ppt []
+  let ppt = global.db.data.game.ppt = []
   let ttt = global.db.data.game.ppt = []
   
   
