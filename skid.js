@@ -21,18 +21,16 @@
   const mimetype = require("mime-types")  
   const {jadibot, listJadibot } = require('./serbot.js')  
   const webp = require("node-webpmux")  
-  const { pinterest } = require('./addons/add-ons.js')  
+  const { pinterest } = require('./lib/RandomFuctions.js')  
   const ffmpeg = require('fluent-ffmpeg')
   const JavaScriptObfuscator = require('javascript-obfuscator')
+  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, } = require('./lib/fuctions')  
+  const { default: makeWASocket, proto, areJidsSameUser } = require("@whiskeysockets/baileys")
+  const speed = require("performance-now")  
   
   const color = (text, color) => { 
-  return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)}
-  
-
-  const { smsg, getGroupAdmins, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, delay, format, logic, generateProfilePicture, parseMention, getRandom, msToTime, } = require('./lib/fuctions')  
-  const { default: makeWASocket, proto } = require("@whiskeysockets/baileys") 
-  
-  const speed = require("performance-now")  
+  return !color ? chalk.cyanBright(text) : color.startsWith('#') ? chalk.hex(color)(text) : chalk.keyword(color)(text)
+  }
   
   const msgs = (message) => { 
   if (message.length >= 10) { 
@@ -40,24 +38,26 @@
   } else { 
   return `${message}`}} 
   
-  const addCmd = (cmd, id) =>  {
-    const stickerdb = global.db.data.sticker // gracias a aiden
-    stickerdb[id] = {
-    id: id,
-    cmd: cmd
+  if (isMedia && m.msg.fileSha256 && (m.msg.fileSha256.toString('base64') in global.db.data.sticker)) {
+    let hash = global.db.data.sticker[m.msg.fileSha256.toString('base64')]
+    let { text, mentionedJid } = hash
+    let messages = await generateWAMessage(from, { text: text, mentions: mentionedJid }, {
+    userJid: conn.user.id,
+    quoted : m.quoted && m.quoted.fakeObj
+    })
+    messages.key.fromMe = areJidsSameUser(m.sender, conn.user.id)
+    messages.key.id = m.key.id
+    messages.pushName = m.pushName
+    if (m.isGroup) messages.participant = m.sender
+    let msg = {
+    ...chatUpdate,  
+    messages: [proto.WebMessageInfo.fromObject(messages)],
+    type: 'append'
     }
-  }
+    conn.ev.emit('messages.upsert', msg) // si lo veo en gataplus voy a doxear a gata
+    }
   
-  const getCmd = (id) => {
-  const stickerdb = global.db.data.sticker
-  let anu = null;  
-  Object.keys(stickerdb).forEach(nganu => { 
-  if (stickerdb[nganu].id === id) { 
-  anu = nganu  
-  }})  
-  if (anu !== null) {  
-  return stickerdb[anu].cmd  
-  }}
+  
  const downloadMp3 = async (Link) => {
     try {
     await ytdl.getInfo(Link)
@@ -132,13 +132,31 @@
   const sender = m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid 
   const mime = (quoted.msg || quoted).mimetype || ''  
   const isMedia = /image|video|sticker|audio/.test(mime) 
-  
   const mentions = []  
   if (m.message[type].contextInfo) {   
   if (m.message[type].contextInfo.mentionedJid) {  
   const msd = m.message[type].contextInfo.mentionedJid  
   for (let i = 0; i < msd.length; i++) {  
   mentions.push(msd[i])}}}  
+  
+     async function loading () {
+    var hawemod = [
+    "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
+    "《 ████▒▒▒▒▒▒▒▒》30%",
+    "《 ███████▒▒▒▒▒》50%",
+    "《 ██████████▒▒》80%",
+    "《 ████████████》100%",
+    "~_*CARGA COMPLETA*_~"
+    ]
+    let { key } = await conn.sendMessage(from, {text: '_*cargando*_'}) // loading message
+
+    for (let i = 0; i < hawemod.length; i++) {
+    /*await delay(10)*/
+    await conn.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
+    }
+    }
+  
+
   
   // ‿︵‿︵ʚɞ『 GRUPO 』ʚɞ‿︵‿︵  
   const groupMetadata = m.isGroup ? await conn.groupMetadata(from) : ''
@@ -173,24 +191,7 @@
   const isQuotedDocument = type === 'extendedTextMessage' && content.includes('documentMessage')  
   const isQuotedMsg = type === 'extendedTextMessage' && content.includes('Message') // Mensaje citado de cualquier tipo  
   const isViewOnce = (type === 'viewOnceMessage') // Verifica si el tipo de mensaje es (mensaje de vista única)  
-    async function loading () {
-    var hawemod = [
-    "《 █▒▒▒▒▒▒▒▒▒▒▒》10%",
-    "《 ████▒▒▒▒▒▒▒▒》30%",
-    "《 ███████▒▒▒▒▒》50%",
-    "《 ██████████▒▒》80%",
-    "《 ████████████》100%",
-    "~_*CARGA COMPLETA*_~"
-    ]
-    let { key } = await conn.sendMessage(from, {text: '_*cargando*_'}) // loading message
-
-    for (let i = 0; i < hawemod.length; i++) {
-    /*await delay(10)*/
-    await conn.sendMessage(from, {text: hawemod[i], edit: key }) // load complete (edited text)
-    }
-    }
-  
-
+ 
 // database  
 let user = global.db.data.users[m.sender]
 let chats = global.db.data.users[m.chat]
@@ -709,7 +710,31 @@ user.afkReason = ''
     if (media.filesize >= 100000) return m.reply('el archivo es demasiado pesado '+util.format(media))
     conn.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `Titulo: ${media.title}\nTamaño: ${media.filesizeF}\nurl: ${isUrl(text)}\n\ncalidad: ${args[1] || '360p'}` }, { quoted: m })
     break
-  
+    
+
+    
+    case 'addcmd':
+    if (!isCreator) return conn.AdReply(m.chat, mess.owner, query, m, false)
+    if (!m.quoted) return conn.AdReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
+    if (!m.quoted.fileSha256) return conn.AdReply(m.chat, `*Solo puedes asignar comandos a stickers/imagenes*`, query, m, false)
+    if (!text) return conn.AdReply(m.chat, `*Necesitas un texto para añadirlo al sticker!!*`, query, m, false)
+    let hash = m.quoted.fileSha256.toString('base64')
+    if (global.db.data.sticker[hash] && global.db.data.sticker[hash].locked) return m.reply(`*no tienes permiso de modificar este comando*`)
+    global.db.data.sticker[hash] = { text, mentionedJid: m.mentionedJid, creator: m.sender, at + new date, locked: false}
+    m.reply(`*El comando fue asignado con exito*`)
+    break
+    
+    case 'delcmd': 
+    if (!isCreator) return conn.AdReply(m.chat, mess.owner, query, m, false)
+    if (!m.quoted) return conn.AdReply(m.chat, `*Responde a un sticker/imagen!!*`, query, m, false)
+    let hash = m.quoted.fileSha256.toString('base64')
+    if (!hash) return conn.AdReply(m.chat, `*Este sticker no tiene un comando asignado!!*`, query, m, false)
+    if (global.db.data.sticker[hash] && global.db.data.sticker[hash].locked) return m.reply(`*no tienes permiso de modificar este comando*`)
+    delete global.db.data.sticker[hash]
+    m.reply(`*hecho*`)
+    break
+    
+    
           case 'update':  
             if (!isCreator) return conn.sendMessage(m.chat, { text: `*ESTE COMANDO ES PARA MI JEFE*` }, { quoted: msg });  
            try {  
@@ -748,6 +773,7 @@ user.afkReason = ''
           result = lol[Math.floor(Math.random() * lol.length)];  
           sendImageAsUrl(result, `*-------「 PINTEREST 」-------*\n🤠 busqueda de ${text}\n🔗 url ${result}`)  
           break  
+  
   
  
 			
@@ -1045,15 +1071,6 @@ user.afkReason = ''
 			}
 			break
 			
-    case 'addcmd':
-    if (!m.quoted)  m.reply('*[❗] 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁 𝙾 𝙸𝙼𝙰𝙶𝙴𝙽 𝙰𝙻 𝙲𝚄𝙰𝙻 𝙳𝙴𝚂𝙴𝙰 𝙰𝙶𝚁𝙴𝙶𝙰𝚁 𝚄𝙽 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙾 𝚃𝙴𝚇𝚃𝙾*')
-    if (!m.quoted.fileSha256) m.reply('*[❗] 𝚂𝙾𝙻𝙾 𝙿𝚄𝙴𝙳𝙴𝚂 𝙰𝚂𝙸𝙶𝙰𝙽𝙰𝚁 𝙲𝙾𝙼𝙰𝙽𝙳𝙾𝚂 𝙾 𝚃𝙴𝚇𝚃𝙾𝚂 𝙰 𝚂𝚃𝙸𝙲𝙺𝙴𝚁𝚂 𝙴 𝙸𝙼𝙰𝙶𝙴𝙽𝙴𝚂*')
-    if (!text) m.reply(`*[❗] 𝙴𝚁𝚁𝙾𝚁 𝙳𝙴 𝚄𝚂𝙾, 𝚃𝙴𝚇𝚃𝙾 𝙵𝙰𝙻𝚃𝙰𝙽𝚃𝙴*\n\n*𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <texto> <responder a sticker o imagen>*\n\n*𝙴𝙹𝙴𝙼𝙿𝙻𝙾 𝙳𝙴 𝚄𝚂𝙾 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙾 𝙳𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:*\n*—◉ ${usedPrefix + command} <#menu> <responder a sticker o imagen>*`)
-    let sticker = global.db.data.sticker
-    let hash = m.quoted.fileSha256.toString('base64')
-    addCmd(text, hash)
-    m.reply(`*[ ✔ ] 𝙴𝙻 𝚃𝙴𝚇𝚃𝙾/𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙰𝚂𝙸𝙶𝙽𝙰𝙳𝙾 𝙰𝙻 𝚂𝚃𝙸𝙲𝙺𝙴𝚁/𝙸𝙼𝙰𝙶𝙴𝙽 𝙵𝚄𝙴 𝙰𝙶𝚁𝙴𝙶𝙰𝙳𝙾 𝙰 𝙻𝙰 𝙱𝙰𝚂𝙴 𝙳𝙴 𝙳𝙰𝚃𝙾𝚂 𝙲𝙾𝚁𝚁𝙴𝙲𝚃𝙰𝙼𝙴𝙽𝚃𝙴*`)
-    break
 			
 
             case 'inspeccionar': case 'vergrupo':
