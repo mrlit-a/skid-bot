@@ -1092,23 +1092,9 @@ ${botname}`
             
 			
 // games nigga 
-case 'math': 
- if (kuismath.hasOwnProperty(m.sender.split('@')[0])) throw "Masih Ada Sesi Yang Belum Diselesaikan!"
- let { genMath, modes } = require('./src/math')
- if (!text) m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${prefix}math medium`)
- let result = await genMath(text.toLowerCase())
- conn.sendText(from, `* *?\n\nWaktu: ${(result.waktu / 1000).toFixed(2)} detik`, m).then(() => {
- kuismath[m.sender.split('@')[0]] = result.jawaban
- })
- await sleep(result.waktu)
- if (kuismath.hasOwnProperty(m.sender.split('@')[0])) {
- console.log("Jawaban: " + result.jawaban)
- 
-}
-break
 
     case 'math':
-    if (mathGame.hasOwnProperty(m.sender.split('@')[0]) return m.reply(`hay un juego ahora mismo\n espera a que ese juego termine`)
+    if (mathGame.hasOwnProperty(m.sender.split('@')[0])) return m.reply(`hay un juego ahora mismo\n espera a que ese juego termine`)
     let { genMath, modes } = require('./lib/math')
     if (!text} return m.reply(`*elige uno de estos modos*\n*${Object.keys(modes.join(' | ')}\n*Ejemplo de uso*\n*${prefix + command} medium*`)
     let result = await genMath(text.toLowerCase())
