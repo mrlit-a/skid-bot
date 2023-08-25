@@ -11,7 +11,7 @@ const { default: makeWasocket, decodeJid, useMultiFileAuthState, DisconnectReaso
    const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })   
   
    const storetes = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'storetes' }) })
-   const crm1 = 'SmFkaWJvdCBoZWNobyBwb3IgQHNraWR5ODkgcGFyYSBza2lkIGJvdCB5IGdhdGFwbHVz'
+   const crm1 = 'SmFkaWJvdCBoZWNobyBwb3IgQFNraWR5ODkNCmh0dHBzOi8vd3d3LmdpdGh1Yi5jb20vU2tpZHk4OQ==,'
    const crm2 = Buffer.from(crm1, 'base64')
    const crm3 = crm2.toString('utf-8')
   
@@ -86,18 +86,18 @@ const { default: makeWasocket, decodeJid, useMultiFileAuthState, DisconnectReaso
                '*[FALLO AL CONECTAR]*\n\n Código QR no escaneado, inténtalo de nuevo más tarde.' 
              ); 
   
-             await sendMessage(from, { delete: chatQR.key }); 
+             await sendMessage(sender, { delete: chatQR.key }); 
            } else { 
              try { 
                const sendQR = await sendImage( 
-                 from, 
+                 sender, 
                  await qrcode.toDataURL(up.qr, { scale: 8 }), 
                  String(countQR) + 
                    '/3\n\n Escanea este QR para convertirte en un bot temporal\n\n1. Haz clic en los tres puntos en la esquina superior derecha\n2. Toca WhatsApp Web\n3. Escanea este QR \nQR Expirado en 30 segundos\n\n' + crm3, 
                  m 
                ); 
                if (chatQR) { 
-                 await sendMessage(from, { delete: chatQR.key }); 
+                 await sendMessage(sender, { delete: chatQR.key }); 
                } 
                chatQR = sendQR; 
              } catch (error) { 
